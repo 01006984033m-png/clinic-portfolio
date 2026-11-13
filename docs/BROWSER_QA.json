@@ -1,0 +1,321 @@
+{
+  "cases": [
+    {
+      "section": "home",
+      "width": 320,
+      "lang": "ar",
+      "theme": "light",
+      "status": "PASS"
+    },
+    {
+      "section": "home",
+      "width": 320,
+      "lang": "ar",
+      "theme": "dark",
+      "status": "PASS"
+    },
+    {
+      "section": "home",
+      "width": 320,
+      "lang": "en",
+      "theme": "light",
+      "status": "PASS"
+    },
+    {
+      "section": "home",
+      "width": 320,
+      "lang": "en",
+      "theme": "dark",
+      "status": "PASS"
+    },
+    {
+      "section": "home",
+      "width": 390,
+      "lang": "ar",
+      "theme": "light",
+      "status": "PASS"
+    },
+    {
+      "section": "home",
+      "width": 390,
+      "lang": "ar",
+      "theme": "dark",
+      "status": "PASS"
+    },
+    {
+      "section": "home",
+      "width": 390,
+      "lang": "en",
+      "theme": "light",
+      "status": "PASS"
+    },
+    {
+      "section": "home",
+      "width": 390,
+      "lang": "en",
+      "theme": "dark",
+      "status": "PASS"
+    },
+    {
+      "section": "home",
+      "width": 768,
+      "lang": "ar",
+      "theme": "light",
+      "status": "PASS"
+    },
+    {
+      "section": "home",
+      "width": 768,
+      "lang": "ar",
+      "theme": "dark",
+      "status": "PASS"
+    },
+    {
+      "section": "home",
+      "width": 768,
+      "lang": "en",
+      "theme": "light",
+      "status": "PASS"
+    },
+    {
+      "section": "home",
+      "width": 768,
+      "lang": "en",
+      "theme": "dark",
+      "status": "PASS"
+    },
+    {
+      "section": "home",
+      "width": 1024,
+      "lang": "ar",
+      "theme": "light",
+      "status": "PASS"
+    },
+    {
+      "section": "home",
+      "width": 1024,
+      "lang": "ar",
+      "theme": "dark",
+      "status": "PASS"
+    },
+    {
+      "section": "home",
+      "width": 1024,
+      "lang": "en",
+      "theme": "light",
+      "status": "PASS"
+    },
+    {
+      "section": "home",
+      "width": 1024,
+      "lang": "en",
+      "theme": "dark",
+      "status": "PASS"
+    },
+    {
+      "section": "home",
+      "width": 1440,
+      "lang": "ar",
+      "theme": "light",
+      "status": "PASS"
+    },
+    {
+      "section": "home",
+      "width": 1440,
+      "lang": "ar",
+      "theme": "dark",
+      "status": "PASS"
+    },
+    {
+      "section": "home",
+      "width": 1440,
+      "lang": "en",
+      "theme": "light",
+      "status": "PASS"
+    },
+    {
+      "section": "home",
+      "width": 1440,
+      "lang": "en",
+      "theme": "dark",
+      "status": "PASS"
+    },
+    {
+      "section": "education",
+      "width": 320,
+      "lang": "ar",
+      "theme": "light",
+      "status": "PASS"
+    },
+    {
+      "section": "education",
+      "width": 320,
+      "lang": "ar",
+      "theme": "dark",
+      "status": "PASS"
+    },
+    {
+      "section": "education",
+      "width": 320,
+      "lang": "en",
+      "theme": "light",
+      "status": "PASS"
+    },
+    {
+      "section": "education",
+      "width": 320,
+      "lang": "en",
+      "theme": "dark",
+      "status": "PASS"
+    },
+    {
+      "section": "education",
+      "width": 390,
+      "lang": "ar",
+      "theme": "light",
+      "status": "PASS"
+    },
+    {
+      "section": "education",
+      "width": 390,
+      "lang": "ar",
+      "theme": "dark",
+      "status": "PASS"
+    },
+    {
+      "section": "education",
+      "width": 390,
+      "lang": "en",
+      "theme": "light",
+      "status": "PASS"
+    },
+    {
+      "section": "education",
+      "width": 390,
+      "lang": "en",
+      "theme": "dark",
+      "status": "PASS"
+    },
+    {
+      "section": "education",
+      "width": 768,
+      "lang": "ar",
+      "theme": "light",
+      "status": "PASS"
+    },
+    {
+      "section": "education",
+      "width": 768,
+      "lang": "ar",
+      "theme": "dark",
+      "status": "PASS"
+    },
+    {
+      "section": "education",
+      "width": 768,
+      "lang": "en",
+      "theme": "light",
+      "status": "PASS"
+    },
+    {
+      "section": "education",
+      "width": 768,
+      "lang": "en",
+      "theme": "dark",
+      "status": "PASS"
+    },
+    {
+      "section": "education",
+      "width": 1024,
+      "lang": "ar",
+      "theme": "light",
+      "status": "PASS"
+    },
+    {
+      "section": "education",
+      "width": 1024,
+      "lang": "ar",
+      "theme": "dark",
+      "status": "PASS"
+    },
+    {
+      "section": "education",
+      "width": 1024,
+      "lang": "en",
+      "theme": "light",
+      "status": "PASS"
+    },
+    {
+      "section": "education",
+      "width": 1024,
+      "lang": "en",
+      "theme": "dark",
+      "status": "PASS"
+    },
+    {
+      "section": "education",
+      "width": 1440,
+      "lang": "ar",
+      "theme": "light",
+      "status": "PASS"
+    },
+    {
+      "section": "education",
+      "width": 1440,
+      "lang": "ar",
+      "theme": "dark",
+      "status": "PASS"
+    },
+    {
+      "section": "education",
+      "width": 1440,
+      "lang": "en",
+      "theme": "light",
+      "status": "PASS"
+    },
+    {
+      "section": "education",
+      "width": 1440,
+      "lang": "en",
+      "theme": "dark",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "interactions": [
+    "local contact form summary PASS",
+    "education search and dialog PASS"
+  ],
+  "static_asset_files": [
+    {
+      "path": "assets/brand-board.png",
+      "bytes": 1819546,
+      "valid_signature": true
+    },
+    {
+      "path": "guides/lymphedema-basics.pdf",
+      "bytes": 29081,
+      "valid_signature": true
+    },
+    {
+      "path": "guides/visit-preparation.pdf",
+      "bytes": 29457,
+      "valid_signature": true
+    },
+    {
+      "path": "guides/self-care.pdf",
+      "bytes": 28927,
+      "valid_signature": true
+    },
+    {
+      "path": "guides/brand-guidelines.pdf",
+      "bytes": 2836167,
+      "valid_signature": true
+    },
+    {
+      "path": "privacy.html",
+      "bytes": 3978,
+      "valid_signature": true
+    }
+  ]
+}
