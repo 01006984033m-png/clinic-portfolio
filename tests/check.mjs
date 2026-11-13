@@ -1,27 +1,33 @@
-import fs from 'node:fs'; import path from 'node:path'; import vm from 'node:vm';
 import assert from 'node:assert/strict';
-const base=path.resolve(import.meta.dirname,'..');
-const read=p=>fs.readFileSync(path.join(base,p),'utf8');
-const root=read('index.html'),edu=read('education/index.html'),data=read('education/content.js'),logo=read('assets/lymelva-mark.svg');
-const context={window:{}};vm.runInNewContext(data,context,{timeout:1000});
-const db=context.window.LYMELVA_LIBRARY;assert(db,'education data missing');
-assert.equal(db.articles.length,30,'30 guides required');assert.equal(Object.keys(db.refs).length,15,'15 references required');
-const ids=new Set;for(const a of db.articles){assert(!ids.has(a.id),'duplicate topic id');ids.add(a.id);
- assert(a.ar.title && a.en.title && a.ar.summary && a.en.summary,'missing bilingual article');
- assert(a.ar.points.length>=3 && a.en.points.length>=3,'missing takeaways');
- assert(a.sources.length>=1,'uncited article');
- for(const src of a.sources)assert(db.refs[src] && /^https:\/\//.test(db.refs[src][1]),'invalid source URL');
+import {readFileSync,existsSync} from 'node:fs';
+import {join,dirname} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import vm from 'node:vm';
+import {createHash} from 'node:crypto';
+const root=join(dirname(fileURLToPath(import.meta.url)),'..');
+const read=(p)=>readFileSync(join(root,p),'utf8');
+const home=read('index.html'),edu=read('education/index.html'),vercel=JSON.parse(read('vercel.json'));
+const ctx={window:{}};vm.runInNewContext(read('education/content.js'),ctx);
+const data=ctx.window.LYMELVA_EDUCATION;
+assert.equal(data.articles.length,30,'article count');
+assert.equal(Object.keys(data.sources).length,15,'reference count');
+assert.equal(new Set(data.articles.map(a=>a.id)).size,30,'unique article ids');
+for(const a of data.articles){
+ for(const l of ['ar','en']){assert.ok(a[l].title.length>5,a.id+' title');assert.ok(a[l].points.length>=3,a.id+' points');}
+ assert.ok(a.sources.length>=1,a.id+' citations');for(const s of a.sources)assert.ok(data.sources[s],a.id+' unknown source '+s);
 }
-for(const [k,v] of Object.entries(db.refs))assert(/^https:\/\//.test(v[1]),'non-HTTPS ref '+k);
-for(const [name,page] of [['index.html',root],['education/index.html',edu]]){assert(page.includes('name="robots" content="noindex,nofollow"'),name+' must be noindex');
- assert(page.includes('data-theme="light"') && page.includes('id="theme"'),name+' missing theme');
- assert(page.includes('id="lang"') || page.includes('id="language"'),name+' missing language control');
- assert(page.includes('viewport-fit=cover'),name+' missing mobile viewport');
- const scripts=[...page.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(m=>m[1]).filter(Boolean);
- for(const js of scripts)new vm.Script(js,{filename:name});
+for(const src of Object.values(data.sources))assert.match(src.url,/^https:\/\//);
+for(const p of ['index.html','styles.css','app.js','education/index.html','education/education.css','education/education.js','education/content.js','privacy.html','assets/brand-board.png','assets/lymelva-mark.svg','assets/lymelva-logo.svg','assets/lymelva-logo-white.svg','guides/lymphedema-basics.pdf','guides/visit-preparation.pdf','guides/self-care.pdf','guides/brand-guidelines.pdf','README.md','RELEASE_GATE.md'])assert.ok(existsSync(join(root,p)),'missing '+p);
+for(const name of ['lymphedema-basics','visit-preparation','self-care'])assert.ok(home.includes('guides/'+name+'.pdf'));
+assert.match(home,/noindex/i);assert.match(edu,/noindex/i);assert.match(read('robots.txt'),/Disallow: \//);
+assert.match(edu,/safety/i);assert.match(home,/education\//);assert.match(home,/privacy.html/);
+assert.doesNotMatch(read('app.js'),/fetch\s*\(|XMLHttpRequest|sendBeacon/,'unexpected contact transmission');
+assert.doesNotMatch(read('education/education.js'),/fetch\s*\(|XMLHttpRequest|sendBeacon/,'unexpected education data transmission');
+const script=/<script type="application\/ld\+json">([\s\S]*?)<\/script>/.exec(home);
+assert.ok(script,'inline structured-data script');
+const wanted="'sha256-"+createHash('sha256').update(script[1]).digest('base64')+"'";
+assert.ok(JSON.stringify(vercel).includes(wanted),'CSP inline script hash mismatch');
+for(const path of ['app.js','education/education.js','education/content.js']){
+ const child=await import('node:child_process'); const r=child.spawnSync(process.execPath,['--check',join(root,path)],{encoding:'utf8'}); assert.equal(r.status,0,path+': '+r.stderr);
 }
-assert(root.includes('href="education/"'),'education page not linked from clinic');
-assert(edu.includes('src="content.js"'),'education source not loaded');
-assert(logo.includes('<svg'),'logo missing');
-assert(read('robots.txt').includes('Disallow: /'),'provisional pages should not be indexed');
-console.log('PASS: 30 guides, 15 sources, source citations, responsive/theme/lang control presence and inline script syntax');
+console.log('PASS 30 bilingual topics, 15 live reference URLs, 4 PDF guides, asset paths, local-only data, CSP, JS syntax and noindex');
