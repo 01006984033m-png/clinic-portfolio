@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="380" viewBox="0 0 1200 380"><defs><style><![CDATA[.brand{font-family:Georgia,"Times New Roman",serif;font-weight:normal;letter-spacing:2px}.sub{font-family:Montserrat,Arial,sans-serif;font-weight:600;letter-spacing:4px}]]></style></defs>
+<g transform="translate(-34 11) scale(1.37)">
+ <path d="M 190 31 C 139 31 103 57 93 98 C 84 135 103 170 145 186 C 119 171 107 147 114 118 C 121 87 141 58 190 31Z" fill="#218F91"/>
+ <path d="M 194 45 C 164 45 154 64 152 95 C 148 126 129 144 101 156 C 135 153 162 136 173 107 C 184 78 176 59 194 45Z" fill="#0B4550"/>
+ <path d="M 98 151 C 123 132 145 134 168 140 C 188 145 215 138 241 112 C 227 146 208 159 180 161 C 149 164 124 145 98 151Z" fill="#218F91"/>
+ <path d="M 104 168 C 139 157 157 168 178 170 C 200 174 222 163 245 142 C 230 174 210 189 183 190 C 156 191 132 173 104 168Z" fill="#B7DCD2"/>
+ <path d="M 108 181 C 142 191 180 201 214 185 C 197 207 154 213 108 181Z" fill="#0B4550" opacity=".82"/>
+</g>
+<text x="327" y="204" font-size="112" fill="#0B4550" class="brand">LYMELVA</text>
+<text x="335" y="253" font-size="23" fill="#153B42" class="sub">LYMPHEDEMA &amp; PHYSICAL THERAPY</text>
+</svg>
