@@ -17,9 +17,10 @@ for(const a of data.articles){
  assert.ok(a.sources.length>=1,a.id+' citations');for(const s of a.sources)assert.ok(data.sources[s],a.id+' unknown source '+s);
 }
 for(const src of Object.values(data.sources))assert.match(src.url,/^https:\/\//);
-for(const p of ['index.html','styles.css','app.js','education/index.html','education/education.css','education/education.js','education/content.js','privacy.html','assets/brand-board.png','assets/lymelva-mark.svg','assets/lymelva-logo.svg','assets/lymelva-logo-white.svg','guides/lymphedema-basics.pdf','guides/visit-preparation.pdf','guides/self-care.pdf','guides/brand-guidelines.pdf','README.md','RELEASE_GATE.md'])assert.ok(existsSync(join(root,p)),'missing '+p);
+for(const p of ['index.html','styles.css','premium-light.css','app.js','education/index.html','education/education.css','education/education.js','education/content.js','privacy.html','assets/brand-board.png','assets/lymelva-mark.svg','assets/lymelva-logo.svg','assets/lymelva-logo-white.svg','guides/lymphedema-basics.pdf','guides/visit-preparation.pdf','guides/self-care.pdf','guides/brand-guidelines.pdf','README.md','RELEASE_GATE.md'])assert.ok(existsSync(join(root,p)),'missing '+p);
 for(const name of ['lymphedema-basics','visit-preparation','self-care'])assert.ok(home.includes('guides/'+name+'.pdf'));
 assert.match(home,/noindex/i);assert.match(edu,/noindex/i);assert.match(read('robots.txt'),/Disallow: \//);
+assert.match(home,/premium-light\.css/);assert.match(edu,/premium-light\.css/);assert.match(read('privacy.html'),/premium-light\.css/);
 assert.match(edu,/safety/i);assert.match(home,/education\//);assert.match(home,/privacy.html/);
 assert.doesNotMatch(read('app.js'),/fetch\s*\(|XMLHttpRequest|sendBeacon/,'unexpected contact transmission');
 assert.doesNotMatch(read('education/education.js'),/fetch\s*\(|XMLHttpRequest|sendBeacon/,'unexpected education data transmission');

@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const output = join(root, 'dist');
 const published = [
-  'index.html', 'styles.css', 'app.js',
+  'index.html', 'styles.css', 'premium-light.css', 'app.js',
   'privacy.html', 'privacy.css', 'robots.txt',
   'assets/brand-board.png', 'assets/lymelva-mark.svg',
   'assets/lymelva-logo.svg', 'assets/lymelva-logo-white.svg',

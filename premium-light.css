@@ -1,0 +1,120 @@
+/* LYMELVA — premium porcelain / deep-teal light palette.
+   Additive layer: the original midnight theme remains unchanged. */
+html[data-theme="light"] {
+  color-scheme: light;
+  --paper: #f3f9f7;
+  --paper2: #eaf4f0;
+  --card: #ffffff;
+  --ink: #10353c;
+  --sub: #466b6e;
+  --teal: #0b4a55;
+  --teal2: #117a80;
+  --mint: #c8ede2;
+  --line: rgba(19, 89, 93, .18);
+  --shadow: 0 22px 65px rgba(10, 64, 72, .105);
+  --selection: #b5e6d9;
+  --ring: #c3e9df;
+}
+html[data-theme="light"] body {
+  background: linear-gradient(145deg,#f9fcfb 0%,#eff7f4 52%,#f9fcfb 100%);
+}
+html[data-theme="light"] .page-glow {
+  background: radial-gradient(circle at 50% 45%,rgba(92,197,176,.18),transparent 65%);
+  filter: blur(28px);
+}
+html[data-theme="light"] .intro {background:#f3f9f7}
+html[data-theme="light"] .intro-word {color:#103b45}
+html[data-theme="light"] .header-inner {
+  background: rgba(255,255,255,.80);
+  border-color: rgba(23,101,101,.12);
+  box-shadow:0 13px 40px rgba(9,75,80,.06);
+  -webkit-backdrop-filter: blur(22px);
+  backdrop-filter: blur(22px);
+}
+html[data-theme="light"] .site-header.is-scrolled .header-inner {
+  background:rgba(255,255,255,.96);
+  border-color:rgba(23,101,101,.19);
+  box-shadow:0 18px 55px rgba(6,61,70,.11)
+}
+html[data-theme="light"] .header-cta,
+html[data-theme="light"] .button-primary {background:#0b4a55;color:#fff;box-shadow:0 8px 24px rgba(8,67,75,.16)}
+html[data-theme="light"] .header-cta:hover,
+html[data-theme="light"] .button-primary:hover {background:#0b6970}
+html[data-theme="light"] .button-outline {background:rgba(255,255,255,.78);border-color:rgba(14,80,87,.23)}
+html[data-theme="light"] .button-outline:hover{background:#e2f4ed;border-color:#67b5aa}
+html[data-theme="light"] .hero h1 {color:#103940}
+html[data-theme="light"] .hero h1 em,
+html[data-theme="light"] .about-heading h2 em,
+html[data-theme="light"] .section-heading-dark h2 em {color:#0b777a}
+html[data-theme="light"] .hero-description {color:#41686b}
+html[data-theme="light"] .hero-visual {
+  background:linear-gradient(150deg,#0a424d 0%,#176f71 38%,#0b4d54 76%,#06383e 100%);
+  box-shadow:0 33px 85px rgba(7,67,72,.22),0 7px 22px rgba(8,70,74,.11);
+}
+html[data-theme="light"] .hero-visual::after{border-color:rgba(245,255,248,.24)}
+html[data-theme="light"] .principles {border-color:rgba(12,82,89,.20)}
+html[data-theme="light"] .principle {background:linear-gradient(160deg,rgba(255,255,255,.75),rgba(229,246,239,.38))}
+html[data-theme="light"] .principle:first-child {border-start-start-radius:18px;border-end-start-radius:18px}
+html[data-theme="light"] .principle:last-child {border-start-end-radius:18px;border-end-end-radius:18px}
+html[data-theme="light"] .principle-icon,
+html[data-theme="light"] .principle-no {color:#137f80}
+html[data-theme="light"] .insight-card {border-color:rgba(19,96,99,.15);box-shadow:0 12px 31px rgba(11,71,75,.055);border-radius:18px}
+html[data-theme="light"] .insight-card:hover {box-shadow:0 24px 53px rgba(9,71,76,.14)}
+html[data-theme="light"] .insight-art {background:linear-gradient(135deg,#0b4b54,#218c87)}
+html[data-theme="light"] .guide-box {background:linear-gradient(110deg,#e3f1ec,#f7fbf8);border-color:rgba(16,94,97,.15);border-radius:22px}
+html[data-theme="light"] .journey-step[aria-selected="true"] {background:#dff3ec;border-radius:12px}
+html[data-theme="light"] .navigator-card {background:#ffffff;color:#133e45;box-shadow:0 28px 70px rgba(1,26,31,.26)}
+html[data-theme="light"] .navigator-option {background:#f5faf7}
+html[data-theme="light"] .faq-question:hover {color:#0c7779}
+html[data-theme="light"] .contact-form {background:#ffffff;border:1px solid rgba(170,219,207,.45)}
+html[data-theme="light"] .contact-form input,
+html[data-theme="light"] .contact-form select {background:#f8fcfa;border-color:#cddfd9}
+html[data-theme="light"] .footer {background:#e7f1ed;color:#113940}
+html[data-theme="light"] .footer-top p,
+html[data-theme="light"] .footer-bottom {color:#436568}
+html[data-theme="light"] .footer-bottom {border-color:#cadbd4}
+html[data-theme="light"] .floating-cta {background:#ffffff;color:#10464e;border:1px solid #b6dcd2;box-shadow:0 15px 35px rgba(6,63,73,.16)}
+html[data-theme="light"] .floating-cta:hover {background:#e7f8f2}
+/* Patient education library */
+html[data-theme="light"] {
+  --ed-bg: #f3f9f7;
+  --ed-surface: #fff;
+  --ed-ink: #103b43;
+  --ed-muted: #496d6e;
+  --ed-accent: #11747a;
+  --ed-sage: #daf0e8;
+  --ed-line: #cfdfd9;
+  --ed-card: #fff;
+}
+html[data-theme="light"] .edu-header {background:rgba(251,254,252,.94);border-color:#d5e7e0;box-shadow:0 6px 24px rgba(10,64,72,.045)}
+html[data-theme="light"] .edu-hero {background:linear-gradient(135deg,#fbfdfc,#eef7f3 76%,#e6f4ef)}
+html[data-theme="light"] .edu-hero-art {filter:drop-shadow(0 12px 30px rgba(8,78,81,.07))}
+html[data-theme="light"] .edu-safe {background:#fffdf9;border-color:#e1d6c3;box-shadow:0 12px 30px rgba(111,82,35,.06)}
+html[data-theme="light"] .edu-search,
+html[data-theme="light"] .edu-card {box-shadow:0 11px 32px rgba(9,71,76,.052)}
+html[data-theme="light"] .edu-card:hover {border-color:#7fc6b9;box-shadow:0 20px 47px rgba(9,72,74,.13)}
+html[data-theme="light"] .edu-card-symbol {color:#0b5359}
+html[data-theme="light"] .edu-footer {background:#e8f3ee}
+html[data-theme="light"] .edu-dialog {border-color:#bdd9d0}
+html[data-theme="light"] .edu-primary {background:#0a4a54;color:white!important}
+html[data-theme="light"] .edu-primary:hover {background:#0c7279}
+/* Keyboard/touch affordances */
+html[data-theme="light"] :is(a,button,input,select):focus-visible {outline:3px solid #087f80;outline-offset:3px}
+html[data-theme="light"] .edu-card:focus-visible,
+html[data-theme="light"] .service-card:focus-visible {box-shadow:0 0 0 4px #b4e9db}
+/* Privacy page: standalone light-only layout */
+body:has(.mast) {background:linear-gradient(140deg,#fbfdfc,#eef7f3);color:#123940}
+body:has(.mast) section {background:#fff;border-color:#cfe1d9;box-shadow:0 15px 40px rgba(13,71,77,.065);border-radius:19px}
+body:has(.mast) a {color:#0b636b}
+@media (max-width:720px){
+ html[data-theme="light"] .header-inner {background:rgba(255,255,255,.96);box-shadow:0 7px 22px rgba(8,61,66,.08)}
+ html[data-theme="light"] .hero-visual {box-shadow:0 20px 45px rgba(10,73,78,.16)}
+ html[data-theme="light"] .principles {border:1px solid rgba(14,88,95,.14);border-radius:17px;overflow:hidden}
+ html[data-theme="light"] .principle {border-radius:0!important}
+ html[data-theme="light"] .edu-header {background:rgba(252,254,253,.97)}
+ html[data-theme="light"] .edu-card {border-radius:16px}
+}
+@media (prefers-reduced-motion:reduce){
+ html[data-theme="light"] .insight-card:hover,
+ html[data-theme="light"] .edu-card:hover {transform:none}
+}
