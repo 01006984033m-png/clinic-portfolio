@@ -120,3 +120,9 @@ body.intro-running .intro.cinematic-intro.intro-active .intro-progress span{anim
  body.intro-running.intro-manual-motion .intro.cinematic-intro.intro-active{display:flex!important;opacity:1!important;visibility:visible!important}
  .hero-visual-photo .hero-photo,.ticker-track{animation:none!important}
 }
+
+/* V9b: reduce expensive painting on low-power devices without losing the brand. */
+.page-glow{filter:none!important}
+.hero-visual-photo .hero-film-layer{mix-blend-mode:normal!important}
+.hero-visual-photo .hero-photo-indicator{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+@media(max-width:960px){.page-glow{display:none!important}}

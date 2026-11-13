@@ -113,3 +113,6 @@ assert.match(read('desktop-motion.css'),/backdrop-filter:none!important/,'expens
 assert.match(read('app.js'),/lymelva-motion-opt-in/,'user opt-in for full desktop animation');
 assert.doesNotMatch(read('editorial-refine.css'),/\.hero-photo\{[^}]*transform:none!important/,'editorial CSS must not block animated transform');
 assert.match(read('desktop-motion.css'),/data-motion-opt-in="true"/,'desktop animation can be manually enabled');
+
+assert.doesNotMatch(read('cinematic-care.css'),/\.hero-moving-light,\.intro-bg-photo,\.intro-light-streak,\.intro-inner img\{animation:none!important;transform:none!important\}/,'manual replay zoom must not be canceled by reduced-motion transform');
+assert.match(read('desktop-motion.css'),/V9b: reduce expensive painting/,'lightweight compositor overrides present');
