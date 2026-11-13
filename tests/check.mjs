@@ -74,7 +74,7 @@ assert.match(home,/Created by Mohammed Elhady/,'footer author credit');
 assert.match(home,/id="replay-intro"/,'intro replay control');
 assert.match(home,/desktop-motion\.css/,'desktop motion override linked');
 assert.match(read('app.js'),/function activateIntro\(\)/,'intro replay logic retained');
-assert.match(read('desktop-motion.css'),/lymelvaDesktopPhoto/,'desktop photograph motion');
+assert.match(read('motion-v11.js'),/function animateLanding\(/,'desktop hero entrance motion');
 assert.match(edu,/clinical-gallery\.css/,'education gallery stylesheet linked');
 assert.match(edu,/edu-hero-photo/,'clinical hero photograph');
 assert.match(edu,/id="article-image"/,'article imagery');
@@ -95,37 +95,39 @@ for(const a of data.articles){
  assert.ok(size>3500&&size<300000,'image size and integrity '+path);
 }
 assert.match(home,/id="header-replay-intro"/,'visible desktop replay entrypoint');
-assert.match(read('motion-v10.js'),/header-replay-intro/,'desktop replay event in the new motion runtime');
-assert.match(read('desktop-motion.css'),/intro-manual-motion/,'opt-in motion support');
+assert.match(read('motion-v11.js'),/header-replay-intro/,'desktop replay event in the motion runtime');
+assert.match(read('motion-v11.js'),/lymelva-motion-v11/,'desktop motion preference persisted');
 assert.match(read('scripts/build.mjs'),/requiredTopicIds/,'all image assets included in production');
 
 
-// v10: desktop cinematic presentation, composited intro and scroll animations.
-const motionJS=read('motion-v10.js'), motionCSS=read('motion-v10.css');
+// V11: no first-paint flash, one timeline owner, and real scroll entry.
+const motionJS=read('motion-v11.js'), motionCSS=read('motion-v11.css');
+assert.match(home,/<body class="intro-running">/,'intro overlay visible at first browser paint');
 assert.match(home,/id="motion-toggle"/,'visible desktop motion switch');
-assert.match(edu,/id="motion-toggle"/,'patient library shares the motion switch');
-assert.match(home,/motion-v10\.js/,'new independent animation runtime included');
-assert.match(home,/motion-v10\.css/,'compositor-friendly motion styles included');
-assert.match(edu,/\.\.\/motion-v10\.js/,'education page uses shared runtime');
-assert.match(read('app.js'),/function activateIntro\(\)\{window\.LYMELVA_MOTION_V10\?\.boot\(\)\}/,'legacy blocking intro replaced');
-assert.match(motionJS,/function playFrames\(/,'cinematic WAAPI timeline');
-assert.match(motionJS,/\.animate\(/,'real browser animation used');
-assert.match(motionJS,/intro-waapi/,'intro WAAPI class applies');
-assert.match(motionJS,/function finishIntro\(/,'intro exit handler');
-assert.match(motionJS,/watchdog=setTimeout/,'a bounded failure watchdog');
-assert.match(motionJS,/full\?3500:450/,'short auto closing intro');
-assert.match(motionJS,/IntersectionObserver/,'viewport-triggered scroll animations');
-assert.match(motionJS,/MutationObserver/,'new dynamic cards are observed');
-assert.match(motionJS,/lymelva-motion-opt-in/,'visitor motion preference is local only');
-assert.match(motionCSS,/motion-reveal\.motion-pending/,'visible scroll entrance');
-assert.match(motionCSS,/motion-reveal\.motion-entered/,'completed scroll entrance');
-assert.match(motionCSS,/transition-duration:\.78s,\.86s!important/,'reduced-motion opt-in transition override');
-assert.match(read('scripts/build.mjs'),/motion-v10\.js/,'new JS included in dist');
-assert.match(read('scripts/build.mjs'),/motion-v10\.css/,'new CSS included in dist');
-for(const p of ['motion-v10.js','motion-v10.css']) assert.ok(existsSync(join(root,p)),'missing '+p);
+assert.match(edu,/id="motion-toggle"/,'patient library shares motion switch');
+assert.match(home,/motion-v11\.js/,'new motion runtime linked');
+assert.match(home,/motion-v11\.css/,'new motion stylesheet linked');
+assert.match(edu,/\.\.\/motion-v11\.js/,'education shares motion runtime');
+assert.match(read('app.js'),/LYMELVA_MOTION_V11\?\.boot/,'single animation boot owner');
+assert.doesNotMatch(read('desktop-motion.css'),/V9: short automatic/,'legacy V9 animation override removed');
+assert.doesNotMatch(read('desktop-motion.css'),/intro-manual-motion/,'legacy conflict removed');
+assert.match(motionJS,/function scene\(/,'intro WAAPI motion timeline');
+assert.match(motionJS,/\.animate\(/,'actual browser animation');
+assert.match(motionJS,/function finishIntro\(/,'safe automatic intro close');
+assert.match(motionJS,/full\?3750:500/,'full default desktop sequence');
+assert.match(motionJS,/function animateLanding\(/,'hero entrance animation');
+assert.match(motionJS,/function show\(/,'scroll animations have independent trigger');
+assert.match(motionJS,/IntersectionObserver/,'viewport driven scroll reveal');
+assert.match(motionJS,/MutationObserver/,'dynamic card observation');
+assert.match(motionJS,/lymelva-motion-v11/,'isolated, persistent motion setting');
+assert.match(motionJS,/desktop\(\)\|\|!reduced\(\)/,'desktop animation defaults on regardless OS');
+assert.match(motionCSS,/lymelvaV11Failsafe/,'CSS fallback when JS never starts');
+assert.match(read('scripts/build.mjs'),/motion-v11\.js/,'motion runtime included in dist');
+assert.match(read('scripts/build.mjs'),/motion-v11\.css/,'motion CSS included in dist');
+for(const p of ['motion-v11.js','motion-v11.css'])assert.ok(existsSync(join(root,p)),'missing '+p);
 {
  const child=await import('node:child_process');
- const syntax=child.spawnSync(process.execPath,['--check',join(root,'motion-v10.js')],{encoding:'utf8'});
+ const syntax=child.spawnSync(process.execPath,['--check',join(root,'motion-v11.js')],{encoding:'utf8'});
  assert.equal(syntax.status,0,'motion JS syntax: '+syntax.stderr);
 }
-console.log('PASS desktop motion v10, accessible opt-in, independent cinematic intro, scroll reveal, build inclusion');
+console.log('PASS V11 first paint, desktop opt-in/out, intro timeline, scroll WAAPI and conflict removal');
