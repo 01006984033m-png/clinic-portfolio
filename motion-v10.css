@@ -1,0 +1,90 @@
+/* LYMELVA Motion V10 — composited, accessible desktop sequences. */
+.motion-toggle{
+  border:1px solid var(--line,#b7dcd2);color:var(--ink,#0b4550);background:transparent;
+  border-radius:22px;display:inline-flex;align-items:center;justify-content:center;
+  gap:8px;padding:8px 12px;min-height:40px;font:600 11px/1.2 Tahoma,Arial,sans-serif;
+  white-space:nowrap;cursor:pointer;transition:background-color .18s ease,border-color .18s ease;
+}
+.motion-toggle:hover{background:var(--mint,#b7dcd2)}
+.motion-toggle:focus-visible{outline:3px solid #218f91;outline-offset:3px}
+.motion-toggle-icon{font-size:19px;color:var(--teal2,#218f91);line-height:1}
+.motion-toggle[aria-pressed="false"] .motion-toggle-icon{opacity:.6}
+body.intro-running .intro.cinematic-intro:not(.done){display:flex!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important}
+body.intro-running .intro.cinematic-intro.done{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+body.intro-running .intro.cinematic-intro.intro-waapi .intro-bg-photo,
+body.intro-running .intro.cinematic-intro.intro-waapi .intro-veil,
+body.intro-running .intro.cinematic-intro.intro-waapi .intro-light-streak,
+body.intro-running .intro.cinematic-intro.intro-waapi .intro-inner img,
+body.intro-running .intro.cinematic-intro.intro-waapi .intro-word,
+body.intro-running .intro.cinematic-intro.intro-waapi .intro-kicker,
+body.intro-running .intro.cinematic-intro.intro-waapi .intro-label,
+body.intro-running .intro.cinematic-intro.intro-waapi .intro-progress span{animation:none!important}
+body.intro-running .intro.cinematic-intro.intro-waapi .intro-light-streak{
+ display:block!important;filter:none!important;will-change:transform,opacity;opacity:0
+}
+body.intro-running .intro.cinematic-intro.intro-waapi .intro-bg-photo{will-change:transform}
+body.intro-running .intro.cinematic-intro.intro-waapi .intro-word{
+ text-shadow:0 4px 24px #02252b5e
+}
+html[data-motion-active="false"] .reveal{
+ opacity:1!important;transform:none!important;transition:none!important
+}
+html[data-motion-active="false"] .ticker-track,
+html[data-motion-active="true"] .ticker-track{animation:none!important}
+html[data-motion-active="false"] .hero-visual-photo .hero-photo{animation:none!important;transform:none!important}
+@media(min-width:961px){
+ html[data-motion-active="true"] .motion-reveal.motion-pending{
+   opacity:0!important;transform:translate3d(0,36px,0)!important;
+   transition-property:opacity,transform!important;
+   transition-duration:.78s,.86s!important;
+   transition-timing-function:cubic-bezier(.2,.7,.25,1)!important;
+   transition-delay:var(--motion-delay,0ms)!important;
+ }
+ html[data-motion-active="true"] .motion-reveal.motion-entered{
+   opacity:1!important;transform:translate3d(0,0,0)!important;
+   transition-property:opacity,transform!important;
+   transition-duration:.78s,.86s!important;
+   transition-timing-function:cubic-bezier(.2,.7,.25,1)!important;
+   transition-delay:var(--motion-delay,0ms)!important;
+ }
+ html[data-motion-active="true"] .motion-reveal.motion-pending.hero-visual-photo,
+ html[data-motion-active="true"] .motion-reveal.motion-pending.statement-art,
+ html[data-motion-active="true"] .motion-reveal.motion-pending.edu-hero-photo{
+   transform:translate3d(0,20px,0) scale(.97)!important;
+ }
+ html[data-motion-active="true"] .motion-reveal.motion-pending.service-photo-card,
+ html[data-motion-active="true"] .motion-reveal.motion-pending.insight-card,
+ html[data-motion-active="true"] .motion-reveal.motion-pending.edu-card{
+   transform:translate3d(0,25px,0) scale(.985)!important;
+ }
+ html[data-motion-active="true"] .motion-reveal.motion-entered.service-photo-card:hover,
+ html[data-motion-active="true"] .motion-reveal.motion-entered.insight-card:hover{
+   transform:translate3d(0,-5px,0)!important;transition-duration:.24s!important;
+ }
+ html[data-motion-active="true"] .hero-visual-photo .hero-photo{
+   animation:none!important;will-change:auto!important;transform:scale(1)!important;
+ }
+ .page-glow{display:none!important}
+ .hero-visual-photo .hero-moving-light{display:none!important}
+ .hero-visual-photo .hero-photo-indicator{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+ .site-header.is-scrolled .header-inner{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+}
+@media(min-width:961px) and (max-width:1250px){
+ .motion-toggle-label{display:none}
+ .motion-toggle{min-width:42px;padding:7px}
+}
+@media(max-width:960px){
+ .motion-toggle{display:none}
+}
+/* Explicit motion preference beats the broad reduced-motion CSS reset for
+   only the elements the visitor elected to animate. */
+@media(prefers-reduced-motion:reduce){
+ html[data-motion-active="true"] .motion-reveal.motion-pending,
+ html[data-motion-active="true"] .motion-reveal.motion-entered{
+   transition-duration:.78s,.86s!important
+ }
+ html[data-motion-active="true"] .intro.cinematic-intro.intro-waapi,
+ html[data-motion-active="true"] body.intro-running .intro.cinematic-intro.intro-waapi{
+   display:flex!important
+ }
+}

@@ -69,62 +69,7 @@ function setMenu(open){menuOpen=open;byId('menu-toggle').setAttribute('aria-expa
 function showToast(msg){const el=byId('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),3000)}
 function makeBrief(){const name=byId('form-name').value.trim();const phone=byId('form-phone').value.trim();const request=byId('form-type').value;const time=byId('form-time').value;const digits=phone.replace(/[^0-9]/g,'');if(name.length<2||digits.length<8||digits.length>16||!['initial','followup','general'].includes(request)){byId('form-error').hidden=false;byId('form-error').textContent=t('formRequired');byId('form-result').hidden=true;return}const requestName={initial:t('formInitial'),followup:t('formFollow'),general:t('formGeneral')}[request];const timeName={any:t('formAny'),morning:t('formMorning'),afternoon:t('formAfternoon'),evening:t('formEvening')}[time]||t('formAny');const keys=lang==='ar'?['طلب تواصل - LYMELVA','الاسم','رقم التواصل','نوع الطلب','الوقت المفضّل','الحالة']:['LYMELVA — enquiry summary','Name','Contact','Request','Preferred time','Status'];const status=lang==='ar'?'مسودة محلية — لم تُرسل للعيادة':'Local draft — not sent to the clinic';lastBrief=`${keys[0]}\n\n${keys[1]}: ${name}\n${keys[2]}: ${phone}\n${keys[3]}: ${requestName}\n${keys[4]}: ${timeName}\n${keys[5]}: ${status}\n`;byId('form-error').hidden=true;byId('form-result').hidden=false;byId('form-result').scrollIntoView({block:'nearest',behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}
 function downloadBrief(){if(!lastBrief)return;const blob=new Blob([lastBrief],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='LYMELVA-enquiry-local-draft.txt';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
-function activateIntro(){
- const original=byId('intro');
- if(!original){document.body.classList.add('intro-finished');return}
- const snapshot=original.cloneNode(true);
- let active=null,closeTimer=0,watchdog=0,removeTimer=0,runCount=0;
- const reduced=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches;
- const optedIn=()=>safeGet('lymelva-motion-opt-in')==='true';
- const setMotionPreference=()=>{
-   safeSet('lymelva-motion-opt-in','true');
-   root.dataset.motionOptIn='true';
- };
- root.dataset.motionOptIn=optedIn()?'true':'false';
- function clearTimers(){clearTimeout(closeTimer);clearTimeout(watchdog);clearTimeout(removeTimer)}
- function closeIntro(node){
-   if(!node||node.dataset.done==='true')return;
-   node.dataset.done='true';clearTimers();
-   node.classList.add('done');
-   document.body.classList.add('intro-finished');
-   document.body.classList.remove('intro-manual-motion');
-   removeTimer=setTimeout(()=>{
-     if(node.isConnected)node.remove();
-     if(active===node)document.body.classList.remove('intro-running');
-   },320);
- }
- function startIntro(manual=false){
-   clearTimers();
-   if(active?.isConnected)active.remove();
-   const node=runCount++===0?original:snapshot.cloneNode(true);
-   if(!node.isConnected)document.body.insertBefore(node,document.body.firstChild);
-   node.classList.remove('done','intro-restart','intro-static','intro-active','intro-soft-motion');
-   node.removeAttribute('data-done');
-   active=node;
-   document.body.classList.add('intro-running');
-   document.body.classList.remove('intro-finished');
-   const play=node.querySelector('#play-intro-motion');
-   if(play)play.hidden=true;
-   node.querySelector('#skip-intro')?.addEventListener('click',()=>closeIntro(node),{once:true});
-   const fullMotion=manual||optedIn()||!reduced();
-   document.body.classList.toggle('intro-manual-motion',reduced()&&fullMotion);
-   // Do not wait for window.load: slow photos should never pin the introduction.
-   node.classList.add(fullMotion?'intro-active':'intro-soft-motion');
-   closeTimer=setTimeout(()=>closeIntro(node),fullMotion?2500:450);
-   watchdog=setTimeout(()=>closeIntro(node),3500);
- }
- const replay=()=>{
-   if(reduced())setMotionPreference();
-   startIntro(true);
-   active?.querySelector('#skip-intro')?.focus({preventScroll:true});
- };
- byId('replay-intro')?.addEventListener('click',replay);
- byId('header-replay-intro')?.addEventListener('click',replay);
- window.addEventListener('pagehide',()=>closeIntro(active));
- document.addEventListener('visibilitychange',()=>{if(document.hidden)closeIntro(active)});
- window.addEventListener('pageshow',event=>{if(event.persisted)closeIntro(active)});
- startIntro(false);
-}
+function activateIntro(){window.LYMELVA_MOTION_V10?.boot()}
 function attachEvents(){byId('theme-switch').addEventListener('click',()=>{theme=theme==='light'?'dark':'light';safeSet('lymelva-theme',theme);applyTheme()});byId('lang-toggle').addEventListener('click',()=>{lang=lang==='ar'?'en':'ar';safeSet('lymelva-lang',lang);translate()});byId('menu-toggle').addEventListener('click',()=>setMenu(!menuOpen));byId('mobile-nav').addEventListener('click',e=>{if(e.target.closest('a'))setMenu(false)});document.addEventListener('click',e=>{const service=e.target.closest('[data-service]');if(service){openModal('service',Number(service.dataset.service));return}const insight=e.target.closest('[data-insight]');if(insight){openModal('insight',Number(insight.dataset.insight));return}const f=e.target.closest('[data-filter]');if(f){filter=f.dataset.filter;renderInsights();return}const journey=e.target.closest('[data-stage]');if(journey){stage=Number(journey.dataset.stage);renderJourney();byId('journey-steps').querySelector(`[data-stage="${stage}"]`)?.focus();return}const faq=e.target.closest('[data-faq]');if(faq){const open=faq.getAttribute('aria-expanded')==='true';document.querySelectorAll('[data-faq]').forEach(el=>{el.setAttribute('aria-expanded','false');byId(`faq-answer-${el.dataset.faq}`).hidden=true});if(!open){faq.setAttribute('aria-expanded','true');byId(`faq-answer-${faq.dataset.faq}`).hidden=false}return}const nav=e.target.closest('[data-navigator]');if(nav){navigatorChoice=Number(nav.dataset.navigator);renderNavigator();return}if(e.target.closest('[data-close-modal], #modal-close'))closeModal();});byId('navigator-reset').addEventListener('click',()=>{navigatorChoice=-1;renderNavigator();byId('navigator-options').querySelector('button')?.focus()});byId('modal-cta').addEventListener('click',closeModal);document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(currentModal)closeModal();else if(menuOpen)setMenu(false);return}if(currentModal&&e.key==='Tab'){const box=byId('detail-modal');const nodes=Array.from(box.querySelectorAll('button:not([disabled]),a[href]')).filter(el=>el.offsetParent!==null);if(nodes.length){if(e.shiftKey&&document.activeElement===nodes[0]){e.preventDefault();nodes.at(-1).focus()}else if(!e.shiftKey&&document.activeElement===nodes.at(-1)){e.preventDefault();nodes[0].focus()}}}if(menuOpen&&e.key==='Tab'){const nodes=[byId('menu-toggle'),...byId('mobile-nav').querySelectorAll('a')];if(e.shiftKey&&document.activeElement===nodes[0]){e.preventDefault();nodes.at(-1).focus()}else if(!e.shiftKey&&document.activeElement===nodes.at(-1)){e.preventDefault();nodes[0].focus()}}});byId('contact-form').addEventListener('submit',e=>{e.preventDefault();makeBrief()});byId('copy-brief').addEventListener('click',async()=>{if(!lastBrief)return;try{await navigator.clipboard.writeText(lastBrief);showToast(t('formCopied'))}catch{const ta=document.createElement('textarea');ta.value=lastBrief;document.body.appendChild(ta);ta.select();const ok=document.execCommand('copy');ta.remove();showToast(ok?t('formCopied'):t('formErrorCopy'))}});byId('download-brief').addEventListener('click',downloadBrief);}
 function observeUI(){const reveal=new IntersectionObserver(items=>{items.forEach(item=>{if(item.isIntersecting){item.target.classList.add('is-visible');reveal.unobserve(item.target)}})},{threshold:.08,rootMargin:'0px 0px -20px 0px'});document.querySelectorAll('.reveal').forEach(el=>reveal.observe(el));const sectionObserver=new IntersectionObserver(entries=>{entries.forEach(ent=>{if(ent.isIntersecting){document.querySelectorAll('.desktop-nav a').forEach(a=>a.classList.toggle('active',a.hash==='#'+ent.target.id))}})},{rootMargin:'-30% 0px -60% 0px'});document.querySelectorAll('main section[id]').forEach(el=>sectionObserver.observe(el));let ticking=false;const onScroll=()=>{if(ticking)return;ticking=true;requestAnimationFrame(()=>{const y=window.scrollY;byId('site-header').classList.toggle('is-scrolled',y>36);byId('site-header').classList.toggle('is-hidden',!menuOpen&&!currentModal&&y>280&&y-lastScroll>10);if(y<160||lastScroll-y>5)byId('site-header').classList.remove('is-hidden');lastScroll=y;const contact=byId('contact').getBoundingClientRect();byId('floating-cta').classList.toggle('is-hidden',(window.innerWidth<=720&&y<Math.min(440,window.innerHeight*.5))||(contact.top<window.innerHeight*.7&&contact.bottom>0));ticking=false})};window.addEventListener('scroll',onScroll,{passive:true});onScroll();}
 function init(){lang=safeGet('lymelva-lang')==='en'?'en':'ar';theme=safeGet('lymelva-theme')==='dark'?'dark':'light';applyTheme();translate();byId('year').textContent=String(new Date().getFullYear());attachEvents();observeUI();activateIntro();}

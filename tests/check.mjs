@@ -99,20 +99,33 @@ assert.match(read('app.js'),/header-replay-intro/,'desktop replay event');
 assert.match(read('desktop-motion.css'),/intro-manual-motion/,'opt-in motion support');
 assert.match(read('scripts/build.mjs'),/requiredTopicIds/,'all image assets included in production');
 
-// v8 — visible desktop intro and motion conflict regression coverage.
-assert.match(home,/id="play-intro-motion"/,'explicit play intro control exists');
-assert.match(read('app.js'),/intro-soft-motion/,'reduced-motion intro exits automatically');
-assert.doesNotMatch(read('app.js'),/addEventListener\('load',begin/,'no waiting for full window load');
-assert.match(read('app.js'),/fullMotion\?2500:450/,'automatic brief intro');
-assert.match(read('app.js'),/watchdog=setTimeout/,'intro has a bounded watchdog');
-assert.doesNotMatch(read('app.js'),/12000/,'no extended static intro hold');
-assert.match(read('desktop-motion.css'),/V9: short automatic/,'performance fix included');
-assert.match(read('desktop-motion.css'),/lymelvaV9IntroPhoto/,'cinematic intro motion retained');
-assert.match(read('desktop-motion.css'),/lymelvaV9HeroArrival/,'hero entrance motion retained');
-assert.match(read('desktop-motion.css'),/backdrop-filter:none!important/,'expensive scroll backdrop disabled');
-assert.match(read('app.js'),/lymelva-motion-opt-in/,'user opt-in for full desktop animation');
-assert.doesNotMatch(read('editorial-refine.css'),/\.hero-photo\{[^}]*transform:none!important/,'editorial CSS must not block animated transform');
-assert.match(read('desktop-motion.css'),/data-motion-opt-in="true"/,'desktop animation can be manually enabled');
 
-assert.doesNotMatch(read('cinematic-care.css'),/\.hero-moving-light,\.intro-bg-photo,\.intro-light-streak,\.intro-inner img\{animation:none!important;transform:none!important\}/,'manual replay zoom must not be canceled by reduced-motion transform');
-assert.match(read('desktop-motion.css'),/V9b: reduce expensive painting/,'lightweight compositor overrides present');
+// v10: desktop cinematic presentation, composited intro and scroll animations.
+const motionJS=read('motion-v10.js'), motionCSS=read('motion-v10.css');
+assert.match(home,/id="motion-toggle"/,'visible desktop motion switch');
+assert.match(edu,/id="motion-toggle"/,'patient library shares the motion switch');
+assert.match(home,/motion-v10\.js/,'new independent animation runtime included');
+assert.match(home,/motion-v10\.css/,'compositor-friendly motion styles included');
+assert.match(edu,/\.\.\/motion-v10\.js/,'education page uses shared runtime');
+assert.match(read('app.js'),/function activateIntro\(\)\{window\.LYMELVA_MOTION_V10\?\.boot\(\)\}/,'legacy blocking intro replaced');
+assert.match(motionJS,/function playFrames\(/,'cinematic WAAPI timeline');
+assert.match(motionJS,/\.animate\(/,'real browser animation used');
+assert.match(motionJS,/intro-waapi/,'intro WAAPI class applies');
+assert.match(motionJS,/function finishIntro\(/,'intro exit handler');
+assert.match(motionJS,/watchdog=setTimeout/,'a bounded failure watchdog');
+assert.match(motionJS,/full\?3500:450/,'short auto closing intro');
+assert.match(motionJS,/IntersectionObserver/,'viewport-triggered scroll animations');
+assert.match(motionJS,/MutationObserver/,'new dynamic cards are observed');
+assert.match(motionJS,/lymelva-motion-opt-in/,'visitor motion preference is local only');
+assert.match(motionCSS,/motion-reveal\.motion-pending/,'visible scroll entrance');
+assert.match(motionCSS,/motion-reveal\.motion-entered/,'completed scroll entrance');
+assert.match(motionCSS,/transition-duration:\.78s,\.86s!important/,'reduced-motion opt-in transition override');
+assert.match(read('scripts/build.mjs'),/motion-v10\.js/,'new JS included in dist');
+assert.match(read('scripts/build.mjs'),/motion-v10\.css/,'new CSS included in dist');
+for(const p of ['motion-v10.js','motion-v10.css']) assert.ok(existsSync(join(root,p)),'missing '+p);
+{
+ const child=await import('node:child_process');
+ const syntax=child.spawnSync(process.execPath,['--check',join(root,'motion-v10.js')],{encoding:'utf8'});
+ assert.equal(syntax.status,0,'motion JS syntax: '+syntax.stderr);
+}
+console.log('PASS desktop motion v10, accessible opt-in, independent cinematic intro, scroll reveal, build inclusion');
