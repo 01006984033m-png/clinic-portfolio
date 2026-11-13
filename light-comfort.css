@@ -4,7 +4,7 @@
    Seafoam #B7DCD2 / Warm Ivory #F7F4ED.
    Dark mode is deliberately NOT selected by these rules. */
 html[data-theme="light"]{
-  color-scheme:light;
+  color-scheme:only light;
   --paper:#eceee8;
   --paper2:#e2eae4;
   --card:#F7F4ED;
@@ -61,3 +61,60 @@ html[data-theme="light"] .edu-footer{background:#e0e8e1}
 /* Privacy is a standalone light page without a theme switch. */
 body:has(.mast){background:#eceee8!important;color:#0B4550}
 body:has(.mast) section{background:#F7F4ED!important;border-color:#c9d9d1}
+
+/* Mobile readability and browser auto-darkening safeguard.
+   Keep the original LYMELVA colors and desktop composition unchanged. */
+html[data-theme="light"] { color-scheme: only light !important; }
+html[data-theme="dark"] { color-scheme: dark; }
+html[data-theme="light"] body,
+html[data-theme="light"] main,
+html[data-theme="light"] .hero,
+html[data-theme="light"] .hero-copy,
+html[data-theme="light"] .about-section,
+html[data-theme="light"] .journey-section,
+html[data-theme="light"] .insights-section,
+html[data-theme="light"] .faq-section {
+  background-color: #eceee8 !important;
+  color: #0B4550;
+}
+html[data-theme="light"] .hero h1,
+html[data-theme="light"] .hero h1 span { color: #0B4550 !important; }
+html[data-theme="light"] .hero h1 em { color: #218F91 !important; }
+html[data-theme="light"] .hero-description,
+html[data-theme="light"] .hero-note { color: #45666a !important; }
+html[data-theme="light"] .hero-education-cta { background:#B7DCD2 !important; color:#0B4550 !important; }
+html[data-theme="light"] .header-inner { background:#F1F2EC !important; }
+@media(max-width:720px){
+  .site-header .header-inner { height:64px; min-height:64px; padding:7px 10px; }
+  .brand { gap:6px; }
+  .brand img { width:35px; height:35px; }
+  .brand-text { font-size:clamp(15px,4.2vw,18px); line-height:1.15; }
+  .brand-text small { font-size:5px; letter-spacing:.09em; }
+  .hero { padding-top:105px !important; padding-bottom:26px !important; gap:16px !important; }
+  .hero-copy { padding-bottom:0 !important; }
+  .hero .eyebrow { margin-bottom:12px; }
+  html[lang="ar"] .hero h1, html[lang="en"] .hero h1 {
+    font-size:clamp(29px,7.8vw,38px) !important;
+    line-height:1.35 !important;
+    margin-bottom:13px !important;
+  }
+  .hero-description { font-size:13px; line-height:1.75; margin-bottom:18px; }
+  .hero-buttons { gap:9px !important; }
+  .hero-buttons .button { min-height:47px; padding:10px 10px; font-size:11.5px; gap:7px; }
+  .hero-note { margin-top:12px !important; padding-top:11px; font-size:11px; }
+  .hero-visual.hero-visual-photo { height:clamp(265px,72vw,340px) !important; }
+  .floating-cta.floating-whatsapp {
+    width:50px !important; height:50px !important; min-width:50px;
+    min-height:50px; max-width:50px !important;
+    padding:0 !important; border-radius:50% !important;
+    align-items:center; justify-content:center;
+    bottom:max(14px,env(safe-area-inset-bottom));
+    inset-inline-end:14px; gap:0 !important;
+  }
+  .floating-cta.floating-whatsapp span:first-child { font-size:23px; color:white !important; }
+  .floating-cta.floating-whatsapp span:not(:first-child) { display:none !important; }
+}
+@media(max-width:380px){
+  .hero-buttons { flex-direction:column; align-items:stretch; }
+  .hero-buttons .button { width:100%; }
+}
