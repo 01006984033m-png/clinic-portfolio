@@ -12,7 +12,7 @@ html[data-theme=dark] .creator-credit{color:#b7dcd2}
 @keyframes lymelvaDesktopPhoto{from{transform:scale(1.018) translateY(0)}to{transform:scale(1.075) translateY(-7px)}}
 @keyframes lymelvaReplayFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:720px){.hero-replay{font-size:11px;margin-top:10px}.creator-credit{width:100%;margin-top:8px}}
-@media(prefers-reduced-motion:reduce){.hero-replay{display:none!important}.hero-visual-photo .hero-photo{animation:none!important;transform:none!important}.hero-visual-photo .hero-moving-light{display:none!important}}
+@media(prefers-reduced-motion:reduce){.hero-replay{display:none!important}html:not([data-motion-opt-in="true"]) .hero-visual-photo .hero-photo{animation:none!important;transform:none!important}.hero-visual-photo .hero-moving-light{display:none!important}}
 
 /* Desktop entrance is discoverable even when the first 4.8-second sequence has elapsed. */
 .desktop-intro-shortcut{display:inline-flex;align-items:center;gap:9px;font-size:12px;font-weight:700;
@@ -39,4 +39,41 @@ html[data-theme=dark] .creator-credit{color:#b7dcd2}
 @media(min-width:961px) and (prefers-reduced-motion:no-preference){
  /* Clearly visible yet restrained parallax, no fake cinematic overlays on skin. */
  .hero-visual-photo .hero-photo{animation:lymelvaDesktopPhoto 10s ease-in-out infinite alternate!important}
+}
+
+/* Intro v8 — prevent animations from finishing during slow CSS/photo loading. */
+.intro.cinematic-intro.intro-restart .intro-bg-photo,
+.intro.cinematic-intro.intro-restart .intro-light-streak,
+.intro.cinematic-intro.intro-restart .intro-veil,
+.intro.cinematic-intro.intro-restart .intro-inner img,
+.intro.cinematic-intro.intro-restart .intro-word,
+.intro.cinematic-intro.intro-restart .intro-label,
+.intro.cinematic-intro.intro-restart .intro-kicker,
+.intro.cinematic-intro.intro-restart .intro-progress span{animation:none!important}
+.intro.cinematic-intro .intro-play-motion{
+ display:block;background:#B7DCD2;color:#062c33;border:1px solid #B7DCD2;
+ border-radius:8px;padding:12px 22px;margin:20px auto 0;font-size:14px;
+ font-weight:700;cursor:pointer;min-height:48px;
+}
+.intro.cinematic-intro .intro-play-motion[hidden]{display:none!important}
+.intro.cinematic-intro .intro-static-hint{color:#f7f4ed}
+@media(min-width:961px) and (prefers-reduced-motion:reduce){
+ /* Show the static introduction instead of hiding it. Movement requires a click. */
+ .intro.cinematic-intro.intro-static{display:flex!important;opacity:1;visibility:visible;pointer-events:auto}
+ .intro.cinematic-intro.intro-static.done{opacity:0!important;visibility:hidden!important;pointer-events:none}
+ .intro.cinematic-intro.intro-static .intro-bg-photo,
+ .intro.cinematic-intro.intro-static .intro-inner img,
+ .intro.cinematic-intro.intro-static .intro-word{animation:none!important;opacity:1!important;transform:none!important}
+ /* Once a visitor has explicitly requested motion, honor their choice. */
+ html[data-motion-opt-in="true"] .hero-visual-photo .hero-photo{
+   animation:lymelvaDesktopPhoto 10s ease-in-out infinite alternate!important;
+   transform-origin:50% 50%;
+ }
+ html[data-motion-opt-in="true"] .hero-visual-photo .hero-moving-light{
+   display:block!important;animation:clinicalMovingLight 10s infinite!important;
+ }
+}
+@media(max-width:960px) and (prefers-reduced-motion:reduce){
+ /* No extra blocking overlay on small-screen accessibility mode. */
+ .intro.cinematic-intro.intro-static{display:none!important}
 }

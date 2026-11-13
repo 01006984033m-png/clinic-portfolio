@@ -98,3 +98,11 @@ assert.match(home,/id="header-replay-intro"/,'visible desktop replay entrypoint'
 assert.match(read('app.js'),/header-replay-intro/,'desktop replay event');
 assert.match(read('desktop-motion.css'),/intro-manual-motion/,'opt-in motion support');
 assert.match(read('scripts/build.mjs'),/requiredTopicIds/,'all image assets included in production');
+
+// v8 — visible desktop intro and motion conflict regression coverage.
+assert.match(home,/id="play-intro-motion"/,'explicit play intro control exists');
+assert.match(read('app.js'),/intro-static/,'reduced-motion intro must remain visible with explicit play control');
+assert.match(read('app.js'),/addEventListener\('load',begin/,'animation timeline waits for first load');
+assert.match(read('app.js'),/lymelva-motion-opt-in/,'user opt-in for full desktop animation');
+assert.doesNotMatch(read('editorial-refine.css'),/\.hero-photo\{[^}]*transform:none!important/,'editorial CSS must not block animated transform');
+assert.match(read('desktop-motion.css'),/data-motion-opt-in="true"/,'desktop animation can be manually enabled');

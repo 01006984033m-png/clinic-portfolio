@@ -128,7 +128,8 @@ html[dir="ltr"] .statement-photo-tag{right:auto;left:35px}
 }
 @media(prefers-reduced-motion:reduce){
  .intro.cinematic-intro{display:none!important}
- .hero-photo,.hero-moving-light,.intro-bg-photo,.intro-light-streak,.intro-inner img{animation:none!important;transform:none!important}
+ .hero-moving-light,.intro-bg-photo,.intro-light-streak,.intro-inner img{animation:none!important;transform:none!important}
+ :root:not([data-motion-opt-in="true"]) .hero-photo{animation:none!important;transform:none!important}
  body:not(.intro-finished) .hero-copy>*{opacity:1;transform:none}
  body.intro-finished .hero-copy>*{animation:none;opacity:1;transform:none}
  .service-photo-frame img,.insight-photo-art img{transition:none}

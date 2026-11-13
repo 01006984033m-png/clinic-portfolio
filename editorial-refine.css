@@ -34,7 +34,7 @@ html[data-theme="light"] .button-outline{background:#fff;border-color:#cddcd8}
 /* Editorial hero: no circular frame or floating UI ornaments over people. */
 .hero{min-height:unset;gap:clamp(26px,5vw,70px);padding-block:155px 85px}
 .hero-visual.hero-visual-photo{height:clamp(440px,46vw,640px);min-height:0;border-radius:18px;background:#d2e2d9;box-shadow:0 16px 45px rgba(13,42,44,.12)}
-.hero-photo{animation:none!important;filter:saturate(.88) contrast(1.00);object-position:center 43%;transform:none!important}
+.hero-photo{filter:saturate(.88) contrast(1.00);object-position:center 43%}
 .hero-visual-photo::before,.hero-visual-photo::after,.hero-moving-light,.hero-film-layer{display:none!important}
 .hero-visual .visual-corners,.hero-visual .visual-bottom,.hero-visual .visual-seal{display:none!important}
 .hero-photo-indicator{bottom:18px;left:18px;right:auto;max-width:calc(100% - 36px);border:0;border-radius:7px;background:rgba(17,40,39,.78);padding:7px 12px;font-size:11px;backdrop-filter:none}
