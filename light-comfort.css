@@ -1,0 +1,63 @@
+/* LYMELVA / 2026-11-13 / LIGHT COMFORT PASS
+   Non-destructive luminance correction. Brand accent colors remain untouched:
+   Midnight Teal #0B4550 / Ocean Teal #218F91 /
+   Seafoam #B7DCD2 / Warm Ivory #F7F4ED.
+   Dark mode is deliberately NOT selected by these rules. */
+html[data-theme="light"]{
+  color-scheme:light;
+  --paper:#eceee8;
+  --paper2:#e2eae4;
+  --card:#F7F4ED;
+  --ink:#0B4550;
+  --sub:#45666a;
+  --teal:#0B4550;
+  --teal2:#218F91;
+  --mint:#B7DCD2;
+  --line:rgba(11,69,80,.19);
+  --shadow:0 10px 28px rgba(11,69,80,.07);
+  --ed-bg:#eceee8;
+  --ed-surface:#F7F4ED;
+  --ed-ink:#0B4550;
+  --ed-muted:#45666a;
+  --ed-accent:#16767a;
+  --ed-sage:#dce9e0;
+  --ed-line:#c9d9d1;
+  --ed-card:#F7F4ED;
+}
+html[data-theme="light"] body,
+html[data-theme="light"] .hero,
+html[data-theme="light"] .about-section,
+html[data-theme="light"] .journey-section,
+html[data-theme="light"] .insights-section,
+html[data-theme="light"] .faq-section{background:#eceee8!important;color:#0B4550}
+html[data-theme="light"] .site-header{background:#e9ede7!important}
+html[data-theme="light"] .header-inner,
+html[data-theme="light"] .site-header.is-scrolled .header-inner{
+  background:#F1F2EC!important;
+  border-color:rgba(11,69,80,.15);
+  box-shadow:0 4px 15px rgba(11,69,80,.045);
+}
+html[data-theme="light"] .hero-description,
+html[data-theme="light"] .hero-note{color:#45666a}
+html[data-theme="light"] .principle{background:#F2F2EC}
+html[data-theme="light"] .guide-box{background:#e3ebe4;border-color:#c9dad1}
+html[data-theme="light"] .insight-card,
+html[data-theme="light"] .contact-form,
+html[data-theme="light"] .navigator-card{background:#F7F4ED;color:#0B4550}
+html[data-theme="light"] .contact-form input,
+html[data-theme="light"] .contact-form select,
+html[data-theme="light"] .navigator-option{background:#F0F1EB}
+html[data-theme="light"] .footer{background:#e0e8e1;color:#0B4550}
+html[data-theme="light"] .floating-cta{background:#F7F4ED;color:#0B4550}
+/* Patient education uses precisely the same light surfaces. */
+html[data-theme="light"] body.edu-page{background:#eceee8!important}
+html[data-theme="light"] .edu-header{background:#F1F2EC!important}
+html[data-theme="light"] .edu-hero{background:#e7ede7!important}
+html[data-theme="light"] .edu-card,
+html[data-theme="light"] .edu-search,
+html[data-theme="light"] .edu-article-card{background:#F7F4ED!important}
+html[data-theme="light"] .edu-safe{background:#F2F0E8}
+html[data-theme="light"] .edu-footer{background:#e0e8e1}
+/* Privacy is a standalone light page without a theme switch. */
+body:has(.mast){background:#eceee8!important;color:#0B4550}
+body:has(.mast) section{background:#F7F4ED!important;border-color:#c9d9d1}

@@ -58,3 +58,13 @@ assert.match(brandCSS,/prefers-reduced-motion/,'motion accessibility');
 assert.match(read('scripts/build.mjs'),/brand-restore\.css/,'production output includes brand overrides');
 
 console.log('PASS 30 bilingual topics, 15 live reference URLs, 4 PDF guides, asset paths, local-only data, CSP, JS syntax and noindex');
+
+// Light Comfort: protect the approved layout while making bright theme softer.
+for(const page of ['index.html','education/index.html','privacy.html']){
+  assert.match(read(page),/light-comfort\.css/,'light-comfort stylesheet on '+page);
+}
+const comfort=read('light-comfort.css');
+for (const hex of ['#0B4550','#218F91','#B7DCD2','#F7F4ED']) assert.ok(comfort.includes(hex),'original brand token '+hex);
+assert.match(comfort,/html\[data-theme="light"\]/,'light mode only override');
+assert.doesNotMatch(comfort,/html\[data-theme="dark"\]/,'dark mode must be preserved');
+assert.match(read('scripts/build.mjs'),/light-comfort\.css/,'light CSS included in output');
