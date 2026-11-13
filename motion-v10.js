@@ -162,7 +162,9 @@
  }
  function boot(){
    if(started)return;started=true;
-   template=one('intro')?.cloneNode(true)||null;
+   const initialIntro=one('intro');
+   template=initialIntro?.cloneNode(true)||null;
+   if(initialIntro)initialIntro.remove(); // Avoid duplicate intro IDs and a hidden leftover overlay.
    syncUI();
    const btn=one('motion-toggle');
    btn?.addEventListener('click',()=>setMotion(!enabled()));
