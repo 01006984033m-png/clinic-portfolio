@@ -19,5 +19,9 @@ jobs:
         run: npm run build
       - name: Install headless browser test driver
         run: npm install --no-save --no-package-lock playwright-core@1.56.1
-      - name: Desktop cinematic and scroll browser checks
-        run: node tests/browser-motion.mjs
+      - name: Repeated Chrome desktop cinematic and scroll regression checks
+        run: |
+          for attempt in 1 2 3; do
+            echo "Chrome motion test attempt ${attempt}/3"
+            node tests/browser-motion.mjs
+          done
