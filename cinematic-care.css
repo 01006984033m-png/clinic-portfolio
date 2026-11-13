@@ -1,0 +1,135 @@
+/* LYMELVA 2026 — photographic care system + kinetic introduction.
+   All scenes are conceptual/illustrative, not patient testimonials or real clinic cases. */
+
+/* CINEMATIC BRAND OPENING */
+.intro.cinematic-intro{isolation:isolate;overflow:hidden;background:#062c33;color:#f0fffa;min-height:100dvh}
+.intro-bg-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;filter:brightness(.43) saturate(.85);transform:scale(1.16);animation:introPhotoReveal 3s ease-out both;pointer-events:none}
+.intro-veil{position:absolute;inset:0;background:linear-gradient(110deg,rgba(1,32,37,.94),rgba(4,58,62,.52) 52%,rgba(3,26,29,.77)),radial-gradient(ellipse at 65% 50%,transparent 10%,#022027a0 84%);animation:introVeilIn 2.5s ease both;pointer-events:none}
+.intro-light-streak{position:absolute;top:-28%;left:-55%;width:55%;height:160%;transform:skewX(-30deg) translateX(-100%);background:linear-gradient(90deg,transparent,rgba(180,255,235,.11),transparent);filter:blur(17px);animation:cinemaLightSweep 2.45s .26s ease-in-out both;pointer-events:none}
+.intro.cinematic-intro .intro-inner{z-index:2;gap:15px;width:min(90vw,620px);padding:30px 15px;text-align:center}
+.intro.cinematic-intro .intro-inner img{width:106px;height:106px;filter:drop-shadow(0 0 18px #5cddc35c);animation:brandEmblemIn 1.1s cubic-bezier(.17,1,.3,1) both,brandEmblemBreathe 2s 1.1s ease-in-out infinite alternate}
+.intro.cinematic-intro .intro-word{font-size:clamp(42px,10vw,82px);color:#f2fffa;letter-spacing:.14em;text-shadow:0 4px 35px #001e2075;animation:introTextIn 1.12s .48s cubic-bezier(.2,1,.3,1) both}
+.intro.cinematic-intro .intro-kicker{font:700 10px/1.4 Arial,sans-serif;letter-spacing:.28em;color:#93e4d5;animation:introTextIn .9s .43s ease both}
+.intro.cinematic-intro .intro-label{color:#e0fff6;font-size:10px;letter-spacing:.27em;animation:introTextIn .9s .76s ease both}
+.intro.cinematic-intro .intro-progress{width:min(250px,62vw);margin-top:30px;background:#e1fff143;height:3px;border-radius:8px;box-shadow:0 0 15px #84f2d844}
+.intro.cinematic-intro .intro-progress span{background:#a8ffdf;box-shadow:0 0 16px #61e1ba;animation:introProgress 3s linear both}
+.intro.cinematic-intro .intro-skip{color:#f0fff8;margin-top:12px;min-width:44px;min-height:44px;font-size:12px;font-weight:600}
+.intro.cinematic-intro .intro-skip:focus-visible{outline:3px solid #eafff2;outline-offset:4px;border-radius:4px}
+html[data-theme="dark"] .intro.cinematic-intro,html[data-theme="light"] .intro.cinematic-intro{background:#062c33}
+html[data-theme="dark"] .intro.cinematic-intro .intro-word,html[data-theme="light"] .intro.cinematic-intro .intro-word{color:#f2fffa}
+
+/* Photographic hero: living light and camera movement, no abstract rings. */
+.hero-visual-photo{background:#113d43!important;isolation:isolate;box-shadow:0 24px 80px rgba(3,54,62,.22)}
+.hero-visual-photo::before{inset:0;background:linear-gradient(to bottom,rgba(2,42,46,.18),transparent 33%,rgba(0,27,32,.54));z-index:2;pointer-events:none}
+.hero-visual-photo::after{z-index:8}
+.hero-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:56% center;display:block;z-index:1;filter:saturate(.9) contrast(1.04);animation:clinicalHeroBreath 13s ease-in-out infinite alternate;transform-origin:center}
+.hero-film-layer{pointer-events:none;position:absolute;inset:0;z-index:2;background:linear-gradient(100deg,#073f4145,transparent 47%,#102f321f),linear-gradient(0deg,rgba(2,27,30,.4),transparent 27%);mix-blend-mode:multiply}
+.hero-moving-light{position:absolute;z-index:3;inset:-30% auto -20% -70%;height:150%;width:52%;background:linear-gradient(90deg,transparent,rgba(202,255,238,.11),transparent);transform:skewX(-25deg);animation:clinicalMovingLight 10s ease-in-out infinite;pointer-events:none}
+.hero-visual-photo .visual-corners,.hero-visual-photo .visual-seal,.hero-visual-photo .visual-bottom{z-index:9}
+.hero-photo-indicator{position:absolute;z-index:9;left:28px;bottom:72px;padding:8px 13px;background:rgba(2,26,29,.58);color:#effff6;border:1px solid #b9ffe94d;border-radius:8px;font-size:10px;letter-spacing:.01em;backdrop-filter:blur(9px)}
+html[dir="rtl"] .hero-photo-indicator{left:auto;right:28px}
+.hero-visual-photo .visual-seal{background:rgba(244,255,250,.88);box-shadow:0 14px 40px #063c423b}
+.hero-visual-photo .visual-bottom{color:white;text-shadow:0 2px 14px #001d20a8}
+.hero-visual-photo .visual-corners{color:#f1fff7;text-shadow:0 2px 12px #00282ad6}
+body:not(.intro-finished) .hero-copy>*{opacity:0;transform:translateY(32px)}
+body.intro-finished .hero-copy>*{animation:cinematicCopyRise .85s cubic-bezier(.2,1,.3,1) both}
+body.intro-finished .hero-copy>*:nth-child(2){animation-delay:.13s}
+body.intro-finished .hero-copy>*:nth-child(3){animation-delay:.25s}
+body.intro-finished .hero-copy>*:nth-child(4){animation-delay:.38s}
+body.intro-finished .hero-copy>*:nth-child(5){animation-delay:.51s}
+
+/* Therapy services: photographs instead of glyphs */
+.service-photo-card{padding:0 0 22px!important;min-height:380px!important;background:rgba(255,255,255,.09)!important;display:flex;overflow:hidden;border-radius:15px!important;transform:translateZ(0)}
+.service-photo-card::before{display:none!important}
+.service-photo-frame{position:relative;display:block;overflow:hidden;height:188px;flex:none;background:#174d4e}
+.service-photo-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,29,36,.37),transparent 64%);pointer-events:none}
+.service-photo-frame img,.insight-photo-art img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 45%;transition:transform .8s cubic-bezier(.2,.8,.15,1),filter .4s;filter:saturate(.88)}
+.service-photo-card:hover .service-photo-frame img,.service-photo-card:focus-visible .service-photo-frame img,.insight-card:hover .insight-photo-art img{transform:scale(1.065);filter:saturate(1)}
+.service-photo-card .service-number{position:absolute;z-index:2;left:15px;top:15px;padding:7px 12px;border:1px solid #d9fff356;border-radius:5px;background:rgba(2,35,39,.6);color:#effff5;font-size:10px}
+.service-photo-card h3,.service-photo-card p,.service-photo-card .service-more{margin-left:22px;margin-right:22px}
+.service-photo-card h3{margin-top:21px;line-height:1.4;font-size:20px}
+.service-photo-card p{margin-top:6px;flex:1}
+.service-photo-card .service-more{margin-top:auto}
+html[dir="rtl"] .service-photo-card .service-number{left:auto;right:15px}
+.imagery-caption{font-size:11px;opacity:.72;margin-top:24px;line-height:1.6;text-align:center}
+.insight-photo-art{background:#174b52!important;display:block!important}
+.insight-photo-art::before,.insight-photo-art::after{display:none!important}
+.insight-photo-art img{object-position:center}
+.insight-card:focus-visible img{transform:scale(1.04)}
+
+/* Care journey: photographic stage, readable overlay. */
+.journey-stage{background:#0a353c!important}
+.stage-glass{isolation:isolate}
+.journey-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.8;filter:brightness(.63) saturate(.85);transition:opacity .5s}
+.stage-ring,.stage-glyph{display:none!important}
+.stage-glass::before{z-index:1;inset:0!important;background:linear-gradient(to top,rgba(1,30,36,.91),rgba(3,48,54,.3) 75%),linear-gradient(90deg,rgba(2,34,37,.32),transparent)!important}
+.stage-glass>.stage-center,.stage-glass>span{z-index:2;position:relative;text-shadow:0 2px 12px rgba(0,0,0,.45)}
+.stage-glass .stage-center{margin-top:90px}
+.stage-glass .stage-center strong,.stage-glass .stage-center p{color:#f6fff9}
+.stage-glass>span:first-child{position:absolute;z-index:3}
+.stage-glass>span:last-child{position:absolute;z-index:3}
+
+/* Replace logo/ring billboard with photographic clinic atmosphere. */
+.statement-art{padding:20px;display:block;min-width:0}
+.statement-art img.statement-photo{width:100%!important;height:100%!important;object-fit:cover;object-position:center;filter:none!important;opacity:1!important;border-radius:17px;box-shadow:0 20px 55px rgba(0,18,22,.3)}
+.statement-photo-tag{position:absolute;bottom:37px;right:35px;color:white;border-radius:6px;background:#06383cc9;padding:9px 11px;font-size:10px;backdrop-filter:blur(6px)}
+html[dir="ltr"] .statement-photo-tag{right:auto;left:35px}
+.statement-circle{display:none!important}
+.modal-graphic{height:210px!important}
+.modal-graphic .modal-ring,.modal-graphic .modal-symbol{display:none!important}
+.modal-graphic img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* Direct WhatsApp contact, without collecting sensitive information on this static website */
+.whatsapp-contact-button{display:inline-flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;min-height:55px;margin:14px 0 18px;padding:11px 18px;border-radius:13px;color:white;text-decoration:none;background:linear-gradient(115deg,#07634c,#128b64);border:1px solid #8ee4c77a;box-shadow:0 14px 32px rgba(0,26,26,.19);font-weight:700;font-size:13px;transition:transform .25s,box-shadow .25s}
+.whatsapp-contact-button:hover,.whatsapp-contact-button:focus-visible{transform:translateY(-3px);box-shadow:0 17px 40px rgba(6,73,62,.32)}
+.whatsapp-contact-button:focus-visible,.floating-whatsapp:focus-visible,.result-whatsapp:focus-visible{outline:3px solid #a8ffe2;outline-offset:3px}
+.wa-button-icon{font-size:22px;border-radius:50%;border:1px solid #f2fff49c;display:grid;place-items:center;width:32px;height:32px;line-height:1}
+.wa-phone-number{font-family:Arial,sans-serif;font-weight:700;letter-spacing:.025em}
+.floating-cta.floating-whatsapp{background:linear-gradient(110deg,#0c735a,#129c6c)!important;color:white!important;border:1px solid #b4f4e074!important;box-shadow:0 10px 30px rgba(0,56,47,.26)}
+.floating-whatsapp>span:first-child{font-size:23px;line-height:1}
+.result-whatsapp{display:inline-flex;align-items:center;justify-content:center;border-radius:9px;padding:10px 12px;color:white;background:#086e50;text-decoration:none;font-size:12px}
+
+@keyframes introPhotoReveal{0%{transform:scale(1.25) translateX(3%);filter:brightness(.19) saturate(.4)}100%{transform:scale(1.03) translateX(-1%);filter:brightness(.43) saturate(.85)}}
+@keyframes introVeilIn{0%{opacity:.28}100%{opacity:1}}
+@keyframes cinemaLightSweep{0%{transform:skewX(-30deg) translateX(-150%);opacity:0}26%{opacity:1}100%{transform:skewX(-30deg) translateX(470%);opacity:0}}
+@keyframes brandEmblemIn{0%{opacity:0;transform:translateY(38px) scale(.7) rotate(-12deg)}100%{opacity:1;transform:translateY(0) scale(1) rotate(0)}}
+@keyframes brandEmblemBreathe{to{transform:translateY(-5px) scale(1.025)}}
+@keyframes introTextIn{0%{opacity:0;transform:translateY(30px);filter:blur(10px)}100%{opacity:1;transform:translateY(0);filter:blur(0)}}
+@keyframes clinicalHeroBreath{0%{transform:scale(1.01) translateY(0)}100%{transform:scale(1.095) translateY(-7px)}}
+@keyframes clinicalMovingLight{0%,15%{transform:skewX(-25deg) translateX(-80%);opacity:0}40%{opacity:1}74%,100%{transform:skewX(-25deg) translateX(510%);opacity:0}}
+@keyframes cinematicCopyRise{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:960px){.hero-visual-photo{height:570px}.service-photo-frame{height:167px}.service-photo-card{min-height:380px!important}}
+@media(max-width:720px){
+ .intro-bg-photo{object-position:62% center}
+ .intro.cinematic-intro .intro-kicker{font-size:8px;letter-spacing:.16em}
+ .intro.cinematic-intro .intro-inner img{width:88px;height:88px}
+ .intro.cinematic-intro .intro-word{font-size:clamp(40px,9vw,66px)}
+ .hero-visual-photo{height:480px;min-height:0;border-radius:190px 190px 17px 17px}
+ .hero-photo{object-position:center}
+ .hero-photo-indicator{bottom:58px;left:12px;right:auto;font-size:9px;max-width:180px}
+ html[dir="rtl"] .hero-photo-indicator{right:12px;left:auto}
+ .service-photo-frame{height:158px}
+ .service-photo-card{min-height:375px!important}
+ .service-photo-card h3,.service-photo-card p,.service-photo-card .service-more{margin-left:17px;margin-right:17px}
+ .statement-art{height:300px!important;padding:15px 8px}
+ .statement-photo-tag{bottom:30px;right:20px;left:auto}
+ .whatsapp-contact-button{width:100%;font-size:12px;gap:7px;padding:10px}
+ .floating-cta.floating-whatsapp{font-size:11px;padding:12px 14px}
+ .modal-graphic{height:165px!important}
+}
+@media(max-width:430px){
+ .hero-visual-photo{height:450px}
+ .service-photo-frame{height:175px}
+ .service-photo-card{min-height:360px!important}
+ .service-photo-card h3{font-size:18px}
+ .wa-phone-number{font-size:12px}
+ .floating-cta.floating-whatsapp{max-width:calc(100vw - 26px)}
+}
+@media(prefers-reduced-motion:reduce){
+ .intro.cinematic-intro{display:none!important}
+ .hero-photo,.hero-moving-light,.intro-bg-photo,.intro-light-streak,.intro-inner img{animation:none!important;transform:none!important}
+ body:not(.intro-finished) .hero-copy>*{opacity:1;transform:none}
+ body.intro-finished .hero-copy>*{animation:none;opacity:1;transform:none}
+ .service-photo-frame img,.insight-photo-art img{transition:none}
+}
