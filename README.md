@@ -33,3 +33,7 @@ No npm install or paid API is required.
 7. Test final deployed origin and actual iOS/Android browsers before claiming cross-device production QA.
 
 **Medical references:** ISL 2023, NHS, APTA, NCI and additional sources listed in `education/content.js` and linked inside articles. This is NOT a clinical protocol or patient-specific advice.
+
+## Editorial image and color update — 2026-11-13
+
+See `docs/EDITORIAL_REVIEW.md` for the photo artifact audit, typography changes, honest image provenance, testing limits and launch gates. The new `editorial-refine.css` is built after previous design layers, without changing application behaviour.

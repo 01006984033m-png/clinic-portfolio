@@ -1,0 +1,68 @@
+{
+  "passed": 6,
+  "total": 6,
+  "rows": [
+    {
+      "size": 320,
+      "passed": true,
+      "metrics": {
+        "viewport": 320,
+        "scroll": 320,
+        "broken": [],
+        "head": "رعاية الوذمة اللمفية\nتبدأ بتقييم واضح.",
+        "services": 6,
+        "whatsapp": "https://wa.me/201027594048",
+        "font": "\"Noto Sans Arabic\", \"Segoe UI\", Tahoma, Arial, sans-serif"
+      }
+    },
+    {
+      "size": 390,
+      "passed": true,
+      "metrics": {
+        "viewport": 390,
+        "scroll": 390,
+        "broken": [],
+        "head": "رعاية الوذمة اللمفية\nتبدأ بتقييم واضح.",
+        "services": 6,
+        "whatsapp": "https://wa.me/201027594048",
+        "font": "\"Noto Sans Arabic\", \"Segoe UI\", Tahoma, Arial, sans-serif"
+      }
+    },
+    {
+      "size": 768,
+      "passed": true,
+      "metrics": {
+        "viewport": 768,
+        "scroll": 768,
+        "broken": [],
+        "head": "رعاية الوذمة اللمفية\nتبدأ بتقييم واضح.",
+        "services": 6,
+        "whatsapp": "https://wa.me/201027594048",
+        "font": "\"Noto Sans Arabic\", \"Segoe UI\", Tahoma, Arial, sans-serif"
+      }
+    },
+    {
+      "size": 1440,
+      "passed": true,
+      "metrics": {
+        "viewport": 1440,
+        "scroll": 1440,
+        "broken": [],
+        "head": "رعاية الوذمة اللمفية\nتبدأ بتقييم واضح.",
+        "services": 6,
+        "whatsapp": "https://wa.me/201027594048",
+        "font": "\"Noto Sans Arabic\", \"Segoe UI\", Tahoma, Arial, sans-serif"
+      }
+    },
+    {
+      "page": "education/index.html",
+      "passed": true
+    },
+    {
+      "page": "privacy.html",
+      "passed": true
+    }
+  ],
+  "pageErrors": [],
+  "method": "embedded HTML/CSS/JS; no live-origin HTTP assertions"
+}

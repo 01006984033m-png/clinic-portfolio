@@ -23,6 +23,10 @@ assert.match(home,/https:\/\/wa\.me\/201027594048/,'approved business WhatsApp n
 assert.match(edu,/201027594048/,'education contact link');
 assert.match(home,/hero-treatment\.webp/,'photographic hero');
 assert.match(home,/cinematic-care\.css/,'cinematic styles');
+assert.match(home,/editorial-refine\.css/,'editorial theme stylesheet');
+assert.match(read('education/index.html'),/editorial-refine\.css/,'patient education style parity');
+assert.match(read('privacy.html'),/editorial-refine\.css/,'privacy style parity');
+assert.doesNotMatch(read('editorial-refine.css'),/fonts\.googleapis|@import\b/,'no external fonts or trackers');
 assert.match(home,/intro-light-streak/,'cinematic intro element');
 assert.match(read('app.js'),/CARE_PHOTOS/,'photographic services');
 assert.match(home,/noindex/i);assert.match(edu,/noindex/i);assert.match(read('robots.txt'),/Disallow: \//);
