@@ -1,10 +1,10 @@
 {
   "name": "lymelva-clinic-portfolio",
+  "version": "1.0.0",
   "private": true,
-  "version": "0.2.0-draft",
   "type": "module",
   "scripts": {
     "test": "node tests/check.mjs",
-    "check": "node tests/check.mjs"
+    "build": "node tests/check.mjs"
   }
 }

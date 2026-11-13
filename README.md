@@ -1,37 +1,35 @@
-# LYMELVA — Clinic Portfolio & Patient Education (PROVISIONAL)
+# LYMELVA — Lymphedema Clinic | Full Static Release Candidate
 
-An Arabic-first, bilingual, responsive concept website for a lymphedema-specialist physical therapy clinic.
+**Status:** prelaunch / noindex. Owner sign-off required before patient-facing production. Last updated: 13 November 2026.
 
-## Editorial and deployment status
-- **Provisional name LYMELVA**, unverified for trademark/domain availability.
-- **Patient education DRAFT**, not yet signed off by the responsible licensed clinician.
-- **Do not activate public advertising/SEO until clinical, legal, privacy, and contact review are complete.**
-- Educational information is not medical diagnosis or a treatment prescription. Red-flag emergencies are prioritized.
-- No fabricated patient reviews, staff credentials, results, appointment confirmations, or autonomous clinical AI.
-- Phone and email are intentionally not invented; the contact form is a LOCAL draft, not a transmitted booking.
-- Owner's existing repository `01006984033m-png/clinic` is unrelated and MUST NOT be overwritten.
+This is the full visual-brand version of the clinic site, including the standalone bilingual patient education hub. The GitHub baseline previously contained a reduced bundle missing the actual PDF handouts and full visual assets. This package restores those files.
 
-## Technology
-Plain HTML, CSS, JavaScript (no npm setup or external services necessary), responsive layouts, RTL/LTR language switch, persisted light/dark, reduced-motion support, searchable guides with source links.
+## Included
+- `index.html` / `styles.css` / `app.js`: cinematic responsive clinic website in Arabic and English, light/dark theme, interactive services, FAQs, information explorer, and contact-summary-only form.
+- `education/index.html` / `education/content.js` / `education/education.js` / `education/education.css`: **30 bilingual educational articles**, search, categories, source links, article dialog, print, copy and emergency alert.
+- `guides/*.pdf`: three bilingual original printable patient guides and preliminary brand guidelines.
+- `assets/*`: brand SVG variants plus visual board.
+- `privacy.html`: transparent bilingual draft privacy notice.
+- `tests/check.mjs`: offline release checks.
+- `vercel.json` / `_headers`: site-level security headers; no backend/API permissions.
 
-## Educational source anchors (each guide names its original references)
-1. International Society of Lymphology (2023 consensus): https://pubmed.ncbi.nlm.nih.gov/39207406/
-2. NHS overview: https://www.nhs.uk/conditions/lymphoedema/
-3. NHS treatment: https://www.nhs.uk/conditions/lymphoedema/treatment/
-4. NHS diagnosis: https://www.nhs.uk/conditions/lymphoedema/diagnosis/
-5. NHS prevention: https://www.nhs.uk/conditions/lymphoedema/prevention/
-6. NHS cellulitis: https://www.nhs.uk/conditions/cellulitis/
-7. NHS deep vein thrombosis: https://www.nhs.uk/conditions/deep-vein-thrombosis-dvt/
-8. APTA cancer-related lymphedema clinical guideline (2020, disease-specific): https://pmc.ncbi.nlm.nih.gov/articles/PMC7412854/
-9. National Cancer Institute PDQ: https://www.cancer.gov/about-cancer/treatment/side-effects/lymphedema/lymphedema-hp-pdq
-10. Cancer Research UK: https://www.cancerresearchuk.org/about-cancer/coping/physically/lymphoedema-and-cancer/treating
-11. Mayo Clinic: https://www.mayoclinic.org/diseases-conditions/lymphedema/diagnosis-treatment/drc-20374687
-12. Memorial Sloan Kettering self-care: https://www.mskcc.org/cancer-care/patient-education/reducing-risk-lymphedema
-13. MSK movement guidance: https://www.mskcc.org/cancer-care/patient-education/exercises-for-lymph-drainage-legs-and-lower-body
-14. Lymphoedema Support Network: https://www.lymphoedema.org/information/your-questions-answered/
-15. UCLH NHS: https://www.uclh.nhs.uk/patients-and-visitors/patient-information-pages/reducing-risk-lymphoedema-upper-limb-and-chest-area
+## Local running/testing
 
-### Content boundaries
-The APTA CPG focuses on **breast-cancer-related** lymphedema and should not be uncritically applied to all causes. ISL is a consensus, not a uniform high-certainty evidence guarantee. Compression, exercises, and manual lymphatic drainage require individual assessment, especially during infection, suspected DVT, or arterial disease.
+```sh
+python -m http.server 8000
+# open http://localhost:8000
+node tests/check.mjs
+```
 
-This GitHub-first implementation includes responsive public-facing clinic and education prototypes. The full locally-generated brand assets/preview ZIP are retained separately for further asset migration and final production QA.
+No npm install or paid API is required.
+
+## Strict release gates
+1. Approve actual clinic name and trademark clearance. **LYMELVA is provisional.**
+2. Add *verified* address, public email/phone, credentials and operating hours. Do not reuse ELHADY Works contact details.
+3. A qualified practitioner must review/sign off every patient article and handout; document review date and author/credentials; update as evidence evolves.
+4. Approve local health advertising and privacy legal obligations.
+5. Only after clinic approval: set an official domain, SEO canonical, business metadata, and remove `noindex`/robots disallow.
+6. Implement a consent-aware secure backend before accepting appointments or health data; until then the form is **local-only and never transmits**.
+7. Test final deployed origin and actual iOS/Android browsers before claiming cross-device production QA.
+
+**Medical references:** ISL 2023, NHS, APTA, NCI and additional sources listed in `education/content.js` and linked inside articles. This is NOT a clinical protocol or patient-specific advice.
