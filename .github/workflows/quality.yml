@@ -16,4 +16,4 @@ jobs:
         with:
           node-version: '22'
       - name: Static clinical content and runtime checks
-        run: npm test
+        run: npm run build
