@@ -74,7 +74,7 @@ assert.match(home,/Created by Mohammed Elhady/,'footer author credit');
 assert.match(home,/id="replay-intro"/,'intro replay control');
 assert.match(home,/desktop-motion\.css/,'desktop motion override linked');
 assert.match(read('app.js'),/function activateIntro\(\)/,'intro replay logic retained');
-assert.match(read('motion-v11.js'),/function animateLanding\(/,'desktop hero entrance motion');
+assert.doesNotMatch(read('motion-v11.js'),/function animateLanding\(/,'no second hero entrance after intro');
 assert.match(edu,/clinical-gallery\.css/,'education gallery stylesheet linked');
 assert.match(edu,/edu-hero-photo/,'clinical hero photograph');
 assert.match(edu,/id="article-image"/,'article imagery');
@@ -131,3 +131,6 @@ for(const p of ['motion-v11.js','motion-v11.css'])assert.ok(existsSync(join(root
  assert.equal(syntax.status,0,'motion JS syntax: '+syntax.stderr);
 }
 console.log('PASS V11 first paint, desktop opt-in/out, intro timeline, scroll WAAPI and conflict removal');
+
+assert.doesNotMatch(read('motion-v11.js'),/main \\.hero-visual-photo,main \\.edu-hero-grid/,'hero picture must not be observed twice');
+assert.doesNotMatch(read('cinematic-care.css'),/body\\.intro-finished \\.hero-copy>\\*\\{animation:/,'no duplicate CSS hero entrance');

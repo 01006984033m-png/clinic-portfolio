@@ -26,6 +26,17 @@ const browser=await chromium.launch({headless:true,executablePath:process.env.CH
 const errors=[];
 try{
  const page=await browser.newPage({viewport:{width:1440,height:900},reducedMotion:'reduce'});
+ await page.addInitScript(() => {
+   window.__lymelvaMotionCalls=[];
+   const nativeAnimate=Element.prototype.animate;
+   Element.prototype.animate=function(frames,options){
+     const inIntro=!!this.closest('#intro');
+     const inHero=!!this.closest('.hero-copy,.hero-visual-photo');
+     const signature=this.className?.baseVal||this.className||this.tagName;
+     window.__lymelvaMotionCalls.push({intro:inIntro,hero:inHero,signature:String(signature)});
+     return nativeAnimate.call(this,frames,options);
+   };
+ });
  page.on('pageerror',e=>errors.push(e.message));
  await page.goto(base,{waitUntil:'commit'});
  await page.waitForFunction(()=>document.querySelector('#intro')!==null,{timeout:3000});
@@ -51,6 +62,14 @@ try{
  assert.ok(playing.logo>0&&playing.title>0&&playing.time>100,'logo and title must move '+JSON.stringify(playing));
  await page.waitForTimeout(3900);
  assert.equal(await page.locator('#intro').count(),0,'intro removed after full cinematic animation');
+ const introCounts=await page.evaluate(()=>({
+   intro:window.__lymelvaMotionCalls.filter(x=>x.intro).length,
+   hero:window.__lymelvaMotionCalls.filter(x=>x.hero).length,
+   heroCSS:Array.from(document.querySelectorAll('.hero-copy > *, .hero-visual-photo')).filter(el=>el.getAnimations().length>0).map(el=>el.className)
+ }));
+ assert.equal(introCounts.intro,7,'exactly one seven-part cinematic timeline on first load '+JSON.stringify(introCounts));
+ assert.equal(introCounts.hero,0,'no second hero WAAPI entrance after intro '+JSON.stringify(introCounts));
+ assert.deepEqual(introCounts.heroCSS,[],'no second hero CSS animation after intro');
  assert.equal(await page.locator('#services-grid .service-photo-card').count(),6,'services present');
  const firstCard=page.locator('#services-grid .service-photo-card').first();
  assert.notEqual(await firstCard.getAttribute('data-motion-shown'),'1','below-fold cards must wait until scroll');
@@ -63,6 +82,12 @@ try{
  await page.evaluate(()=>{window.scrollTo(0,0);document.querySelector('#header-replay-intro').click()});
  await page.waitForTimeout(480);
  assert.equal(await page.locator('#intro').count(),1,'replay is unique and active');
+ const replayCounts=await page.evaluate(()=>({
+  intro:window.__lymelvaMotionCalls.filter(x=>x.intro).length,
+  hero:window.__lymelvaMotionCalls.filter(x=>x.hero).length
+ }));
+ assert.equal(replayCounts.intro,14,'one manual replay adds exactly one timeline');
+ assert.equal(replayCounts.hero,0,'replay must not trigger duplicate hero animation');
  const replayState=await page.evaluate(()=>{
    const n=document.querySelector('#intro'),skip=document.querySelector('#skip-intro');
    const s=n?getComputedStyle(n):null, b=skip?getComputedStyle(skip):null;
@@ -88,5 +113,5 @@ try{
  assert.ok(count>0,'education cards should animate on scroll, not only change class');
  await edu.close();
  assert.deepEqual(errors,[],'zero browser Javascript runtime errors');
- console.log('PASS CHROME 1440px: true first paint, full intro WAAPI, no duplicate, scroll animations, manual replay, skip, education, reduced-motion desktop default');
+ console.log('PASS CHROME 1440px: one cinematic timeline, no duplicate hero motion, actual scroll animation, replay and skip');
 } finally {await browser.close();await new Promise(resolve=>server.close(resolve))}

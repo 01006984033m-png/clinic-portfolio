@@ -11,7 +11,7 @@
  const saved=()=>{try{return localStorage.getItem(KEY)}catch{return null}};
  const enabled=()=>saved()==='on'||(saved()!=='off'&&(desktop()||!reduced()));
  const store=value=>{try{localStorage.setItem(KEY,value?'on':'off')}catch{}};
- const candidates='main .reveal,main .service-photo-card,main .insight-card,main .journey-step,main .education-promo-inner > *,main .statement-art,main .guide-list a,main .faq-item,main .contact-form,main .contact-copy,main .hero-visual-photo,main .edu-hero-grid > *,main .edu-section-head,main .edu-card,main .edu-sources-grid > *,main .edu-safety,main .edu-notice';
+ const candidates='main .reveal,main .service-photo-card,main .insight-card,main .journey-step,main .education-promo-inner > *,main .statement-art,main .guide-list a,main .faq-item,main .contact-form,main .contact-copy,main .edu-hero-grid > *,main .edu-section-head,main .edu-card,main .edu-sources-grid > *,main .edu-safety,main .edu-notice';
  function sync(){
    root.dataset.motionActive=String(enabled());
    const button=one('motion-toggle');
@@ -36,7 +36,7 @@
      node.remove();active=null;
      document.body.classList.remove('intro-running');
      initScroll();
-     animateLanding();
+     // The cinematic intro is the only first-screen entrance. No second hero pass.
    },340);
  }
  function animatePart(node,selector,frames,duration,delay=0){
@@ -101,16 +101,6 @@
    if(full)requestAnimationFrame(()=>scene(node,token));
    introClose=setTimeout(()=>finishIntro(node,token),full?3750:500);
    introFailsafe=setTimeout(()=>finishIntro(node,token),4400);
- }
- function animateLanding(){
-   if(!enabled()||!desktop())return;
-   for(const selector of ['.hero-copy h1','.hero-description','.hero-buttons','.hero-visual-photo']){
-     const el=document.querySelector(selector);
-     if(!el?.animate)continue;
-     el.animate([{opacity:0,transform:'translate3d(0,24px,0)'},{opacity:1,transform:'translate3d(0,0,0)'}],{
-       duration:780,easing:'cubic-bezier(.18,.7,.25,1)'
-     });
-   }
  }
  function show(el){
    if(scrollObserver)scrollObserver.unobserve(el);
