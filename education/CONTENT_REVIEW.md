@@ -1,24 +1,36 @@
-# Patient education — mandatory clinical editorial review
+# LYMELVA — Patient education clinical review gate
 
-Edition: 2026-11-13. **DRAFT; not clinically signed off**.
+Edition: 13 November 2026. **DRAFT — NOT CLINICALLY SIGNED OFF.**
 
-## Scope
-- 30 original bilingual patient-facing summaries, grouped in seven categories, linking to 15 international references.
-- Content is designed as education, **not** a triage chatbot, medical diagnosis, prescription, or individual recommendation.
-- Red flags: suspected DVT needs urgent assessment; fever/hot painful skin warrants same-day medical assessment for cellulitis; chest pain, acute breathlessness or collapse warrants immediate emergency services.
-- Compression strength, application and garment suitability need individual professional assessment; active skin infection, suspected DVT or arterial problems require medical review before therapy decisions.
-- Exercise must be gradual and individualized. MLD is not deep massage; do not self-prescribe.
-- APTA 2020 guideline is primarily for **breast-cancer-related** lymphedema. Its evidence grades should not be presented as applying to every etiology.
-- ISL 2023 is clinical consensus acknowledging variable evidence and individualized care.
-- Avoid claims of universal cure, guaranteed results, cure by supplements or 'detox', or unsafe high-pressure techniques.
+## Editorial method
+- 30 original bilingual (Egyptian/standard accessible Arabic and international English) patient education topics, composed from multiple original authoritative links, not copied paragraphs.
+- Each topic connects to its specific references. Sources are named, their official URL retained, and access is not paywalled where possible.
+- Evidence is not uniform: APTA guideline focuses on *breast-cancer-related lymphedema*; avoid generalizing its recommendations indiscriminately to primary or noncancer causes.
+- ISL 2023 document is consensus, not a universal randomized-trial standard.
+- No individualized treatment advice, garment pressure prescription, or self-MLD instruction.
+- Content differentiates same-day infection medical review, urgent DVT assessment, and emergency chest pain / dyspnea / severe systemic infection.
+- No symptom-based diagnosis, automated appointments, sensitive health collection, invented testimonials or outcome statistics.
 
-## Before clinical publishing
-1. Qualified licensed professional reviews every Arabic and English article against the linked sources, verifies red flags and local referral instructions, and signs the content ledger.
-2. Independently verify organization name, trademark rights, business address, phone, professional credentials, services, equipment and consent for all marketing images.
-3. Implement real patient data security and privacy notices before collecting any health information. The current client-only form does **not** submit or store identifiable health information to a server.
-4. Verify actual production deployment, SSL, headers, responsive layouts and accessibility in multiple browsers and physical phones.
-5. Establish an editorial owner and update cadence (at least every 6–12 months, sooner for guideline changes).
-6. Keep pages noindex until medical and brand approval, then review marketing rules and SEO.
+## Before public deployment
+1. Qualified licensed clinician working at the clinic must independently review each article for accuracy, contraindications, Arabic terminology and local referral pathways.
+2. Confirm actual clinic name, phone, address, professional credentials and permitted service descriptions.
+3. Review medical advertising law and consent/privacy; leave `noindex` until approval.
+4. Run accessibility and mobile/device/browser checks on actual deployed origin.
+5. Schedule editorial review every 6–12 months and sooner after major guideline updates.
 
-## Evidence register
-See the site `README.md` and `education/content.js` for 15 linked sources. Every article has its own `sources[]` reference IDs. No copied third-party paragraphs.
+## Evidence used
+- ISL: International Society of Lymphology — 2023 Consensus — https://pubmed.ncbi.nlm.nih.gov/39207406/
+- NHS: NHS — Lymphoedema overview — https://www.nhs.uk/conditions/lymphoedema/
+- NHST: NHS — Lymphoedema treatment — https://www.nhs.uk/conditions/lymphoedema/treatment/
+- NHSD: NHS — Diagnosis of lymphoedema — https://www.nhs.uk/conditions/lymphoedema/diagnosis/
+- NHSP: NHS — Prevention and skin care — https://www.nhs.uk/conditions/lymphoedema/prevention/
+- CELL: NHS — Cellulitis — https://www.nhs.uk/conditions/cellulitis/
+- DVT: NHS — Deep vein thrombosis — https://www.nhs.uk/conditions/deep-vein-thrombosis-dvt/
+- APTA: APTA — Cancer-related lymphedema clinical practice guideline — https://pmc.ncbi.nlm.nih.gov/articles/PMC7412854/
+- NCI: National Cancer Institute — Lymphedema PDQ — https://www.cancer.gov/about-cancer/treatment/side-effects/lymphedema/lymphedema-hp-pdq
+- CRUK: Cancer Research UK — Treating lymphoedema — https://www.cancerresearchuk.org/about-cancer/coping/physically/lymphoedema-and-cancer/treating
+- MAYO: Mayo Clinic — Lymphedema diagnosis and treatment — https://www.mayoclinic.org/diseases-conditions/lymphedema/diagnosis-treatment/drc-20374687
+- MSK: Memorial Sloan Kettering — Lower limb risk and self-care — https://www.mskcc.org/cancer-care/patient-education/reducing-risk-lymphedema
+- MSKEX: Memorial Sloan Kettering — Lower-body lymph drainage exercises — https://www.mskcc.org/cancer-care/patient-education/exercises-for-lymph-drainage-legs-and-lower-body
+- LSN: Lymphoedema Support Network — Patient questions — https://www.lymphoedema.org/information/your-questions-answered/
+- UCLH: UCLH NHS — Reducing the risk of upper limb lymphoedema — https://www.uclh.nhs.uk/patients-and-visitors/patient-information-pages/reducing-risk-lymphoedema-upper-limb-and-chest-area
