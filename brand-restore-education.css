@@ -1,0 +1,11 @@
+/* Brand guide color parity: Midnight Teal / Ocean Teal / Seafoam / Warm Ivory */
+html[data-theme="light"]{--ed-bg:#F7F4ED;--ed-surface:#fffefa;--ed-ink:#0B4550;--ed-muted:#486a6e;--ed-accent:#218F91;--ed-sage:#B7DCD2;--ed-line:#d2e2dc;--ed-card:#fffefa;color-scheme:light}
+html[data-theme="dark"]{--ed-bg:#06171c;--ed-surface:#0d282f;--ed-ink:#F7F4ED;--ed-muted:#c3d6d4;--ed-accent:#8acbc4;--ed-sage:#15393f;--ed-line:#355057;--ed-card:#102b31;color-scheme:dark}
+html[data-theme="dark"] body.edu-page{background:#06171c!important;color:#F7F4ED!important}
+html[data-theme="dark"] .edu-header{background:#091f25!important;color:#F7F4ED!important;border-color:#355057}
+html[data-theme="dark"] .edu-hero,html[data-theme="dark"] .edu-section{background:#06171c!important;color:#F7F4ED}
+html[data-theme="dark"] .edu-card,html[data-theme="dark"] .edu-search,html[data-theme="dark"] .edu-article-card{background:#102b31!important;border-color:#355057;color:#f7f4ed}
+html[data-theme="light"] body.edu-page{background:#F7F4ED!important}
+html[data-theme="light"] .edu-header{background:#fffefa!important}
+html[data-theme="light"] .edu-hero{background:#F7F4ED!important}
+html[data-theme="dark"] .edu-footer{background:#041116;color:#f7f4ed}

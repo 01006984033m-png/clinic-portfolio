@@ -1,0 +1,111 @@
+/* LYMELVA / Brand Restore 2026-11-13
+   Source: official preliminary LYMELVA brand kit.
+   Midnight Teal #0B4550 | Ocean Teal #218F91 | Seafoam #B7DCD2 | Warm Ivory #F7F4ED
+   Preserve hero photograph, RTL layout, all original icons and reduced-motion support. */
+:root,html[data-theme="light"]{
+ --paper:#F7F4ED;--paper2:#f0f5f2;--card:#fffefa;--ink:#0B4550;--sub:#486a6e;
+ --teal:#0B4550;--teal2:#218F91;--mint:#B7DCD2;--line:rgba(11,69,80,.18);
+ --selection:#B7DCD2;--ring:#dbece7;color-scheme:light;
+}
+html[data-theme="light"] body{background:#F7F4ED;color:#0B4550}
+/* Dark must be unmistakably deeper than light, across the ENTIRE site. */
+html[data-theme="dark"]{
+ --paper:#06171c;--paper2:#0a2026;--card:#0d282f;--ink:#F7F4ED;--sub:#c3d6d4;
+ --teal:#B7DCD2;--teal2:#8acbc4;--mint:#15393f;--line:rgba(183,220,210,.22);
+ --shadow:0 17px 50px rgba(0,0,0,.38);--selection:#236c73;--ring:#16454b;color-scheme:dark;
+}
+html[data-theme="dark"] body{background:var(--paper)!important;color:var(--ink)!important}
+html[data-theme="dark"] .page-glow{display:none}
+html[data-theme="dark"] .hero,html[data-theme="dark"] .site-header{background:#06171c}
+html[data-theme="dark"] .header-inner,html[data-theme="dark"] .site-header.is-scrolled .header-inner{background:rgba(7,25,30,.97);border-color:rgba(183,220,210,.18);box-shadow:none}
+html[data-theme="dark"] .brand-text,html[data-theme="dark"] .hero h1,html[data-theme="dark"] .hero h1 span,html[data-theme="dark"] .hero-description{color:#f4f5ed!important}
+html[data-theme="dark"] .hero h1 em{color:#B7DCD2!important}
+html[data-theme="dark"] .hero .eyebrow,html[data-theme="dark"] .hero-note{color:#c6d4d0}
+html[data-theme="dark"] .desktop-nav a,html[data-theme="dark"] .brand small{color:#d0ded8}
+html[data-theme="dark"] .nav-education-feature,html[data-theme="dark"] .desktop-nav a:hover{color:#B7DCD2!important}
+html[data-theme="dark"] .header-cta{background:#0B4550;color:#f7f4ed;border:1px solid #b7dcd257}
+html[data-theme="dark"] .button-primary{background:#B7DCD2;color:#072b31}
+html[data-theme="dark"] .button-outline{background:rgba(183,220,210,.06);border:1px solid #a2d4c58a;color:#f7f4ed}
+html[data-theme="dark"] .button-outline:hover{background:rgba(183,220,210,.14)}
+html[data-theme="dark"] .services-section{background:#0b242a;color:#f4f5ed}
+html[data-theme="dark"] .service-photo-card{background:#0e3036!important;border-color:#305257}
+html[data-theme="dark"] .service-photo-card p{color:#c0d7d1}
+html[data-theme="dark"] .about-section,html[data-theme="dark"] .journey-section,html[data-theme="dark"] .insights-section,html[data-theme="dark"] .faq-section{background:#06171c;color:#f7f4ed}
+html[data-theme="dark"] .insight-card,html[data-theme="dark"] .journey-step,html[data-theme="dark"] .guide-box{background:#102a30;color:#f7f4ed;border-color:#325359}
+html[data-theme="dark"] .navigator-section,html[data-theme="dark"] .contact-section,html[data-theme="dark"] .statement-section{background:#091f25}
+html[data-theme="dark"] .contact-form,html[data-theme="dark"] .navigator-card{background:#102a30}
+html[data-theme="dark"] .footer{background:#041116;color:#f4f5ed}
+html[data-theme="dark"] .footer-top p,html[data-theme="dark"] .footer-bottom{color:#b1c8c2}
+html[data-theme="dark"] .mobile-nav{background:#071a1f}
+html[data-theme="dark"] .theme-switch{box-shadow:inset 0 0 0 1px #cce0df5c;background:linear-gradient(140deg,#07101a,#17313c)}
+html[data-theme="dark"] .hero-photo{filter:brightness(.80) saturate(.82) contrast(1.04)!important}
+html[data-theme="dark"] .hero-visual-photo{box-shadow:0 20px 48px rgba(0,0,0,.36)}
+/* Restore the owner's approved panoramic desktop composition (photo left / copy right).
+   The identity's teal/seafoam replaces unrelated gold colors. */
+@media(min-width:961px){
+ .header-inner{max-width:1430px;margin:0 auto!important;border-radius:0!important;min-height:76px;padding:10px clamp(28px,3.3vw,55px);height:76px}
+ .site-header{position:sticky;top:0;background:var(--paper);border-bottom:1px solid var(--line)}
+ .site-header.is-hidden{transform:none}
+ .hero.shell{width:100%;max-width:none;min-height:0;display:grid;grid-template-columns:minmax(0,1.03fr) minmax(0,1.1fr);gap:0;padding:0!important;align-items:stretch}
+ .hero-copy{grid-column:1;grid-row:1;padding:clamp(28px,3.0vw,51px) clamp(34px,4.5vw,85px)!important;max-width:800px;align-self:center;justify-self:center}
+ .hero-visual.hero-visual-photo{grid-column:2;grid-row:1;width:100%;height:clamp(430px,34vw,510px);min-height:0;border-radius:0!important;box-shadow:none!important}
+ .hero-photo{object-position:center 50%}
+ .hero-scroll{display:none}
+ .hero h1{margin-bottom:16px;font-size:clamp(36px,3.75vw,57px)!important;line-height:1.43!important}
+ .hero-description{max-width:580px;font-size:clamp(14px,1.3vw,17px)}
+ .hero-note{font-size:12px;padding-top:13px;margin-top:19px}
+ .hero-buttons{flex-wrap:wrap;gap:12px}
+ .hero-visual .hero-photo-indicator{bottom:14px}
+ .services-section{padding-block:58px!important}
+ .services-section .section-index{margin-bottom:16px}
+ .services-section .section-heading-row{margin-bottom:28px}
+ .services-section .section-heading-row h2{font-size:clamp(29px,2.7vw,43px)}
+ .services-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+}
+/* Prominent patient education FIRST, not hidden between services / late-page sections. */
+.education-promo-featured{position:relative;z-index:1;padding:clamp(26px,3.3vw,48px) 0!important;background:#0B4550;color:#F7F4ED;border-top:2px solid #218F91;border-bottom:1px solid #218F91}
+.education-promo-featured .education-promo-inner{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:26px;align-items:center}
+.education-promo-featured .overline{color:#B7DCD2;margin-bottom:5px;font:700 11px/1.5 Arial,sans-serif;letter-spacing:.16em}
+.education-promo-featured h2{margin:0 0 6px!important;font-family:"Noto Sans Arabic",Tahoma,Arial,sans-serif;font-weight:700;font-size:clamp(25px,3vw,40px)!important;line-height:1.45!important;color:#fffdf6}
+.education-promo-featured h2 em{font:inherit;color:#B7DCD2}
+.education-promo-featured p{color:#e5f5ef;font-size:clamp(13px,1.3vw,15px);line-height:1.7;max-width:760px;margin:0}
+.education-promo-featured a.button{white-space:normal;min-width:210px;text-align:center;background:#B7DCD2;color:#0B4550;font-weight:750;border:0;box-shadow:0 6px 20px #001b1b28}
+.education-promo-featured a.button:hover{background:#d3eee4}
+html[data-theme="dark"] .education-promo-featured{background:#091f25;border-top-color:#34636a;border-bottom-color:#28474e}
+html[data-theme="light"] .education-promo-featured{background:#0B4550}
+/* Give the hero education action the same visual priority as the WhatsApp action. */
+.hero-education-cta{border-width:2px!important;font-weight:750!important}
+html[data-theme="light"] .hero-education-cta{background:#B7DCD2!important;border-color:#218F91!important;color:#0B4550!important}
+html[data-theme="dark"] .hero-education-cta{background:#B7DCD2!important;color:#092c32!important;border-color:#B7DCD2!important}
+/* Desktop screenshot has clean squared service cards, maintain photos and all icons. */
+.services-section .service-photo-card{border-radius:13px!important}
+.nav-education-feature{font-weight:800!important;color:#218F91!important}
+/* Readable dark toggles / controls and clearly lighter light experience */
+html[data-theme="light"] .header-inner{background:#fdfdf9}
+html[data-theme="light"] .site-header{background:#f7f4ed}
+html[data-theme="light"] .services-section{background:#0B4550}
+html[data-theme="light"] .services-section .service-photo-card{background:#15535d!important}
+html[data-theme="light"] .about-section,html[data-theme="light"] .journey-section,html[data-theme="light"] .insights-section{background:#F7F4ED}
+@media(max-width:960px){
+ .header-inner{margin-top:8px}
+ .hero{padding-top:112px!important;padding-bottom:36px!important}
+ .education-promo-featured .education-promo-inner{grid-template-columns:1fr;gap:18px}
+ .education-promo-featured a.button{min-width:0;width:100%;max-width:420px}
+}
+@media(max-width:720px){
+ .hero{gap:19px!important;padding-top:104px!important}
+ .hero h1{font-size:clamp(30px,8.3vw,44px)!important;line-height:1.48!important}
+ .hero-visual.hero-visual-photo{height:clamp(270px,73vw,370px)!important}
+ .hero-buttons{gap:9px!important}
+ .hero-education-cta{flex:1 1 175px}
+ .education-promo-featured{padding:25px 0!important}
+ .education-promo-featured h2{font-size:clamp(24px,6.9vw,34px)!important}
+ .services-section{padding-block:50px!important}
+ .services-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+ .service-photo-card{min-height:310px!important}
+ .service-photo-card .service-photo-frame{height:150px}
+}
+@media(max-width:380px){.services-grid{grid-template-columns:1fr}.service-photo-card .service-photo-frame{height:180px}}
+@media(prefers-reduced-motion:reduce){.education-promo-featured *{animation:none!important;transition:none!important}}
+
+html[data-theme="dark"] .hero-buttons .button-primary{background:#0B4550!important;color:#F7F4ED!important;border:1px solid #94c8c1}

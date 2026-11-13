@@ -40,4 +40,21 @@ assert.ok(JSON.stringify(vercel).includes(wanted),'CSP inline script hash mismat
 for(const path of ['app.js','education/education.js','education/content.js']){
  const child=await import('node:child_process'); const r=child.spawnSync(process.execPath,['--check',join(root,path)],{encoding:'utf8'}); assert.equal(r.status,0,path+': '+r.stderr);
 }
+
+// Brand restore release-specific invariants; preserve previous verified features.
+assert.match(home,/brand-restore\.css/,'brand palette stylesheet loaded');
+assert.match(edu,/brand-restore-education\.css/,'education dark/light parity');
+assert.match(read('privacy.html'),/brand-restore\.css/,'privacy dark/light parity');
+const educationPos=home.indexOf('education-promo-featured');
+const servicePos=home.indexOf('<section id="services"');
+const aboutPos=home.indexOf('<section id="about"');
+assert.ok(educationPos>0&&educationPos<servicePos&&servicePos<aboutPos,'education is first, then services, then about');
+assert.equal((home.match(/education-promo-featured/g)||[]).length,1,'one education panel; no duplicates');
+assert.match(home,/hero-education-cta[^>]*href="education\/"|href="education\/"[^>]*hero-education-cta/,'hero education CTA navigates to library');
+const brandCSS=read('brand-restore.css');
+for (const hex of ['#0B4550','#218F91','#B7DCD2','#F7F4ED']) assert.ok(brandCSS.includes(hex),'missing original brand token '+hex);
+assert.match(brandCSS,/html\[data-theme="dark"\][\s\S]*?#06171c/,'deep dark theme');
+assert.match(brandCSS,/prefers-reduced-motion/,'motion accessibility');
+assert.match(read('scripts/build.mjs'),/brand-restore\.css/,'production output includes brand overrides');
+
 console.log('PASS 30 bilingual topics, 15 live reference URLs, 4 PDF guides, asset paths, local-only data, CSP, JS syntax and noindex');
