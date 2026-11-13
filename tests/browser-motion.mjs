@@ -63,7 +63,15 @@ try{
  await page.evaluate(()=>{window.scrollTo(0,0);document.querySelector('#header-replay-intro').click()});
  await page.waitForTimeout(480);
  assert.equal(await page.locator('#intro').count(),1,'replay is unique and active');
- await page.locator('#skip-intro').click();
+ const replayState=await page.evaluate(()=>{
+   const n=document.querySelector('#intro'),skip=document.querySelector('#skip-intro');
+   const s=n?getComputedStyle(n):null, b=skip?getComputedStyle(skip):null;
+   return {body:document.body.className,node:n?.className,visible:s?.visibility,opacity:s?.opacity,
+     display:s?.display,buttonDisplay:b?.display,buttonVisibility:b?.visibility,
+     buttonOpacity:b?.opacity,buttonRect:skip?.getBoundingClientRect().toJSON()};
+ });
+ console.log('REPLAY_VISIBILITY',JSON.stringify(replayState));
+ await page.locator('#skip-intro').click({timeout:3000});
  await page.waitForTimeout(500);
  assert.equal(await page.locator('#intro').count(),0,'skip closes intro');
  await page.locator('#motion-toggle').click();
