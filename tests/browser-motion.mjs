@@ -92,6 +92,7 @@ try{
    const scrollKeyframes=card?.getAnimations().filter(a=>a.effect?.getKeyframes).flatMap(a=>a.effect.getKeyframes())||[];
    const rect=photo?.getBoundingClientRect();
    return {imageTransform:photo?getComputedStyle(photo).transform:null,
+     photoFilter:photo?getComputedStyle(photo).filter:null,
      objectFit:photo?getComputedStyle(photo).objectFit:null,
      naturalWidth:photo?.naturalWidth||0,
      rect:rect?{width:rect.width,height:rect.height}:null,
@@ -107,7 +108,7 @@ try{
  assert.equal(await page.locator('#services-grid .service-photo-frame img').first().evaluate(el=>getComputedStyle(el).transform),
    'none','hover must not add a second image transform');
  const hoverFilter=await page.locator('#services-grid .service-photo-frame img').first().evaluate(el=>getComputedStyle(el).filter);
- assert.equal(hoverFilter,samples[0].photoFilter,'hover must not increase saturation or brightness');
+ assert.equal(hoverFilter,photoStability.photoFilter,'hover must not increase saturation or brightness');
  await page.waitForTimeout(1200);
  assert.ok((await page.locator('#services-grid .service-photo-card h3[data-motion-shown="1"]').count())>0,'service copy finishes reveal');
  // Down/up/down tests photograph exposure, opacity and live animations.
