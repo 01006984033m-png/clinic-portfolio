@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /
+
+# Provisional clinic brand and clinically unapproved educational draft.
+# Remove the noindex metadata and revisit indexing only after medical and legal sign-off.
