@@ -1,0 +1,44 @@
+name: Deploy LYMELVA preview to GitHub Pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: lymelva-pages
+  cancel-in-progress: false
+jobs:
+  deploy:
+    name: Build and publish prelaunch preview
+    environment:
+      name: github-pages
+      url: ${{ steps.publish.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - run: npm test
+      - name: Assemble static prelaunch website
+        run: |
+          mkdir -p .pages-preview/assets .pages-preview/education .pages-preview/guides
+          cp index.html app.js styles.css privacy.html privacy.css robots.txt .pages-preview/
+          cp assets/lymelva-mark.svg assets/lymelva-logo.svg assets/lymelva-logo-white.svg assets/brand-board.png .pages-preview/assets/
+          cp education/index.html education/content.js education/education.js education/education.css .pages-preview/education/
+          cp guides/*.pdf .pages-preview/guides/
+          touch .pages-preview/.nojekyll
+          test -f .pages-preview/education/index.html
+          test -f .pages-preview/guides/self-care.pdf
+      - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+        with:
+          path: .pages-preview
+      - name: Publish preview
+        id: publish
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
