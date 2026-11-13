@@ -83,8 +83,8 @@ try{
  assert.notEqual(await firstCard.getAttribute('data-motion-shown'),'1','below-fold cards must wait until scroll');
  await page.evaluate(()=>document.querySelector('#services-grid').scrollIntoView({block:'center'}));
  await page.waitForTimeout(150);
- const active=await page.evaluate(()=>Array.from(document.querySelectorAll('#services-grid .service-photo-card')).filter(n=>n.getAnimations().length>0).length);
- assert.ok(active>0,'scroll must cause active browser animations, not just an is-visible class');
+ const active=await page.evaluate(()=>Array.from(document.querySelectorAll('#services-grid .service-photo-card h3')).filter(n=>n.getAnimations().length>0).length);
+ assert.ok(active>0,'service text must move on scroll, without fading photographs');
  const photoStability=await page.evaluate(()=>{
    const frame=document.querySelector('#services-grid .service-photo-frame');
    const photo=frame?.querySelector('img');
@@ -100,14 +100,41 @@ try{
  assert.equal(photoStability.imageTransform,'none','service images must not zoom or distort during card entry');
  assert.equal(photoStability.objectFit,'cover','photographs retain cover cropping');
  assert.ok(photoStability.naturalWidth>0,'photograph asset loaded');
- assert.ok(photoStability.scrollKeyframes.length>0&&photoStability.scrollKeyframes.every(f=>!f.transform),
-   'photographic cards must only fade, never scale or translate '+JSON.stringify(photoStability));
+ assert.equal(photoStability.scrollKeyframes.length,0,
+   'photograph wrappers must never animate opacity (the source of flashing): '+JSON.stringify(photoStability));
  await page.locator('#services-grid .service-photo-card').first().hover();
  await page.waitForTimeout(180);
  assert.equal(await page.locator('#services-grid .service-photo-frame img').first().evaluate(el=>getComputedStyle(el).transform),
    'none','hover must not add a second image transform');
+ const hoverFilter=await page.locator('#services-grid .service-photo-frame img').first().evaluate(el=>getComputedStyle(el).filter);
+ assert.equal(hoverFilter,samples[0].photoFilter,'hover must not increase saturation or brightness');
  await page.waitForTimeout(1200);
- assert.ok((await page.locator('#services-grid .service-photo-card[data-motion-shown="1"]').count())>0,'services finish reveal');
+ assert.ok((await page.locator('#services-grid .service-photo-card h3[data-motion-shown="1"]').count())>0,'service copy finishes reveal');
+ // Down/up/down tests photograph exposure, opacity and live animations.
+ // A changing filter or any wrapper opacity animation would recreate the
+ // reported lights-on/lights-off flicker on desktop.
+ const samples=[];
+ for(let cycle=0;cycle<4;cycle++){
+   await page.evaluate(()=>window.scrollTo(0,0));
+   await page.waitForTimeout(100);
+   await page.evaluate(()=>document.querySelector('#services-grid').scrollIntoView({block:'center'}));
+   await page.waitForTimeout(120);
+   samples.push(await page.evaluate(()=>{
+     const card=document.querySelector('#services-grid .service-photo-card');
+     const img=card?.querySelector('.service-photo-frame img');
+     return {
+       photoOpacity:getComputedStyle(img).opacity,
+       cardOpacity:getComputedStyle(card).opacity,
+       photoFilter:getComputedStyle(img).filter,
+       photoAnimations:img.getAnimations().length,
+       cardAnimations:card.getAnimations().length
+     };
+   }));
+ }
+ assert.ok(samples.every(s=>s.photoOpacity==='1'&&s.cardOpacity==='1'&&s.photoAnimations===0&&s.cardAnimations===0),
+   'photo must never darken or flash in either scroll direction '+JSON.stringify(samples));
+ assert.equal(new Set(samples.map(s=>s.photoFilter)).size,1,'photo filter must be constant while scrolling '+JSON.stringify(samples));
+
  await page.evaluate(()=>{window.scrollTo(0,0);document.querySelector('#header-replay-intro').click()});
  await page.waitForTimeout(480);
  assert.equal(await page.locator('#intro').count(),1,'replay is unique and active');
@@ -138,9 +165,9 @@ try{
  assert.equal(await edu.locator('#cards .edu-card').count(),30,'all education articles present');
  await edu.evaluate(()=>document.querySelector('#cards .edu-card').scrollIntoView({block:'center'}));
  await edu.waitForTimeout(180);
- const count=await edu.evaluate(()=>Array.from(document.querySelectorAll('#cards .edu-card')).filter(n=>n.getAnimations().length>0).length);
- assert.ok(count>0,'education cards should animate on scroll, not only change class');
+ const count=await edu.evaluate(()=>Array.from(document.querySelectorAll('#cards .edu-card h3')).filter(n=>n.getAnimations().length>0).length);
+ assert.ok(count>0,'education text moves on scroll without fading its images');
  await edu.close();
  assert.deepEqual(errors,[],'zero browser Javascript runtime errors');
- console.log('PASS CHROME 1440px: one cinematic timeline, no image distortion, fade-only photo cards, scroll animations, replay and skip');
+ console.log('PASS CHROME 1440px: one cinematic timeline, no image distortion, fixed photo opacity across 4 scroll cycles, text animations, replay and skip');
 } finally {await browser.close();await new Promise(resolve=>server.close(resolve))}

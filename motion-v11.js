@@ -11,7 +11,7 @@
  const saved=()=>{try{return localStorage.getItem(KEY)}catch{return null}};
  const enabled=()=>saved()==='on'||(saved()!=='off'&&(desktop()||!reduced()));
  const store=value=>{try{localStorage.setItem(KEY,value?'on':'off')}catch{}};
- const candidates='main .reveal,main .service-photo-card,main .insight-card,main .journey-step,main .education-promo-inner > *,main .statement-art,main .guide-list a,main .faq-item,main .contact-form,main .contact-copy,main .edu-hero-grid > *,main .edu-section-head,main .edu-card,main .edu-sources-grid > *,main .edu-safety,main .edu-notice';
+ const candidates='main .reveal,main .service-photo-card h3,main .service-photo-card p,main .service-photo-card .service-more,main .insight-card .insight-body,main .journey-step,main .education-promo-inner > *,main .guide-list a,main .faq-item,main .contact-form,main .contact-copy,main .edu-hero-grid > .edu-intro,main .edu-section-head,main .edu-card h3,main .edu-card p,main .edu-card .edu-card-top,main .edu-sources-grid > *,main .edu-safety,main .edu-notice';
  function sync(){
    root.dataset.motionActive=String(enabled());
    const button=one('motion-toggle');
@@ -110,17 +110,15 @@
    // WAAPI does not depend on CSS transitions, earlier .is-visible,
    // legacy reduced-motion resets, or separate animation stylesheets.
    if(!enabled()||!desktop()||!el.animate)return;
-   const image=el.matches('.service-photo-card,.insight-card,.edu-card,.hero-visual-photo,.statement-art,.edu-hero-photo');
+   // Never animate an image, or any wrapper containing one: even an
+   // opacity-only WAAPI animation makes photographs flash when scrolling.
+   // Text remains independently animated without changing image luminance.
+   if(el.matches('img,picture,video,figure')||el.querySelector('img,picture,video'))return;
    const delay=Math.min(Number(el.dataset.motionDelay||0),150);
-   // Photo surfaces use opacity only: scale + nested image hover zoom
-   // caused double transforms, blurry cropping and a visible end-of-frame jump.
-   // Text and non-image blocks retain a subtle compositor-only rise.
-   const frames=image
-     ? [{opacity:0},{opacity:1}]
-     : [{opacity:0,transform:'translate3d(0,28px,0)'},{opacity:1,transform:'translate3d(0,0,0)'}];
-   el.animate(frames,{
-     duration:image?760:810,delay,fill:'none',easing:'cubic-bezier(.17,.75,.22,1)'
-   });
+   el.animate([
+     {opacity:0,transform:'translate3d(0,22px,0)'},
+     {opacity:1,transform:'translate3d(0,0,0)'}
+   ],{duration:700,delay,fill:'none',easing:'cubic-bezier(.17,.75,.22,1)'});
  }
  function refresh(){
    if(!scrollReady)return;

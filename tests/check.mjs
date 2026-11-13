@@ -135,8 +135,11 @@ console.log('PASS V11 first paint, desktop opt-in/out, intro timeline, scroll WA
 assert.doesNotMatch(read('motion-v11.js'),/main \\.hero-visual-photo,main \\.edu-hero-grid/,'hero picture must not be observed twice');
 assert.doesNotMatch(read('cinematic-care.css'),/body\\.intro-finished \\.hero-copy>\\*\\{animation:/,'no duplicate CSS hero entrance');
 
-assert.match(read('motion-v11.js'),/const frames=image/,'image reveal uses a dedicated fade');
-assert.match(read('motion-v11.js'),/\? \[\{opacity:0\},\{opacity:1\}\]/,'image fade keyframes do not scale or move photos');
+assert.doesNotMatch(read('motion-v11.js'),/const frames=image/,'no fade animation on photograph wrappers');
+assert.match(read('motion-v11.js'),/el\.querySelector\('img,picture,video'\)/,'never run scroll animation on image-containing elements');
+assert.match(read('motion-v11.js'),/service-photo-card h3/,'animate service text independently of images');
+assert.match(read('motion-v11.js'),/edu-card h3/,'animate education text independently of images');
+assert.match(read('motion-v11.css'),/V13: zero photo flicker/,'all photo surfaces have stable exposure');
 assert.doesNotMatch(read('motion-v11.js'),/scale\('\+\(image/,'old double-scale image animation not restored');
 assert.match(read('motion-v11.css'),/V12 image stability/,'image motion stabilization stylesheet included');
 assert.match(read('motion-v11.css'),/\.service-photo-frame img,[\s\S]*?transform:none!important/,'service photo cannot zoom on hover');

@@ -102,3 +102,64 @@ html[data-motion-active] .edu-card:hover .edu-card-photo img{
     box-shadow:0 12px 32px rgba(0,32,40,.11);
   }
 }
+
+
+/* V13: zero photo flicker in either scroll direction.
+   Remove ALL opacity/transform/reveal transitions from photo surfaces;
+   keep the genuine cinematic intro separate. */
+html[data-motion-active] .service-photo-card,
+html[data-motion-active] .insight-card,
+html[data-motion-active] .edu-card,
+html[data-motion-active] .journey-stage,
+html[data-motion-active] .statement-art,
+html[data-motion-active] .edu-hero-photo,
+html[data-motion-active] .hero-visual-photo{
+  opacity:1!important;
+  animation:none!important;
+  transition-property:border-color,background-color,box-shadow!important;
+}
+html[data-motion-active] .service-photo-card:hover,
+html[data-motion-active] .service-photo-card:focus-visible,
+html[data-motion-active] .insight-card:hover,
+html[data-motion-active] .edu-card:hover{
+  opacity:1!important;
+  transform:none!important;
+}
+html[data-motion-active] .service-photo-frame img,
+html[data-motion-active] .insight-photo-art img{
+  opacity:1!important;
+  filter:saturate(.85) contrast(1.02)!important;
+  transition:none!important;
+  animation:none!important;
+  transform:none!important;
+}
+html[data-motion-active] .edu-card-photo img{
+  opacity:1!important;
+  filter:saturate(.86)!important;
+  transition:none!important;
+  animation:none!important;
+  transform:none!important;
+}
+html[data-motion-active] .edu-hero-photo img{
+  opacity:1!important;
+  filter:saturate(.83) contrast(1.03)!important;
+  transition:none!important;
+  animation:none!important;
+  transform:none!important;
+}
+html[data-motion-active] .service-photo-card:hover .service-photo-frame img,
+html[data-motion-active] .service-photo-card:focus-visible .service-photo-frame img,
+html[data-motion-active] .insight-card:hover .insight-photo-art img,
+html[data-motion-active] .edu-card:hover .edu-card-photo img{
+  opacity:1!important;
+  transform:none!important;
+  transition:none!important;
+}
+html[data-motion-active] .service-photo-card:hover .service-photo-frame img,
+html[data-motion-active] .service-photo-card:focus-visible .service-photo-frame img,
+html[data-motion-active] .insight-card:hover .insight-photo-art img{
+  filter:saturate(.85) contrast(1.02)!important;
+}
+html[data-motion-active] .edu-card:hover .edu-card-photo img{
+  filter:saturate(.86)!important;
+}
