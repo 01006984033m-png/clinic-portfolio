@@ -115,7 +115,7 @@ assert.match(motionJS,/function scene\(/,'intro WAAPI motion timeline');
 assert.match(motionJS,/\.animate\(/,'actual browser animation');
 assert.match(motionJS,/function finishIntro\(/,'safe automatic intro close');
 assert.match(motionJS,/full\?3750:500/,'full default desktop sequence');
-assert.match(motionJS,/function animateLanding\(/,'hero entrance animation');
+assert.doesNotMatch(motionJS,/function animateLanding\(/,'legacy duplicate hero entrance removed');
 assert.match(motionJS,/function show\(/,'scroll animations have independent trigger');
 assert.match(motionJS,/IntersectionObserver/,'viewport driven scroll reveal');
 assert.match(motionJS,/MutationObserver/,'dynamic card observation');
