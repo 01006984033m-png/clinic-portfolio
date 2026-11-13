@@ -1,0 +1,182 @@
+{
+  "understanding": {
+    "file": "assets/education/understanding.webp",
+    "origin": "sheet:0",
+    "bytes": 22468,
+    "kind": "Illustrative clinical photograph"
+  },
+  "primary-secondary": {
+    "file": "assets/education/primary-secondary.webp",
+    "origin": "sheet:1",
+    "bytes": 19874,
+    "kind": "Illustrative clinical photograph"
+  },
+  "early-signs": {
+    "file": "assets/education/early-signs.webp",
+    "origin": "sheet:2",
+    "bytes": 19044,
+    "kind": "Illustrative clinical photograph"
+  },
+  "stages": {
+    "file": "assets/education/stages.webp",
+    "origin": "sheet:3",
+    "bytes": 17592,
+    "kind": "Illustrative clinical photograph"
+  },
+  "diagnosis": {
+    "file": "assets/education/diagnosis.webp",
+    "origin": "sheet:5",
+    "bytes": 26284,
+    "kind": "Illustrative clinical photograph"
+  },
+  "not-all-swelling": {
+    "file": "assets/education/not-all-swelling.webp",
+    "origin": "editorial-svg",
+    "bytes": 7348,
+    "kind": "Illustrative editorial diagram"
+  },
+  "cancer-related": {
+    "file": "assets/education/cancer-related.webp",
+    "origin": "sheet:6",
+    "bytes": 22302,
+    "kind": "Illustrative clinical photograph"
+  },
+  "cdt": {
+    "file": "assets/education/cdt.webp",
+    "origin": "sheet:7",
+    "bytes": 26420,
+    "kind": "Illustrative clinical photograph"
+  },
+  "compression": {
+    "file": "assets/education/compression.webp",
+    "origin": "sheet:8",
+    "bytes": 16080,
+    "kind": "Illustrative clinical photograph"
+  },
+  "compression-wear": {
+    "file": "assets/education/compression-wear.webp",
+    "origin": "existing:care-compression.webp",
+    "bytes": 26464,
+    "kind": "Illustrative clinical photograph"
+  },
+  "exercise": {
+    "file": "assets/education/exercise.webp",
+    "origin": "existing:care-movement.webp",
+    "bytes": 39638,
+    "kind": "Illustrative clinical photograph"
+  },
+  "strength": {
+    "file": "assets/education/strength.webp",
+    "origin": "editorial-svg",
+    "bytes": 4688,
+    "kind": "Illustrative editorial diagram"
+  },
+  "breathing": {
+    "file": "assets/education/breathing.webp",
+    "origin": "editorial-svg",
+    "bytes": 7576,
+    "kind": "Illustrative editorial diagram"
+  },
+  "mld": {
+    "file": "assets/education/mld.webp",
+    "origin": "editorial-svg",
+    "bytes": 5824,
+    "kind": "Illustrative editorial diagram"
+  },
+  "home-care": {
+    "file": "assets/education/home-care.webp",
+    "origin": "existing:care-selfcare.webp",
+    "bytes": 27310,
+    "kind": "Illustrative clinical photograph"
+  },
+  "skin-care": {
+    "file": "assets/education/skin-care.webp",
+    "origin": "editorial-svg",
+    "bytes": 5360,
+    "kind": "Illustrative editorial diagram"
+  },
+  "cellulitis": {
+    "file": "assets/education/cellulitis.webp",
+    "origin": "editorial-svg",
+    "bytes": 6800,
+    "kind": "Illustrative editorial diagram"
+  },
+  "urgent-swelling": {
+    "file": "assets/education/urgent-swelling.webp",
+    "origin": "editorial-svg",
+    "bytes": 6272,
+    "kind": "Illustrative editorial diagram"
+  },
+  "weight-nutrition": {
+    "file": "assets/education/weight-nutrition.webp",
+    "origin": "editorial-svg",
+    "bytes": 6880,
+    "kind": "Illustrative editorial diagram"
+  },
+  "travel": {
+    "file": "assets/education/travel.webp",
+    "origin": "editorial-svg",
+    "bytes": 5678,
+    "kind": "Illustrative editorial diagram"
+  },
+  "heat": {
+    "file": "assets/education/heat.webp",
+    "origin": "editorial-svg",
+    "bytes": 7202,
+    "kind": "Illustrative editorial diagram"
+  },
+  "sleep": {
+    "file": "assets/education/sleep.webp",
+    "origin": "editorial-svg",
+    "bytes": 6532,
+    "kind": "Illustrative editorial diagram"
+  },
+  "mental-health": {
+    "file": "assets/education/mental-health.webp",
+    "origin": "editorial-svg",
+    "bytes": 7406,
+    "kind": "Illustrative editorial diagram"
+  },
+  "follow-up": {
+    "file": "assets/education/follow-up.webp",
+    "origin": "existing:care-assessment.webp",
+    "bytes": 39148,
+    "kind": "Illustrative clinical photograph"
+  },
+  "first-visit": {
+    "file": "assets/education/first-visit.webp",
+    "origin": "sheet:4",
+    "bytes": 24344,
+    "kind": "Illustrative clinical photograph"
+  },
+  "head-neck": {
+    "file": "assets/education/head-neck.webp",
+    "origin": "editorial-svg",
+    "bytes": 6448,
+    "kind": "Illustrative editorial diagram"
+  },
+  "pumps": {
+    "file": "assets/education/pumps.webp",
+    "origin": "editorial-svg",
+    "bytes": 6230,
+    "kind": "Illustrative editorial diagram"
+  },
+  "surgery": {
+    "file": "assets/education/surgery.webp",
+    "origin": "editorial-svg",
+    "bytes": 4486,
+    "kind": "Illustrative editorial diagram"
+  },
+  "myths": {
+    "file": "assets/education/myths.webp",
+    "origin": "editorial-svg",
+    "bytes": 5068,
+    "kind": "Illustrative editorial diagram"
+  },
+  "questions": {
+    "file": "assets/education/questions.webp",
+    "origin": "existing:care-room.webp",
+    "bytes": 46394,
+    "kind": "Illustrative clinical photograph"
+  }
+}

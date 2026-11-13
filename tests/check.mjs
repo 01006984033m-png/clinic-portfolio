@@ -83,3 +83,18 @@ assert.match(read('education/education.js'),/b\.append\(photo,top,title,summary,
 assert.match(read('scripts/build.mjs'),/clinical-gallery\.css/,'education photo styles in dist');
 assert.match(read('scripts/build.mjs'),/desktop-motion\.css/,'desktop motion styles in dist');
 for(const name of ['assessment','compression','decongestive','manual','movement','selfcare','room'])assert.ok(existsSync(join(root,'assets/care-'+name+'.webp')),'education photo asset '+name);
+
+// v7: independent visual per educational topic (never class-level reused images).
+const educationJS=read('education/education.js');
+assert.match(educationJS,/TOPIC_VISUAL_IDS/,'topic visual inventory');
+assert.doesNotMatch(educationJS,/CLINICAL_PHOTOS/,'old repetitive category images removed');
+for(const a of data.articles){
+ const path='assets/education/'+a.id+'.webp';
+ assert.ok(existsSync(join(root,path)),'missing subject-specific image: '+path);
+ const {size}=await import('node:fs/promises').then(m=>m.stat(join(root,path)));
+ assert.ok(size>3500&&size<300000,'image size and integrity '+path);
+}
+assert.match(home,/id="header-replay-intro"/,'visible desktop replay entrypoint');
+assert.match(read('app.js'),/header-replay-intro/,'desktop replay event');
+assert.match(read('desktop-motion.css'),/intro-manual-motion/,'opt-in motion support');
+assert.match(read('scripts/build.mjs'),/requiredTopicIds/,'all image assets included in production');

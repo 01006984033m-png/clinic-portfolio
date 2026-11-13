@@ -13,3 +13,30 @@ html[data-theme=dark] .creator-credit{color:#b7dcd2}
 @keyframes lymelvaReplayFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:720px){.hero-replay{font-size:11px;margin-top:10px}.creator-credit{width:100%;margin-top:8px}}
 @media(prefers-reduced-motion:reduce){.hero-replay{display:none!important}.hero-visual-photo .hero-photo{animation:none!important;transform:none!important}.hero-visual-photo .hero-moving-light{display:none!important}}
+
+/* Desktop entrance is discoverable even when the first 4.8-second sequence has elapsed. */
+.desktop-intro-shortcut{display:inline-flex;align-items:center;gap:9px;font-size:12px;font-weight:700;
+ color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:8px;
+ min-height:42px;padding:8px 12px;white-space:nowrap;cursor:pointer;transition:background .2s,color .2s}
+.desktop-intro-shortcut:hover{background:var(--mint);color:var(--ink)}
+.desktop-intro-shortcut:focus-visible{outline:3px solid var(--teal2);outline-offset:3px}
+@media (max-width:1250px){.desktop-intro-shortcut span{display:none}.desktop-intro-shortcut{padding:8px 12px}}
+@media (max-width:960px){.desktop-intro-shortcut{display:none}}
+/* The deliberate manual action is allowed to request motion once, including on
+   systems that normally suppress auto-play. Auto-play still respects settings. */
+@media(prefers-reduced-motion:reduce){
+ body.intro-manual-motion .intro.cinematic-intro{display:flex!important;opacity:1;visibility:visible;pointer-events:auto}
+ body.intro-manual-motion .intro.cinematic-intro.done{opacity:0!important;visibility:hidden!important;pointer-events:none}
+ body.intro-manual-motion .intro-bg-photo{animation:lymelvaIntroManualZoom 4.6s ease-out both!important}
+ body.intro-manual-motion .intro-inner img{animation:lymelvaManualLogo .75s ease-out both!important}
+ body.intro-manual-motion .intro-word,body.intro-manual-motion .intro-label{animation:lymelvaManualLogo .8s ease-out both!important}
+ body.intro-manual-motion .intro-progress span{animation:lymelvaManualProgress 4.8s linear both!important}
+ .hero-replay{display:inline-flex!important}
+}
+@keyframes lymelvaIntroManualZoom{from{transform:scale(1.16)}to{transform:scale(1.02)}}
+@keyframes lymelvaManualLogo{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes lymelvaManualProgress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media(min-width:961px) and (prefers-reduced-motion:no-preference){
+ /* Clearly visible yet restrained parallax, no fake cinematic overlays on skin. */
+ .hero-visual-photo .hero-photo{animation:lymelvaDesktopPhoto 10s ease-in-out infinite alternate!important}
+}

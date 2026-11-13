@@ -17,6 +17,8 @@ const published = [
   'guides/brand-guidelines.pdf', 'guides/lymphedema-basics.pdf',
   'guides/visit-preparation.pdf', 'guides/self-care.pdf',
 ];
+const requiredTopicIds=["understanding", "primary-secondary", "early-signs", "stages", "diagnosis", "not-all-swelling", "cancer-related", "cdt", "compression", "compression-wear", "exercise", "strength", "breathing", "mld", "home-care", "skin-care", "cellulitis", "urgent-swelling", "weight-nutrition", "travel", "heat", "sleep", "mental-health", "follow-up", "first-visit", "head-neck", "pumps", "surgery", "myths", "questions"];
+for(const id of requiredTopicIds)published.push('assets/education/'+id+'.webp');
 await rm(output, {recursive: true, force: true});
 for (const path of published) {
   const src = join(root, path), dst = join(output, path);
