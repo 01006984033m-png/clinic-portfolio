@@ -77,3 +77,46 @@ html[data-theme=dark] .creator-credit{color:#b7dcd2}
  /* No extra blocking overlay on small-screen accessibility mode. */
  .intro.cinematic-intro.intro-static{display:none!important}
 }
+
+
+/* V9: short automatic cinematic intro with a non-blocking failure mode. */
+.intro.cinematic-intro{display:none!important;opacity:0!important;visibility:hidden!important;pointer-events:none!important;transition:opacity .3s ease,visibility .3s ease!important}
+body.intro-running .intro.cinematic-intro:not(.done){display:flex!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important}
+body.intro-running .intro.cinematic-intro.done{display:flex!important;opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+body:not(.intro-running):not(.intro-finished) .hero-copy>*{opacity:1!important;transform:none!important}
+.intro.cinematic-intro .intro-bg-photo,
+.intro.cinematic-intro .intro-veil,
+.intro.cinematic-intro .intro-light-streak,
+.intro.cinematic-intro .intro-inner img,
+.intro.cinematic-intro .intro-word,
+.intro.cinematic-intro .intro-kicker,
+.intro.cinematic-intro .intro-label,
+.intro.cinematic-intro .intro-progress span{animation:none!important}
+.intro.cinematic-intro .intro-bg-photo{transform:scale(1.035)}
+.intro.cinematic-intro .intro-light-streak{display:none!important;filter:none!important}
+body.intro-running .intro.cinematic-intro.intro-active .intro-bg-photo{animation:lymelvaV9IntroPhoto 2.45s cubic-bezier(.2,.7,.2,1) both!important;will-change:transform}
+body.intro-running .intro.cinematic-intro.intro-active .intro-inner img{animation:lymelvaV9IntroMark .7s cubic-bezier(.2,1,.3,1) both!important}
+body.intro-running .intro.cinematic-intro.intro-active .intro-word{animation:lymelvaV9IntroText .8s .18s cubic-bezier(.2,1,.3,1) both!important}
+body.intro-running .intro.cinematic-intro.intro-active .intro-kicker,
+body.intro-running .intro.cinematic-intro.intro-active .intro-label{animation:lymelvaV9IntroText .65s .3s ease both!important}
+body.intro-running .intro.cinematic-intro.intro-active .intro-progress span{animation:lymelvaV9IntroProgress 2.4s linear both!important}
+@keyframes lymelvaV9IntroPhoto{from{transform:scale(1.1)}to{transform:scale(1.015)}}
+@keyframes lymelvaV9IntroMark{from{opacity:0;transform:translateY(15px) scale(.92)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes lymelvaV9IntroText{from{opacity:0;transform:translateY(17px)}to{opacity:1;transform:translateY(0)}}
+@keyframes lymelvaV9IntroProgress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.hero-visual-photo .hero-photo{animation:none!important;transform:none;will-change:auto!important}
+.hero-visual-photo .hero-moving-light{display:none!important;animation:none!important;filter:none!important}
+.site-header.is-scrolled .header-inner{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+@media(prefers-reduced-motion:no-preference){
+ body.intro-finished .hero-visual-photo .hero-photo{animation:lymelvaV9HeroArrival 1.8s cubic-bezier(.2,.75,.2,1) both!important}
+}
+@keyframes lymelvaV9HeroArrival{from{transform:scale(1.045) translateY(6px)}to{transform:scale(1) translateY(0)}}
+@media(prefers-reduced-motion:reduce){
+ body.intro-running .intro.cinematic-intro.intro-soft-motion{display:flex!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important}
+ body.intro-running .intro.cinematic-intro.intro-soft-motion .intro-inner img,
+ body.intro-running .intro.cinematic-intro.intro-soft-motion .intro-word,
+ body.intro-running .intro.cinematic-intro.intro-soft-motion .intro-kicker,
+ body.intro-running .intro.cinematic-intro.intro-soft-motion .intro-label{opacity:1!important;transform:none!important;animation:none!important}
+ body.intro-running.intro-manual-motion .intro.cinematic-intro.intro-active{display:flex!important;opacity:1!important;visibility:visible!important}
+ .hero-visual-photo .hero-photo,.ticker-track{animation:none!important}
+}

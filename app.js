@@ -73,81 +73,56 @@ function activateIntro(){
  const original=byId('intro');
  if(!original){document.body.classList.add('intro-finished');return}
  const snapshot=original.cloneNode(true);
- let current=null,launchTimer=0,closeTimer=0,removeTimer=0,runCount=0;
+ let active=null,closeTimer=0,watchdog=0,removeTimer=0,runCount=0;
  const reduced=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches;
  const optedIn=()=>safeGet('lymelva-motion-opt-in')==='true';
- const setMotionPreference=(value)=>{
-   if(value)safeSet('lymelva-motion-opt-in','true');
-   root.dataset.motionOptIn=value?'true':'false';
+ const setMotionPreference=()=>{
+   safeSet('lymelva-motion-opt-in','true');
+   root.dataset.motionOptIn='true';
  };
- setMotionPreference(optedIn());
+ root.dataset.motionOptIn=optedIn()?'true':'false';
+ function clearTimers(){clearTimeout(closeTimer);clearTimeout(watchdog);clearTimeout(removeTimer)}
  function closeIntro(node){
    if(!node||node.dataset.done==='true')return;
-   node.dataset.done='true';
-   clearTimeout(launchTimer);clearTimeout(closeTimer);clearTimeout(removeTimer);
-   node.classList.add('done');document.body.classList.add('intro-finished');
+   node.dataset.done='true';clearTimers();
+   node.classList.add('done');
+   document.body.classList.add('intro-finished');
+   document.body.classList.remove('intro-manual-motion');
    removeTimer=setTimeout(()=>{
-      if(node.isConnected)node.remove();
-      document.body.classList.remove('intro-manual-motion');
-   },720);
+     if(node.isConnected)node.remove();
+     if(active===node)document.body.classList.remove('intro-running');
+   },320);
  }
  function startIntro(manual=false){
-   clearTimeout(launchTimer);clearTimeout(closeTimer);clearTimeout(removeTimer);
-   if(current?.isConnected)current.remove();
+   clearTimers();
+   if(active?.isConnected)active.remove();
    const node=runCount++===0?original:snapshot.cloneNode(true);
    if(!node.isConnected)document.body.insertBefore(node,document.body.firstChild);
-   node.classList.remove('done','intro-restart','intro-active','intro-static');
+   node.classList.remove('done','intro-restart','intro-static','intro-active','intro-soft-motion');
    node.removeAttribute('data-done');
-   current=node;document.body.classList.remove('intro-finished');
+   active=node;
+   document.body.classList.add('intro-running');
+   document.body.classList.remove('intro-finished');
    const play=node.querySelector('#play-intro-motion');
    if(play)play.hidden=true;
    node.querySelector('#skip-intro')?.addEventListener('click',()=>closeIntro(node),{once:true});
-   const playFull=manual||optedIn()||!reduced();
-   document.body.classList.toggle('intro-manual-motion',reduced()&&playFull);
-   if(!playFull){
-     // Small-screen reduced-motion mode should never block the page.
-     if(window.innerWidth<=960){closeIntro(node);return}
-     // Do not silently discard the intro on a computer with reduced-motion enabled.
-     // Show a fully visible still frame with explicit Play / Skip choices.
-     node.classList.add('intro-static');
-     if(play){play.hidden=false;play.addEventListener('click',()=>{
-       setMotionPreference(true);startIntro(true);
-     },{once:true})}
-     closeTimer=setTimeout(()=>closeIntro(node),12000);
-     return;
-   }
-   // CSS animations may have finished while slow images/styles were downloading.
-   // Start a new timeline only after the first paint and critical resources are ready.
-   node.classList.add('intro-restart');
-   let begun=false;
-   const begin=()=>{
-      if(begun||current!==node||node.dataset.done==='true')return;
-      begun=true;clearTimeout(launchTimer);
-      node.getBoundingClientRect(); // force a frame at the animation reset state
-      requestAnimationFrame(()=>requestAnimationFrame(()=>{
-         if(current!==node||node.dataset.done==='true')return;
-         node.classList.remove('intro-restart');
-         node.classList.add('intro-active');
-         closeTimer=setTimeout(()=>closeIntro(node),6100);
-      }));
-   };
-   if(document.readyState==='complete')requestAnimationFrame(begin);
-   else{
-      window.addEventListener('load',begin,{once:true});
-      launchTimer=setTimeout(begin,1800);
-   }
+   const fullMotion=manual||optedIn()||!reduced();
+   document.body.classList.toggle('intro-manual-motion',reduced()&&fullMotion);
+   // Do not wait for window.load: slow photos should never pin the introduction.
+   node.classList.add(fullMotion?'intro-active':'intro-soft-motion');
+   closeTimer=setTimeout(()=>closeIntro(node),fullMotion?2500:450);
+   watchdog=setTimeout(()=>closeIntro(node),3500);
  }
  const replay=()=>{
-   // A click expressly opts into motion when the computer's OS disables autoplay.
-   if(reduced())setMotionPreference(true);
+   if(reduced())setMotionPreference();
    startIntro(true);
-   current?.querySelector('#skip-intro')?.focus({preventScroll:true});
+   active?.querySelector('#skip-intro')?.focus({preventScroll:true});
  };
  byId('replay-intro')?.addEventListener('click',replay);
  byId('header-replay-intro')?.addEventListener('click',replay);
- window.addEventListener('pageshow',event=>{
-   if(event.persisted&&window.innerWidth>=961)startIntro(false);
- });
+ window.addEventListener('pagehide',()=>closeIntro(active));
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)closeIntro(active)});
+ window.addEventListener('pageshow',event=>{if(event.persisted)closeIntro(active)});
  startIntro(false);
 }
 function attachEvents(){byId('theme-switch').addEventListener('click',()=>{theme=theme==='light'?'dark':'light';safeSet('lymelva-theme',theme);applyTheme()});byId('lang-toggle').addEventListener('click',()=>{lang=lang==='ar'?'en':'ar';safeSet('lymelva-lang',lang);translate()});byId('menu-toggle').addEventListener('click',()=>setMenu(!menuOpen));byId('mobile-nav').addEventListener('click',e=>{if(e.target.closest('a'))setMenu(false)});document.addEventListener('click',e=>{const service=e.target.closest('[data-service]');if(service){openModal('service',Number(service.dataset.service));return}const insight=e.target.closest('[data-insight]');if(insight){openModal('insight',Number(insight.dataset.insight));return}const f=e.target.closest('[data-filter]');if(f){filter=f.dataset.filter;renderInsights();return}const journey=e.target.closest('[data-stage]');if(journey){stage=Number(journey.dataset.stage);renderJourney();byId('journey-steps').querySelector(`[data-stage="${stage}"]`)?.focus();return}const faq=e.target.closest('[data-faq]');if(faq){const open=faq.getAttribute('aria-expanded')==='true';document.querySelectorAll('[data-faq]').forEach(el=>{el.setAttribute('aria-expanded','false');byId(`faq-answer-${el.dataset.faq}`).hidden=true});if(!open){faq.setAttribute('aria-expanded','true');byId(`faq-answer-${faq.dataset.faq}`).hidden=false}return}const nav=e.target.closest('[data-navigator]');if(nav){navigatorChoice=Number(nav.dataset.navigator);renderNavigator();return}if(e.target.closest('[data-close-modal], #modal-close'))closeModal();});byId('navigator-reset').addEventListener('click',()=>{navigatorChoice=-1;renderNavigator();byId('navigator-options').querySelector('button')?.focus()});byId('modal-cta').addEventListener('click',closeModal);document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(currentModal)closeModal();else if(menuOpen)setMenu(false);return}if(currentModal&&e.key==='Tab'){const box=byId('detail-modal');const nodes=Array.from(box.querySelectorAll('button:not([disabled]),a[href]')).filter(el=>el.offsetParent!==null);if(nodes.length){if(e.shiftKey&&document.activeElement===nodes[0]){e.preventDefault();nodes.at(-1).focus()}else if(!e.shiftKey&&document.activeElement===nodes.at(-1)){e.preventDefault();nodes[0].focus()}}}if(menuOpen&&e.key==='Tab'){const nodes=[byId('menu-toggle'),...byId('mobile-nav').querySelectorAll('a')];if(e.shiftKey&&document.activeElement===nodes[0]){e.preventDefault();nodes.at(-1).focus()}else if(!e.shiftKey&&document.activeElement===nodes.at(-1)){e.preventDefault();nodes[0].focus()}}});byId('contact-form').addEventListener('submit',e=>{e.preventDefault();makeBrief()});byId('copy-brief').addEventListener('click',async()=>{if(!lastBrief)return;try{await navigator.clipboard.writeText(lastBrief);showToast(t('formCopied'))}catch{const ta=document.createElement('textarea');ta.value=lastBrief;document.body.appendChild(ta);ta.select();const ok=document.execCommand('copy');ta.remove();showToast(ok?t('formCopied'):t('formErrorCopy'))}});byId('download-brief').addEventListener('click',downloadBrief);}

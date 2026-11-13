@@ -101,8 +101,15 @@ assert.match(read('scripts/build.mjs'),/requiredTopicIds/,'all image assets incl
 
 // v8 — visible desktop intro and motion conflict regression coverage.
 assert.match(home,/id="play-intro-motion"/,'explicit play intro control exists');
-assert.match(read('app.js'),/intro-static/,'reduced-motion intro must remain visible with explicit play control');
-assert.match(read('app.js'),/addEventListener\('load',begin/,'animation timeline waits for first load');
+assert.match(read('app.js'),/intro-soft-motion/,'reduced-motion intro exits automatically');
+assert.doesNotMatch(read('app.js'),/addEventListener\('load',begin/,'no waiting for full window load');
+assert.match(read('app.js'),/fullMotion\?2500:450/,'automatic brief intro');
+assert.match(read('app.js'),/watchdog=setTimeout/,'intro has a bounded watchdog');
+assert.doesNotMatch(read('app.js'),/12000/,'no extended static intro hold');
+assert.match(read('desktop-motion.css'),/V9: short automatic/,'performance fix included');
+assert.match(read('desktop-motion.css'),/lymelvaV9IntroPhoto/,'cinematic intro motion retained');
+assert.match(read('desktop-motion.css'),/lymelvaV9HeroArrival/,'hero entrance motion retained');
+assert.match(read('desktop-motion.css'),/backdrop-filter:none!important/,'expensive scroll backdrop disabled');
 assert.match(read('app.js'),/lymelva-motion-opt-in/,'user opt-in for full desktop animation');
 assert.doesNotMatch(read('editorial-refine.css'),/\.hero-photo\{[^}]*transform:none!important/,'editorial CSS must not block animated transform');
 assert.match(read('desktop-motion.css'),/data-motion-opt-in="true"/,'desktop animation can be manually enabled');
