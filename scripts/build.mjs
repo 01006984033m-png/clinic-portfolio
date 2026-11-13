@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const output = join(root, 'dist');
 const published = [
-  'index.html', 'styles.css', 'premium-light.css', 'cinematic-care.css', 'editorial-refine.css', 'brand-restore.css', 'brand-restore-education.css', 'light-comfort.css', 'app.js',
+  'index.html', 'styles.css', 'premium-light.css', 'cinematic-care.css', 'editorial-refine.css', 'brand-restore.css', 'brand-restore-education.css', 'light-comfort.css', 'desktop-motion.css', 'app.js',
   'privacy.html', 'privacy.css', 'robots.txt',
   'assets/brand-board.png', 'assets/lymelva-mark.svg',
   'assets/lymelva-logo.svg', 'assets/lymelva-logo-white.svg',
@@ -13,7 +13,7 @@ const published = [
   'assets/care-manual.webp', 'assets/care-compression.webp', 'assets/care-movement.webp',
   'assets/care-selfcare.webp', 'assets/care-room.webp',
   'education/index.html', 'education/content.js',
-  'education/education.css', 'education/education.js',
+  'education/education.css', 'education/clinical-gallery.css', 'education/education.js',
   'guides/brand-guidelines.pdf', 'guides/lymphedema-basics.pdf',
   'guides/visit-preparation.pdf', 'guides/self-care.pdf',
 ];

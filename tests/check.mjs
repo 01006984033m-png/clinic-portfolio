@@ -68,3 +68,18 @@ for (const hex of ['#0B4550','#218F91','#B7DCD2','#F7F4ED']) assert.ok(comfort.i
 assert.match(comfort,/html\[data-theme="light"\]/,'light mode only override');
 assert.doesNotMatch(comfort,/html\[data-theme="dark"\]/,'dark mode must be preserved');
 assert.match(read('scripts/build.mjs'),/light-comfort\.css/,'light CSS included in output');
+
+// Education photography, cinematic replay and author credit regressions.
+assert.match(home,/Created by Mohammed Elhady/,'footer author credit');
+assert.match(home,/id="replay-intro"/,'intro replay control');
+assert.match(home,/desktop-motion\.css/,'desktop motion override linked');
+assert.match(read('app.js'),/function activateIntro\(\)/,'intro replay logic retained');
+assert.match(read('desktop-motion.css'),/lymelvaDesktopPhoto/,'desktop photograph motion');
+assert.match(edu,/clinical-gallery\.css/,'education gallery stylesheet linked');
+assert.match(edu,/edu-hero-photo/,'clinical hero photograph');
+assert.match(edu,/id="article-image"/,'article imagery');
+assert.match(read('education/education.js'),/function articlePhoto\(article\)/,'topic-to-image mapping');
+assert.match(read('education/education.js'),/b\.append\(photo,top,title,summary,bottom\)/,'card photograph rendering');
+assert.match(read('scripts/build.mjs'),/clinical-gallery\.css/,'education photo styles in dist');
+assert.match(read('scripts/build.mjs'),/desktop-motion\.css/,'desktop motion styles in dist');
+for(const name of ['assessment','compression','decongestive','manual','movement','selfcare','room'])assert.ok(existsSync(join(root,'assets/care-'+name+'.webp')),'education photo asset '+name);

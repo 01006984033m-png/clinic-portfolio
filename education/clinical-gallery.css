@@ -1,0 +1,26 @@
+/* LYMELVA patient education — clinical editorial photography. Asset reuse with honest illustrative labels. */
+.edu-hero-photo{position:relative;margin:0;min-width:0;height:clamp(300px,38vw,530px);border-radius:16px;overflow:hidden;background:#0B4550;border:1px solid var(--ed-line)}
+.edu-hero-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(.83) contrast(1.03)}
+.edu-hero-photo:after{content:"";pointer-events:none;position:absolute;inset:42% 0 0;background:linear-gradient(transparent,rgba(4,34,37,.75))}
+.edu-hero-photo figcaption{position:absolute;bottom:18px;inset-inline-start:18px;inset-inline-end:18px;z-index:1;font-size:11px;line-height:1.6;color:#fff;letter-spacing:0}
+.edu-cards{gap:18px}
+.edu-card{padding:0!important;min-height:390px!important;border-radius:15px;overflow:hidden;box-shadow:none;text-align:start}
+.edu-card:before{display:none!important}
+.edu-card-photo{position:relative;height:190px;margin:0;overflow:hidden;background:#0B4550;flex:none}
+.edu-card-photo img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.86);transition:transform .4s ease}
+.edu-card:hover .edu-card-photo img{transform:scale(1.025)}
+.edu-card-photo:after{content:"";position:absolute;inset:45% 0 0;background:linear-gradient(transparent,rgba(3,31,35,.65));pointer-events:none}
+.edu-card-photo figcaption{position:absolute;inset-inline:13px;bottom:10px;z-index:1;color:#fff;font-size:10px;line-height:1.4}
+.edu-card-top{padding:16px 20px 0;letter-spacing:.02em}
+.edu-card h3{padding-inline:20px;margin-top:13px;font:700 clamp(18px,1.6vw,22px)/1.48 'Noto Sans Arabic',Tahoma,Arial,sans-serif;letter-spacing:0}
+html[lang=en] .edu-card h3{font-family:'Segoe UI',Arial,sans-serif}
+.edu-card p{padding-inline:20px;margin:0 0 15px;line-height:1.7;flex-grow:1}
+.edu-card-bottom{margin:0 20px 0;padding:13px 0 16px}
+.edu-article-photo{margin:2px 0 24px;position:relative;overflow:hidden;border-radius:11px;background:var(--ed-sage)}
+.edu-article-photo img{display:block;width:100%;height:200px;object-fit:cover;filter:saturate(.86)}
+.edu-article-photo figcaption{font-size:11px;color:var(--ed-muted);padding:8px 12px;text-align:start;background:var(--ed-bg)}
+html[data-theme=dark] .edu-hero-photo,html[data-theme=dark] .edu-card-photo{border-color:#355057}
+@media(max-width:950px){.edu-hero-photo{height:380px}.edu-card{min-height:365px!important}}
+@media(max-width:680px){.edu-hero-photo{height:265px;border-radius:12px}.edu-card{min-height:0!important}.edu-card-photo{height:190px}.edu-article-photo img{height:175px}}
+@media(prefers-reduced-motion:reduce){.edu-card-photo img{transition:none!important}.edu-card:hover .edu-card-photo img{transform:none!important}}
+@media print{.edu-article-photo{break-inside:avoid}.edu-article-photo img{max-height:140px}}

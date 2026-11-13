@@ -1,0 +1,15 @@
+/* LYMELVA cinematic desktop — restore subtle movement disabled by editorial-refine.css. */
+.hero-replay{display:inline-flex;align-items:center;gap:7px;padding:7px 0;margin-top:17px;border:0;background:transparent;color:var(--teal2);font:600 12px 'Noto Sans Arabic',Tahoma,Arial,sans-serif;cursor:pointer;text-decoration:underline;text-underline-offset:5px}
+.hero-replay:hover,.hero-replay:focus-visible{color:var(--teal);outline-offset:5px}
+.creator-credit{font:600 12px/1.5 'Segoe UI',Arial,sans-serif;letter-spacing:.02em;unicode-bidi:isolate;direction:ltr;color:var(--sub)}
+html[data-theme=dark] .creator-credit{color:#b7dcd2}
+@media(min-width:961px) and (prefers-reduced-motion:no-preference){
+ .hero-visual-photo .hero-photo{animation:lymelvaDesktopPhoto 13s ease-in-out infinite alternate!important;transform-origin:50% 50%;will-change:transform}
+ .hero-visual-photo .hero-moving-light{display:block!important;animation:clinicalMovingLight 10s ease-in-out infinite!important;opacity:.45}
+ .hero-visual-photo .hero-film-layer{display:block!important;opacity:.12}
+ .hero-copy .hero-replay{animation:lymelvaReplayFade 1.0s ease both}
+}
+@keyframes lymelvaDesktopPhoto{from{transform:scale(1.018) translateY(0)}to{transform:scale(1.075) translateY(-7px)}}
+@keyframes lymelvaReplayFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:720px){.hero-replay{font-size:11px;margin-top:10px}.creator-credit{width:100%;margin-top:8px}}
+@media(prefers-reduced-motion:reduce){.hero-replay{display:none!important}.hero-visual-photo .hero-photo{animation:none!important;transform:none!important}.hero-visual-photo .hero-moving-light{display:none!important}}
