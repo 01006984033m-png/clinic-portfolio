@@ -50,8 +50,8 @@
    node.classList.add('intro-waapi');
    const count=[
      animatePart(node,'.intro-bg-photo',[
-       {transform:'translate3d(0,22px,0) scale(1.22)'},
-       {transform:'translate3d(0,0,0) scale(1.015)'}
+       {transform:'translate3d(0,8px,0) scale(1.06)'},
+       {transform:'translate3d(0,-8px,0) scale(1.06)'}
      ],3400),
      animatePart(node,'.intro-inner img',[
        {opacity:0,transform:'translate3d(0,55px,0) scale(.48) rotate(-11deg)'},
@@ -111,12 +111,16 @@
    // legacy reduced-motion resets, or separate animation stylesheets.
    if(!enabled()||!desktop()||!el.animate)return;
    const image=el.matches('.service-photo-card,.insight-card,.edu-card,.hero-visual-photo,.statement-art,.edu-hero-photo');
-   const travel=image?34:46;
    const delay=Math.min(Number(el.dataset.motionDelay||0),150);
-   el.animate([
-     {opacity:0,transform:'translate3d(0,'+travel+'px,0) scale('+(image?'.965':'1')+')'},
-     {opacity:1,transform:'translate3d(0,0,0) scale(1)'}
-   ],{duration:image?1050:850,delay,fill:'none',easing:'cubic-bezier(.17,.75,.22,1)'});
+   // Photo surfaces use opacity only: scale + nested image hover zoom
+   // caused double transforms, blurry cropping and a visible end-of-frame jump.
+   // Text and non-image blocks retain a subtle compositor-only rise.
+   const frames=image
+     ? [{opacity:0},{opacity:1}]
+     : [{opacity:0,transform:'translate3d(0,28px,0)'},{opacity:1,transform:'translate3d(0,0,0)'}];
+   el.animate(frames,{
+     duration:image?760:810,delay,fill:'none',easing:'cubic-bezier(.17,.75,.22,1)'
+   });
  }
  function refresh(){
    if(!scrollReady)return;

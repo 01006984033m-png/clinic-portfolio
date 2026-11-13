@@ -59,6 +59,14 @@ try{
  });
  assert.equal(playing.waapi,true,'intro needs a real timeline '+JSON.stringify(playing));
  assert.equal(playing.count,1,'intro must not duplicate');
+ const photoKeys=await page.locator('#intro .intro-bg-photo').evaluate(img=>{
+   const a=img.getAnimations().find(x=>x.effect?.getKeyframes);
+   return a?.effect?.getKeyframes().map(k=>k.transform)||[];
+ });
+ assert.deepEqual(photoKeys,[
+   'translate3d(0px, 8px, 0px) scale(1.06)',
+   'translate3d(0px, -8px, 0px) scale(1.06)'
+ ],'intro image must pan without abrupt scale or image distortion');
  assert.ok(playing.logo>0&&playing.title>0&&playing.time>100,'logo and title must move '+JSON.stringify(playing));
  await page.waitForTimeout(3900);
  assert.equal(await page.locator('#intro').count(),0,'intro removed after full cinematic animation');
@@ -77,6 +85,27 @@ try{
  await page.waitForTimeout(150);
  const active=await page.evaluate(()=>Array.from(document.querySelectorAll('#services-grid .service-photo-card')).filter(n=>n.getAnimations().length>0).length);
  assert.ok(active>0,'scroll must cause active browser animations, not just an is-visible class');
+ const photoStability=await page.evaluate(()=>{
+   const frame=document.querySelector('#services-grid .service-photo-frame');
+   const photo=frame?.querySelector('img');
+   const card=frame?.closest('.service-photo-card');
+   const scrollKeyframes=card?.getAnimations().filter(a=>a.effect?.getKeyframes).flatMap(a=>a.effect.getKeyframes())||[];
+   const rect=photo?.getBoundingClientRect();
+   return {imageTransform:photo?getComputedStyle(photo).transform:null,
+     objectFit:photo?getComputedStyle(photo).objectFit:null,
+     naturalWidth:photo?.naturalWidth||0,
+     rect:rect?{width:rect.width,height:rect.height}:null,
+     scrollKeyframes:scrollKeyframes.map(f=>({opacity:f.opacity,transform:f.transform||null}))};
+ });
+ assert.equal(photoStability.imageTransform,'none','service images must not zoom or distort during card entry');
+ assert.equal(photoStability.objectFit,'cover','photographs retain cover cropping');
+ assert.ok(photoStability.naturalWidth>0,'photograph asset loaded');
+ assert.ok(photoStability.scrollKeyframes.length>0&&photoStability.scrollKeyframes.every(f=>!f.transform),
+   'photographic cards must only fade, never scale or translate '+JSON.stringify(photoStability));
+ await page.locator('#services-grid .service-photo-card').first().hover();
+ await page.waitForTimeout(180);
+ assert.equal(await page.locator('#services-grid .service-photo-frame img').first().evaluate(el=>getComputedStyle(el).transform),
+   'none','hover must not add a second image transform');
  await page.waitForTimeout(1200);
  assert.ok((await page.locator('#services-grid .service-photo-card[data-motion-shown="1"]').count())>0,'services finish reveal');
  await page.evaluate(()=>{window.scrollTo(0,0);document.querySelector('#header-replay-intro').click()});
@@ -113,5 +142,5 @@ try{
  assert.ok(count>0,'education cards should animate on scroll, not only change class');
  await edu.close();
  assert.deepEqual(errors,[],'zero browser Javascript runtime errors');
- console.log('PASS CHROME 1440px: one cinematic timeline, no duplicate hero motion, actual scroll animation, replay and skip');
+ console.log('PASS CHROME 1440px: one cinematic timeline, no image distortion, fade-only photo cards, scroll animations, replay and skip');
 } finally {await browser.close();await new Promise(resolve=>server.close(resolve))}

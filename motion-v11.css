@@ -18,7 +18,7 @@ body.intro-running:not(.intro-js-ready) #intro{animation:lymelvaV11Failsafe 5s b
 .intro.cinematic-intro .intro-progress span{
   animation:none!important;
 }
-.intro.cinematic-intro .intro-bg-photo{transform:scale(1.015)}
+.intro.cinematic-intro .intro-bg-photo{transform:translate3d(0,-8px,0) scale(1.06);transform-origin:center center}
 .intro.cinematic-intro .intro-light-streak{
   display:block;filter:none!important;opacity:0;will-change:transform,opacity
 }
@@ -67,3 +67,38 @@ html[data-motion-active] .motion-reveal{
 @media(max-width:960px){.motion-toggle{display:none}}
 /* Legacy OS reduced-motion declarations continue to protect people who
    explicitly turn motion off. The owner's desktop default uses WAAPI. */
+
+/* V12 image stability:
+   Images stay on a fixed cover plane. Scroll animations fade the wrapper
+   instead of scaling its texture; hover uses contrast and border feedback. */
+html[data-motion-active] .service-photo-frame,
+html[data-motion-active] .insight-photo-art,
+html[data-motion-active] .edu-card-photo,
+html[data-motion-active] .edu-hero-photo{
+  overflow:hidden;
+  contain:paint;
+}
+html[data-motion-active] .service-photo-frame img,
+html[data-motion-active] .insight-photo-art img,
+html[data-motion-active] .edu-card-photo img,
+html[data-motion-active] .edu-hero-photo img{
+  transform:none!important;
+  transition:none!important;
+  animation:none!important;
+  object-fit:cover;
+  max-width:none;
+}
+html[data-motion-active] .service-photo-card:hover .service-photo-frame img,
+html[data-motion-active] .service-photo-card:focus-visible .service-photo-frame img,
+html[data-motion-active] .insight-card:hover .insight-photo-art img,
+html[data-motion-active] .edu-card:hover .edu-card-photo img{
+  transform:none!important;
+}
+@media(min-width:961px){
+  html[data-motion-active="true"] .service-photo-card:hover,
+  html[data-motion-active="true"] .insight-card:hover,
+  html[data-motion-active="true"] .edu-card:hover{
+    transform:none!important;
+    box-shadow:0 12px 32px rgba(0,32,40,.11);
+  }
+}
