@@ -95,7 +95,7 @@ for(const a of data.articles){
  assert.ok(size>3500&&size<300000,'image size and integrity '+path);
 }
 assert.match(home,/id="header-replay-intro"/,'visible desktop replay entrypoint');
-assert.match(read('app.js'),/header-replay-intro/,'desktop replay event');
+assert.match(read('motion-v10.js'),/header-replay-intro/,'desktop replay event in the new motion runtime');
 assert.match(read('desktop-motion.css'),/intro-manual-motion/,'opt-in motion support');
 assert.match(read('scripts/build.mjs'),/requiredTopicIds/,'all image assets included in production');
 
