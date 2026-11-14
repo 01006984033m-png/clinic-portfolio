@@ -28,3 +28,6 @@ jobs:
 
       - name: Chrome mobile navigation and email form integration
         run: node tests/browser-contact.mjs
+
+      - name: Inspect production in real mobile and Brave desktop-request modes
+        run: node tests/mobile-layout-diagnostic.mjs
