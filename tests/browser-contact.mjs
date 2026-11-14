@@ -35,15 +35,14 @@ try{
    return {sibling:{display:a.display,direction:a.flexDirection,height:sibling.getBoundingClientRect().height},
      whatsapp:{display:b.display,direction:b.flexDirection,height:wa.getBoundingClientRect().height,
        background:b.backgroundColor,border:b.borderTopWidth,shadow:b.boxShadow},
-     label:wa.querySelector('.mobile-whatsapp-label')?.textContent,outerHTML:wa.outerHTML.slice(0,1400)};
+     label:wa.querySelector('.mobile-whatsapp-label')?.textContent};
  });
  assert.equal(siblingStyles.whatsapp.display,siblingStyles.sibling.display,'WhatsApp matches sibling display');
  assert.equal(siblingStyles.whatsapp.direction,siblingStyles.sibling.direction,'WhatsApp matches sibling icon-caption direction');
  assert.ok(Math.abs(siblingStyles.whatsapp.height-siblingStyles.sibling.height)<2,'all five touch targets have equal height');
  assert.equal(siblingStyles.whatsapp.background,'rgba(0, 0, 0, 0)','WhatsApp is not a green bubble');
  assert.equal(siblingStyles.whatsapp.border,'0px','WhatsApp has no circular outline');
- console.log('MOBILE_WA_DOM',siblingStyles.outerHTML);
- assert.equal(siblingStyles.whatsapp.label,'واتساب','WhatsApp caption is visible');
+ assert.equal(siblingStyles.label,'واتساب','WhatsApp caption is visible');
  // User-visible regression: a raised WhatsApp bubble previously covered
  // neighboring controls and the hero photograph on real Android devices.
  async function assertNoWhatsAppOverlap(width){
