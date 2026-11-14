@@ -163,3 +163,20 @@ html[data-motion-active] .insight-card:hover .insight-photo-art img{
 html[data-motion-active] .edu-card:hover .edu-card-photo img{
   filter:saturate(.86)!important;
 }
+
+
+/* V14: stable-exposure text motion. Disable the previous opacity reveal
+   observer and CSS transitions; Web Animations now move text ONLY. */
+main .reveal,
+main .reveal.is-visible,
+main .motion-reveal,
+main .motion-reveal.motion-entered{
+  opacity:1!important;
+  transition-property:none!important;
+}
+@media(min-width:961px){
+  /* Preserve distinct motion from translate + subtle scaling, never fading. */
+  html[data-motion-active="true"] main .motion-reveal{
+    backface-visibility:hidden;
+  }
+}

@@ -114,11 +114,15 @@
    // opacity-only WAAPI animation makes photographs flash when scrolling.
    // Text remains independently animated without changing image luminance.
    if(el.matches('img,picture,video,figure')||el.querySelector('img,picture,video'))return;
-   const delay=Math.min(Number(el.dataset.motionDelay||0),150);
+   const delay=Math.min(Number(el.dataset.motionDelay||0),180);
+   // Transform-only entrance: never change opacity, brightness or filters.
+   // One observer, one animation per text element, no replay on reverse scroll.
+   const title=el.matches('h1,h2,h3,.section-heading-row,.edu-section-head,.reveal');
+   const travel=title?54:36;
    el.animate([
-     {opacity:0,transform:'translate3d(0,22px,0)'},
-     {opacity:1,transform:'translate3d(0,0,0)'}
-   ],{duration:700,delay,fill:'none',easing:'cubic-bezier(.17,.75,.22,1)'});
+     {transform:'translate3d(0,'+travel+'px,0) scale('+(title?'.965':'.985')+')'},
+     {transform:'translate3d(0,0,0) scale(1)'}
+   ],{duration:title?1080:880,delay,fill:'none',easing:'cubic-bezier(.17,.85,.22,1)'});
  }
  function refresh(){
    if(!scrollReady)return;

@@ -143,3 +143,11 @@ assert.match(read('motion-v11.css'),/V13: zero photo flicker/,'all photo surface
 assert.doesNotMatch(read('motion-v11.js'),/scale\('\+\(image/,'old double-scale image animation not restored');
 assert.match(read('motion-v11.css'),/V12 image stability/,'image motion stabilization stylesheet included');
 assert.match(read('motion-v11.css'),/\.service-photo-frame img,[\s\S]*?transform:none!important/,'service photo cannot zoom on hover');
+
+/* V14 motion protection — opacity and brightness are not scroll animation inputs. */
+assert.doesNotMatch(read('app.js'),/const reveal=new IntersectionObserver/,'legacy duplicate reveal observer disabled');
+assert.match(read('motion-v11.js'),/Transform-only entrance/,'scroll text uses transform-only entrance');
+assert.doesNotMatch(read('motion-v11.js'),/\{opacity:0,transform:'translate3d\(0,22px,0\)'/,'no opacity-zero text frames');
+assert.match(read('motion-v11.js'),/title\?1080:880/,'prominent desktop movement retained');
+assert.match(read('motion-v11.css'),/V14: stable-exposure text motion/,'CSS text opacity fixed');
+assert.match(read('motion-v11.css'),/main \.motion-reveal\.motion-entered/,'motion CSS covers completed text');

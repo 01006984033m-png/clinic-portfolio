@@ -85,6 +85,18 @@ try{
  await page.waitForTimeout(150);
  const active=await page.evaluate(()=>Array.from(document.querySelectorAll('#services-grid .service-photo-card h3')).filter(n=>n.getAnimations().length>0).length);
  assert.ok(active>0,'service text must move on scroll, without fading photographs');
+ const textMotion=await page.evaluate(()=>{
+   const el=Array.from(document.querySelectorAll('#services-grid .service-photo-card h3'))
+     .find(node=>node.getAnimations().some(animation=>animation.effect?.getKeyframes));
+   const frames=el?.getAnimations().filter(a=>a.effect?.getKeyframes).flatMap(a=>a.effect.getKeyframes())||[];
+   return {frames:frames.map(f=>({transform:f.transform||null,opacity:f.opacity||null})),
+     opacity:el?getComputedStyle(el).opacity:null};
+ });
+ assert.equal(textMotion.opacity,'1','animated headings must remain fully opaque');
+ assert.ok(textMotion.frames.length>=2&&textMotion.frames.every(f=>f.transform&&f.opacity===null),
+   'headings must move visibly without any opacity tween: '+JSON.stringify(textMotion));
+ assert.ok(textMotion.frames.some(f=>/54px|36px/.test(f.transform)),
+   'text entry should have a meaningful transform, not disappear');
  const photoStability=await page.evaluate(()=>{
    const frame=document.querySelector('#services-grid .service-photo-frame');
    const photo=frame?.querySelector('img');
@@ -115,6 +127,7 @@ try{
  // A changing filter or any wrapper opacity animation would recreate the
  // reported lights-on/lights-off flicker on desktop.
  const samples=[];
+ const textSamples=[];
  for(let cycle=0;cycle<4;cycle++){
    await page.evaluate(()=>window.scrollTo(0,0));
    await page.waitForTimeout(100);
@@ -131,10 +144,22 @@ try{
        cardAnimations:card.getAnimations().length
      };
    }));
+   textSamples.push(await page.evaluate(()=>{
+     const heading=document.querySelector('#services-grid .service-photo-card h3');
+     const copy=document.querySelector('#services-grid .service-photo-card p');
+     return {headingOpacity:getComputedStyle(heading).opacity,
+       copyOpacity:getComputedStyle(copy).opacity,
+       headingAnimations:heading.getAnimations().length};
+   }));
+
  }
  assert.ok(samples.every(s=>s.photoOpacity==='1'&&s.cardOpacity==='1'&&s.photoAnimations===0&&s.cardAnimations===0),
    'photo must never darken or flash in either scroll direction '+JSON.stringify(samples));
  assert.equal(new Set(samples.map(s=>s.photoFilter)).size,1,'photo filter must be constant while scrolling '+JSON.stringify(samples));
+ assert.ok(textSamples.length===4&&textSamples.every(s=>s.headingOpacity==='1'&&s.copyOpacity==='1'),
+   'text must never blink during down/up/down scrolling '+JSON.stringify(textSamples));
+ assert.ok(textSamples.every(s=>s.headingAnimations===0),
+   'entrance must not retrigger on every scroll direction '+JSON.stringify(textSamples));
 
  await page.evaluate(()=>{window.scrollTo(0,0);document.querySelector('#header-replay-intro').click()});
  await page.waitForTimeout(480);
@@ -170,5 +195,5 @@ try{
  assert.ok(count>0,'education text moves on scroll without fading its images');
  await edu.close();
  assert.deepEqual(errors,[],'zero browser Javascript runtime errors');
- console.log('PASS CHROME 1440px: one cinematic timeline, no image distortion, fixed photo opacity across 4 scroll cycles, text animations, replay and skip');
+ console.log('PASS CHROME 1440px: one cinematic timeline, no image distortion, fixed image/text opacity across 4 scroll cycles, transform-only text motion, replay and skip');
 } finally {await browser.close();await new Promise(resolve=>server.close(resolve))}
