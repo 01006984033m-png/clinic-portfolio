@@ -51,6 +51,26 @@ const educationPos=home.indexOf('education-promo-featured');
 const servicePos=home.indexOf('<section id="services"');
 const aboutPos=home.indexOf('<section id="about"');
 assert.ok(educationPos>0&&educationPos<servicePos&&servicePos<aboutPos,'education is first, then services, then about');
+const doctorSectionPos=home.indexOf('<section id="doctors"');
+const journeySectionPos=home.indexOf('<section id="journey"');
+assert.ok(aboutPos<doctorSectionPos&&doctorSectionPos<journeySectionPos,'Our Doctors appears between About and Care Journey');
+assert.equal((home.match(/<li class="doctor-card">/g)||[]).length,22,'our doctors section remains complete');
+const doctorNames=[
+ 'Mohammed Hesham Mohammed Elhady','Mohamed Tarek sheta','Mohamed Nabil Abdelgalil',
+ 'Mohamed Abdalwarth Bakoush','Mahmoud Mohamed Khames','Mohamed Ezzat Ali',
+ 'Mahmoud Osama Elsayed','Mohamed Mahmoud Roshdy','Mohammed Mohsen Eliwa',
+ 'Mohamed abdelaty Mohamed','Mohamed Mustafa Abdelazim','Mohamed Nabil Ghanem',
+ 'Mohamed Ali Mohamed','Mohamed Abbas Ezzat','Mohamed mamdouh abdlmoniem',
+ 'Mahmoud nazmi abo horan','Mohamed Mostafa Fathallah','Mohamed essam mohamed',
+ 'Mahmoud Mohamed Abdelalim','mohamed Abdo Atia','Mohamed Mosad Mohamed',
+ 'Mohamed karam mansour'
+];
+for(const name of doctorNames)assert.ok(home.includes('<h3 class="doctor-name" lang="en" dir="ltr">'+name+'</h3>'),'missing doctor '+name);
+assert.match(home,/our-doctors\.css/,'Our Doctors stylesheet linked');
+assert.match(read('scripts/build.mjs'),/'our-doctors\.css'/,'Our Doctors stylesheet published');
+assert.match(read('app.js'),/function updateDoctors\(\)/,'Our Doctors search is wired');
+assert.equal((home.match(/data-i18n="navDoctors"/g)||[]).length,3,'doctors linked in desktop, mobile, and footer');
+
 assert.equal((home.match(/education-promo-featured/g)||[]).length,1,'one education panel; no duplicates');
 assert.match(home,/hero-education-cta[^>]*href="education\/"|href="education\/"[^>]*hero-education-cta/,'hero education CTA navigates to library');
 const brandCSS=read('brand-restore.css');
