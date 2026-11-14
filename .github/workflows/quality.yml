@@ -26,6 +26,8 @@ jobs:
             node tests/browser-motion.mjs
           done
 
+      - name: Desktop smooth-scroll performance regression
+        run: node tests/browser-performance.mjs
       - name: Chrome mobile navigation and email form integration
         run: node tests/browser-contact.mjs
 

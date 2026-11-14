@@ -150,7 +150,7 @@ assert.match(read('motion-v11.css'),/\.service-photo-frame img,[\s\S]*?transform
 assert.doesNotMatch(read('app.js'),/const reveal=new IntersectionObserver/,'legacy duplicate reveal observer disabled');
 assert.match(read('motion-v11.js'),/Transform-only entrance/,'scroll text uses transform-only entrance');
 assert.doesNotMatch(read('motion-v11.js'),/\{opacity:0,transform:'translate3d\(0,22px,0\)'/,'no opacity-zero text frames');
-assert.match(read('motion-v11.js'),/title\?1080:880/,'prominent desktop movement retained');
+assert.match(read('motion-v11.js'),/title\?850:700/,'clear but lighter desktop movement retained');
 assert.match(read('motion-v11.css'),/V14: stable-exposure text motion/,'CSS text opacity fixed');
 assert.match(read('motion-v11.css'),/main \.motion-reveal\.motion-entered/,'motion CSS covers completed text');
 
@@ -211,3 +211,13 @@ for(const route of ['/', '/index.html','/education/','/education/index.html']){
  const header=vercel.headers.find(h=>h.source===route);
  assert.ok(header?.headers.some(h=>h.key==='Cache-Control'&&h.value.includes('no-store')),'stale HTML blocked on '+route);
 }
+
+// V15: responsive desktop scroll with no forced geometry reads each frame.
+const appSource=read('app.js');
+const scrollBody=appSource.slice(appSource.indexOf('function observeUI(){'),appSource.indexOf('function init(){'));
+assert.doesNotMatch(scrollBody,/getBoundingClientRect\s*\(/,'scroll handler must not force synchronous layout');
+assert.match(scrollBody,/contactObserver=new IntersectionObserver/,'contact visibility uses async intersection instead of geometry read');
+assert.match(scrollBody,/window\.addEventListener\('scroll',onScroll,\{passive:true\}\)/,'scroll handler passive');
+assert.match(scrollBody,/movement>5/,'desktop header does not flicker for tiny scroll events');
+assert.doesNotMatch(read('motion-v11.js'),/scale\('\+\(title/,'scroll text never scales/rasterizes every frame');
+assert.match(read('motion-v11.js'),/Translate-only is compositor-friendly/,'transform-only scroll entrance retained');
