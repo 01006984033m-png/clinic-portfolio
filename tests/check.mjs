@@ -188,3 +188,10 @@ assert.doesNotMatch(mobileCSS,/left:\s*-\s*10000px/,'honeypot cannot push RTL co
 assert.match(mobileCSS,/\.contact-form\{position:relative\}/,'honeypot positions against its form');
 assert.match(mobileCSS,/clip-path:inset\(50%\)/,'honeypot remains visually hidden without overflow');
 assert.match(read('.github/workflows/quality.yml'),/mobile-layout-diagnostic\.mjs/,'live mobile viewport regression enabled');
+
+// WhatsApp must be fully docked; never raised over photographs or adjacent controls.
+const phoneNavCSS=read('mobile-bottom.css');
+assert.match(phoneNavCSS,/grid-template-columns:repeat\(5,minmax\(0,1fr\)\)/,'phone dock gives each control its own slot');
+assert.match(phoneNavCSS,/\.mobile-bottom-whatsapp\{[^}]*transform:none/,'WhatsApp button stays in the dock');
+assert.doesNotMatch(phoneNavCSS,/\.mobile-bottom-whatsapp\{[^}]*translateY\(-/,'raised WhatsApp overlay must not return');
+assert.match(phoneNavCSS,/body:has\(\.contact-form:focus-within\)/,'dock yields space during form typing');
