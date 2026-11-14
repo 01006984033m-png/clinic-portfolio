@@ -139,7 +139,7 @@ function observeUI(){
   const mobileTop=window.innerWidth<=720&&y<Math.min(440,window.innerHeight*.5);
   floating.classList.toggle('is-hidden',mobileTop||contactNear);
  };
- // The old per-scroll contact.getBoundingClientRect() forced synchronous layout.
+ // The old per-frame contact geometry read forced synchronous layout.
  const contactObserver=new IntersectionObserver(entries=>{
   contactNear=entries.some(e=>e.isIntersecting);
   updateFloating(window.scrollY);
