@@ -4,20 +4,25 @@ on:
     branches: [main]
     paths:
       - 'api/contact.js'
+      - 'index.html'
+      - 'app.js'
+      - 'mobile-bottom.css'
+      - 'mobile-nav.js'
 permissions:
   contents: read
 jobs:
   verify-owner-email:
     runs-on: ubuntu-latest
     steps:
-      - name: Wait for production serverless endpoint
+      - name: Wait for new production frontend and working contact API
         shell: bash
         run: |
           set -euo pipefail
           for i in $(seq 1 24); do
             status="$(curl -sS -m 12 -o /dev/null -w '%{http_code}' 'https://clinic-portfolio-sigma.vercel.app/api/contact' || true)"
-            if [ "$status" = "405" ]; then
-              echo "Contact API live (405 for unsupported GET)."
+            html="$(curl -fLsS -m 12 'https://clinic-portfolio-sigma.vercel.app/?rev=fix-wa-email-20261114' || true)"
+            if [ "$status" = "405" ] && [[ "$html" == *"إرسال تفاصيل الطلب إلى البريد"* ]] && [[ "$html" == *"app.js?rev=fix-wa-email-20261114"* ]]; then
+              echo "Latest contact frontend and serverless endpoint are live."
               exit 0
             fi
             sleep 8
@@ -28,7 +33,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          payload="$(printf '{"name":"LYMELVA QA Test","phone":"00000000000","email":"","type":"general","time":"any","details":"LYMELVA-EMAIL-SMOKE-20261114-%s (synthetic automated test, no patient data)","website":""}' "$GITHUB_RUN_ID")"
+          payload="$(printf '{"name":"LYMELVA Form QA","phone":"00000000000","email":"","type":"followup","time":"evening","details":"LYMELVA-FORM-EMAIL-VERIFY-20261114-%s (synthetic automated end-to-end test; name, phone, type, preferred time and enquiry details)","website":""}' "$GITHUB_RUN_ID")"
           response="$(curl --fail-with-body -sS -m 15 \
             -H 'Content-Type: application/json' \
             -H 'Origin: https://clinic-portfolio-sigma.vercel.app' \
