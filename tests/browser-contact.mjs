@@ -28,7 +28,21 @@ try{
  const nav=page.locator('#mobile-bottom-nav');
  assert.equal(await nav.isVisible(),true,'mobile bottom nav visible');
  assert.equal(await nav.locator('.mobile-bottom-link').count(),4,'four mobile destinations');
- assert.equal(await nav.locator('.mobile-bottom-whatsapp').count(),1,'WhatsApp raised action present');
+ assert.equal(await nav.locator('.mobile-bottom-whatsapp').count(),1,'WhatsApp fifth navigation action present');
+ const siblingStyles=await nav.evaluate(nav=>{
+   const sibling=nav.querySelector('.mobile-bottom-link'),wa=nav.querySelector('.mobile-bottom-whatsapp');
+   const a=getComputedStyle(sibling),b=getComputedStyle(wa);
+   return {sibling:{display:a.display,direction:a.flexDirection,height:sibling.getBoundingClientRect().height},
+     whatsapp:{display:b.display,direction:b.flexDirection,height:wa.getBoundingClientRect().height,
+       background:b.backgroundColor,border:b.borderTopWidth,shadow:b.boxShadow},
+     label:wa.querySelector('.mobile-whatsapp-label')?.textContent};
+ });
+ assert.equal(siblingStyles.whatsapp.display,siblingStyles.sibling.display,'WhatsApp matches sibling display');
+ assert.equal(siblingStyles.whatsapp.direction,siblingStyles.sibling.direction,'WhatsApp matches sibling icon-caption direction');
+ assert.ok(Math.abs(siblingStyles.whatsapp.height-siblingStyles.sibling.height)<2,'all five touch targets have equal height');
+ assert.equal(siblingStyles.whatsapp.background,'rgba(0, 0, 0, 0)','WhatsApp is not a green bubble');
+ assert.equal(siblingStyles.whatsapp.border,'0px','WhatsApp has no circular outline');
+ assert.equal(siblingStyles.whatsapp.label,'واتساب','WhatsApp caption is visible');
  // User-visible regression: a raised WhatsApp bubble previously covered
  // neighboring controls and the hero photograph on real Android devices.
  async function assertNoWhatsAppOverlap(width){
@@ -80,6 +94,9 @@ try{
  assert.equal(requests[0].name,'Browser Test');
  assert.equal(requests[0].phone,'01012345678');
  assert.equal(requests[0].details,'Please share appointment options.');
+ assert.equal(requests[0].type,'initial','enquiry type is transmitted');
+ assert.equal(requests[0].time,'morning','preferred time is transmitted');
+ assert.match(await page.locator('#contact-form button[type="submit"]').innerText(),/إرسال تفاصيل الطلب إلى البريد/,'actual button declares email sending');
  assert.equal(requests[0].email,'sample@example.com');
  const result=await page.locator('#result-whatsapp').getAttribute('href');
  const draft=new URL(result).searchParams.get('text')||'';

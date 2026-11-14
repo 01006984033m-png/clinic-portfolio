@@ -16,10 +16,15 @@
  .mobile-bottom-link svg{width:23px;height:23px;flex:none}
  .mobile-bottom-link.is-current,.mobile-bottom-link[aria-current="page"]{color:#56dbb8;background:#158f8240}
  /* WhatsApp stays WITHIN the bar and cannot cover the photo, chat or Home buttons. */
- .mobile-bottom-whatsapp{justify-self:center;align-self:center;transform:none;width:48px;height:48px;
- display:grid;place-items:center;color:#fff;background:#087f58;border:2px solid #aaffd1;border-radius:50%;
- box-shadow:0 2px 11px #0de77539}
- .mobile-bottom-whatsapp svg{width:27px;height:27px}
+ .mobile-bottom-whatsapp{justify-self:stretch;align-self:stretch;transform:none;
+ display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+ min-width:0;min-height:60px;width:auto;height:auto;
+ color:#d0e0db;background:transparent;border:0;border-radius:25px;
+ box-shadow:none;outline-offset:3px;font:600 10px/1.1 Tahoma,Arial,sans-serif;
+ text-align:center;transition:color .18s,background-color .18s}
+ .mobile-bottom-whatsapp svg{width:23px;height:23px;flex:none}
+ .mobile-bottom-whatsapp .mobile-whatsapp-label{font-size:clamp(9px,2.5vw,11px);white-space:nowrap}
+ .mobile-bottom-whatsapp:hover{color:#56dbb8;background:rgba(21,143,130,.14)}
  .mobile-bottom-link:focus-visible,.mobile-bottom-whatsapp:focus-visible{outline:3px solid #5ddfbb;outline-offset:3px}
  body:has(.mobile-nav.is-open) .mobile-bottom-nav,
  body:has(.modal-layer:not([hidden])) .mobile-bottom-nav{visibility:hidden;pointer-events:none}
@@ -29,7 +34,7 @@
  #floating-cta.floating-whatsapp{display:none!important}
  .footer{padding-bottom:calc(40px + env(safe-area-inset-bottom,0px))}
 }
-@media(max-width:365px){.mobile-bottom-nav{inset-inline:5px;grid-template-columns:repeat(5,minmax(0,1fr));padding:4px;min-height:68px}.mobile-bottom-link{min-height:56px}.mobile-bottom-link svg{width:20px;height:20px}.mobile-bottom-whatsapp{width:43px;height:43px}.mobile-bottom-whatsapp svg{width:25px;height:25px}}
+@media(max-width:365px){.mobile-bottom-nav{inset-inline:5px;grid-template-columns:repeat(5,minmax(0,1fr));padding:4px;min-height:68px}.mobile-bottom-link{min-height:56px}.mobile-bottom-link svg{width:20px;height:20px}.mobile-bottom-whatsapp{min-height:56px;width:auto;height:auto}.mobile-bottom-whatsapp svg{width:20px;height:20px}}
 /* Keep the honeypot INSIDE the form's box. A -10000px offset causes
    10,000px horizontal overflow on RTL Android browsers and blanks the site. */
 .contact-form{position:relative}
