@@ -169,7 +169,7 @@ assert.match(home,/src="mobile-nav\.js"/,'mobile quick navigation runtime linked
 assert.match(home,/href="mobile-bottom\.css"/,'mobile quick nav stylesheet linked');
 assert.match(edu,/\.\.\/mobile-nav\.js/,'education shares WhatsApp runtime');
 assert.match(read('mobile-nav.js'),/encodeURIComponent/,'WhatsApp messages are URL encoded');
-assert.match(read('mobile-nav.js'),/data\.formMessage/,'submitted enquiry summary is prepared in WhatsApp');
+assert.match(read('mobile-nav.js'),/dataset\.formMessage/,'submitted enquiry summary is prepared in WhatsApp');
 assert.match(read('mobile-bottom.css'),/env\(safe-area-inset-bottom/,'phone safe-area spacing');
 assert.match(read('scripts/build.mjs'),/mobile-nav\.js/,'mobile JS copied in output');
 assert.match(read('scripts/build.mjs'),/mobile-bottom\.css/,'mobile CSS copied in output');
