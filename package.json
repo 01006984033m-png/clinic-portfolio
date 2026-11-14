@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node tests/check.mjs",
+    "test": "node tests/check.mjs && node --test tests/contact.test.mjs",
     "build": "npm run test && node scripts/build.mjs"
   }
 }
