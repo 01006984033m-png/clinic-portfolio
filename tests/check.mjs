@@ -20,6 +20,17 @@ for(const src of Object.values(data.sources))assert.match(src.url,/^https:\/\//)
 for(const p of ['index.html','styles.css','cinematic-care.css','app.js','education/index.html','education/education.css','education/education.js','education/content.js','privacy.html','assets/brand-board.png','assets/hero-treatment.webp','assets/care-assessment.webp','assets/care-decongestive.webp','assets/care-manual.webp','assets/care-compression.webp','assets/care-movement.webp','assets/care-selfcare.webp','assets/care-room.webp','assets/lymelva-mark.svg','assets/lymelva-logo.svg','assets/lymelva-logo-white.svg','guides/lymphedema-basics.pdf','guides/visit-preparation.pdf','guides/self-care.pdf','guides/brand-guidelines.pdf','README.md','RELEASE_GATE.md'])assert.ok(existsSync(join(root,p)),'missing '+p);
 for(const name of ['lymphedema-basics','visit-preparation','self-care'])assert.ok(home.includes('guides/'+name+'.pdf'));
 assert.match(home,/https:\/\/wa\.me\/201027594048/,'approved business WhatsApp number');
+const newTagline='VASCULAR &amp; LYMPHATIC PHYSICAL THERAPY';
+assert.match(home,/class="intro-label">VASCULAR &amp; LYMPHATIC PHYSICAL THERAPY<\/span>/,'intro uses updated brand tagline');
+assert.match(home,/class="brand-text">LYMELVA <small>VASCULAR &amp; LYMPHATIC PHYSICAL THERAPY<\/small>/,'header branding matches intro');
+for(const f of ['assets/lymelva-logo.svg','assets/lymelva-logo-white.svg']){
+ assert.ok(read(f).includes(newTagline),'brand SVG uses approved tagline: '+f);
+ assert.doesNotMatch(read(f),/LYMPHEDEMA &amp; PHYSICAL THERAPY/,'legacy logo tagline removed');
+}
+assert.match(edu,/VASCULAR &amp; LYMPHATIC PHYSICAL THERAPY/,'education footer has updated brand');
+assert.match(read('app.js'),/LYMELVA \| Vascular & Lymphatic Physical Therapy/,'English document title updated');
+assert.match(home,/LYMELVA — Vascular &amp; Lymphatic Physical Therapy/,'social preview title updated');
+
 assert.match(edu,/201027594048/,'education contact link');
 assert.match(home,/hero-treatment\.webp/,'photographic hero');
 assert.match(home,/cinematic-care\.css/,'cinematic styles');
