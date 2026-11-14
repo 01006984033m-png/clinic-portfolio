@@ -31,7 +31,9 @@ assert.match(home,/intro-light-streak/,'cinematic intro element');
 assert.match(read('app.js'),/CARE_PHOTOS/,'photographic services');
 assert.match(home,/noindex/i);assert.match(edu,/noindex/i);assert.match(read('robots.txt'),/Disallow: \//);
 assert.match(edu,/safety/i);assert.match(home,/education\//);assert.match(home,/privacy.html/);
-assert.doesNotMatch(read('app.js'),/fetch\s*\(|XMLHttpRequest|sendBeacon/,'unexpected contact transmission');
+assert.match(read('app.js'),/fetch\('\/api\/contact'/,'contact form uses same-origin API only');
+assert.doesNotMatch(read('app.js'),/XMLHttpRequest|sendBeacon/,'no background tracking of contact data');
+assert.doesNotMatch(read('app.js'),/fetch\('https?:/,'no direct client-to-provider contact data transmission');
 assert.doesNotMatch(read('education/education.js'),/fetch\s*\(|XMLHttpRequest|sendBeacon/,'unexpected education data transmission');
 const script=/<script type="application\/ld\+json">([\s\S]*?)<\/script>/.exec(home);
 assert.ok(script,'inline structured-data script');
@@ -151,3 +153,31 @@ assert.doesNotMatch(read('motion-v11.js'),/\{opacity:0,transform:'translate3d\(0
 assert.match(read('motion-v11.js'),/title\?1080:880/,'prominent desktop movement retained');
 assert.match(read('motion-v11.css'),/V14: stable-exposure text motion/,'CSS text opacity fixed');
 assert.match(read('motion-v11.css'),/main \.motion-reveal\.motion-entered/,'motion CSS covers completed text');
+
+
+// Mobile menu / email relay / WhatsApp acceptance gates.
+assert.match(home,/id="mobile-bottom-nav"/,'fixed phone navigation is present');
+assert.match(edu,/id="mobile-bottom-nav"/,'education uses the shared phone navigation');
+assert.match(home,/data-bottom-target="home"|data-bottom-target="top"/,'home quick nav');
+assert.match(home,/data-bottom-target="services"/,'services quick nav');
+assert.match(home,/data-bottom-target="education"/,'education quick nav');
+assert.match(home,/data-bottom-target="contact"/,'contact quick nav');
+assert.match(home,/class="mobile-bottom-whatsapp"/,'prominent WhatsApp quick action');
+for(const field of ['form-email','form-details','form-website','form-status','manual-email-link','result-whatsapp'])
+  assert.ok(home.includes('id="'+field+'"'),'missing form UI '+field);
+assert.match(home,/src="mobile-nav\.js"/,'mobile quick navigation runtime linked');
+assert.match(home,/href="mobile-bottom\.css"/,'mobile quick nav stylesheet linked');
+assert.match(edu,/\.\.\/mobile-nav\.js/,'education shares WhatsApp runtime');
+assert.match(read('mobile-nav.js'),/encodeURIComponent/,'WhatsApp messages are URL encoded');
+assert.match(read('mobile-nav.js'),/dataset\.formMessage/,'submitted enquiry summary is prepared in WhatsApp');
+assert.match(read('mobile-bottom.css'),/env\(safe-area-inset-bottom/,'phone safe-area spacing');
+assert.match(read('scripts/build.mjs'),/mobile-nav\.js/,'mobile JS copied in output');
+assert.match(read('scripts/build.mjs'),/mobile-bottom\.css/,'mobile CSS copied in output');
+assert.ok(existsSync(join(root,'api/contact.js')),'server-side clinic contact API included');
+assert.match(read('api/contact.js'),/01006984033m@gmail\.com/,'fixed correct server-side recipient');
+assert.match(read('api/contact.js'),/email\.gosecureserver\.in\/api\/send\.php/,'ELHADY Works provider fallback');
+assert.doesNotMatch(read('api/contact.js'),/String\(body\.to/,'recipient cannot be overridden from the browser');
+const csp=vercel.headers[0].headers.find(h=>h.key==='Content-Security-Policy').value;
+assert.match(csp,/connect-src 'self'/,'CSP permits same-origin contact POST only');
+assert.doesNotMatch(csp,/connect-src \*/,'CSP never allows arbitrary outbound connections');
+assert.match(read('privacy.html'),/third-party email delivery provider/,'privacy terms updated for transmission');

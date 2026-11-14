@@ -25,3 +25,6 @@ jobs:
             echo "Chrome motion test attempt ${attempt}/3"
             node tests/browser-motion.mjs
           done
+
+      - name: Chrome mobile navigation and email form integration
+        run: node tests/browser-contact.mjs

@@ -1,0 +1,37 @@
+name: LYMELVA production email smoke (on contact API release)
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'api/contact.js'
+permissions:
+  contents: read
+jobs:
+  verify-owner-email:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for production serverless endpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in $(seq 1 24); do
+            status="$(curl -sS -m 12 -o /dev/null -w '%{http_code}' 'https://clinic-portfolio-sigma.vercel.app/api/contact' || true)"
+            if [ "$status" = "405" ]; then
+              echo "Contact API live (405 for unsupported GET)."
+              exit 0
+            fi
+            sleep 8
+          done
+          echo "Contact API did not become available on production" >&2
+          exit 1
+      - name: One synthetic owner-only email delivery test
+        shell: bash
+        run: |
+          set -euo pipefail
+          payload="$(printf '{"name":"LYMELVA QA Test","phone":"00000000000","email":"","type":"general","time":"any","details":"LYMELVA-EMAIL-SMOKE-20261114-%s (synthetic automated test, no patient data)","website":""}' "$GITHUB_RUN_ID")"
+          response="$(curl --fail-with-body -sS -m 15 \
+            -H 'Content-Type: application/json' \
+            -H 'Origin: https://clinic-portfolio-sigma.vercel.app' \
+            -X POST 'https://clinic-portfolio-sigma.vercel.app/api/contact' \
+            --data "$payload")"
+          RESPONSE="$response" node -e "const v=JSON.parse(process.env.RESPONSE);if(v.sent!==true){throw Error('Provider did not accept email')} console.log('Email provider accepted one synthetic clinic enquiry; verify the owner inbox separately.')"
