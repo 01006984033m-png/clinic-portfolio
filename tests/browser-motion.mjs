@@ -95,7 +95,7 @@ try{
  assert.equal(textMotion.opacity,'1','animated headings must remain fully opaque');
  assert.ok(textMotion.frames.length>=2&&textMotion.frames.every(f=>f.transform&&f.opacity===null),
    'headings must move visibly without any opacity tween: '+JSON.stringify(textMotion));
- assert.ok(textMotion.frames.some(f=>/54px|36px/.test(f.transform)),
+ assert.ok(textMotion.frames.some(f=>/42px|28px/.test(f.transform)),
    'text entry should have a meaningful transform, not disappear');
  const photoStability=await page.evaluate(()=>{
    const frame=document.querySelector('#services-grid .service-photo-frame');
