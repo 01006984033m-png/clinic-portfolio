@@ -25,7 +25,7 @@
 .doctor-index{display:block;font:600 10px/1.5 Arial,sans-serif;color:var(--teal2);letter-spacing:.12em;margin-bottom:8px}
 .doctor-name{font:600 clamp(13px,1.1vw,16px)/1.5 "Segoe UI",Arial,sans-serif;color:var(--ink);overflow-wrap:anywhere;hyphens:none;text-align:start;margin:0;letter-spacing:-.012em}
 .doctors-empty{font-size:14px;text-align:center;color:var(--sub);padding:32px 15px}
-.doctors-more{display:block;cursor:pointer;margin:30px auto 0;padding:14px 26px;background:var(--teal);color:#fff;border:1px solid transparent;border-radius:999px;font:700 13px/1.3 inherit;transition:transform .2s,background .2s}
+.doctors-more{display:block;cursor:pointer;margin:30px auto 0;padding:14px 26px;background:var(--teal);color:#fff;border:1px solid transparent;border-radius:999px;font:700 13px/1.3 "Segoe UI",Arial,sans-serif;transition:transform .2s,background .2s}
 .doctors-more:hover{transform:translateY(-2px);background:var(--teal2)}
 .doctors-more:focus-visible{outline:3px solid var(--teal2);outline-offset:3px}
 html[data-theme="dark"] .doctor-avatar{background:linear-gradient(145deg,#124954,#217579)}
