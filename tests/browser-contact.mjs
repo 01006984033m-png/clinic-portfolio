@@ -29,6 +29,34 @@ try{
  assert.equal(await nav.isVisible(),true,'mobile bottom nav visible');
  assert.equal(await nav.locator('.mobile-bottom-link').count(),4,'four mobile destinations');
  assert.equal(await nav.locator('.mobile-bottom-whatsapp').count(),1,'WhatsApp raised action present');
+ // User-visible regression: a raised WhatsApp bubble previously covered
+ // neighboring controls and the hero photograph on real Android devices.
+ async function assertNoWhatsAppOverlap(width){
+   await page.setViewportSize({width,height:844});
+   await page.waitForTimeout(100);
+   const geometry=await page.locator('#mobile-bottom-nav').evaluate(n=>{
+     const r=e=>{const b=e.getBoundingClientRect();return {x:b.x,y:b.y,left:b.left,right:b.right,top:b.top,bottom:b.bottom,width:b.width,height:b.height}};
+     const wa=n.querySelector('.mobile-bottom-whatsapp');
+     return {bar:r(n),wa:r(wa),links:[...n.querySelectorAll('.mobile-bottom-link')].map(r),
+       innerWidth:window.innerWidth,scrollWidth:document.documentElement.scrollWidth,
+       padded:parseFloat(getComputedStyle(document.body).paddingBottom)};
+   });
+   const {bar,wa,links,padded,scrollWidth,innerWidth}=geometry;
+   assert.ok(wa.top>=bar.top-1&&wa.bottom<=bar.bottom+1,
+     'WhatsApp bubble must stay inside bottom bar '+JSON.stringify(geometry));
+   assert.ok(wa.left>=bar.left-1&&wa.right<=bar.right+1,
+     'WhatsApp bubble cannot overhang bottom bar '+JSON.stringify(geometry));
+   for(const link of links){
+     const overlap=Math.max(0,Math.min(wa.right,link.right)-Math.max(wa.left,link.left))*
+       Math.max(0,Math.min(wa.bottom,link.bottom)-Math.max(wa.top,link.top));
+     assert.equal(overlap,0,'WhatsApp must not cover another nav destination '+JSON.stringify(geometry));
+   }
+   assert.ok(padded>=bar.height,'last page content needs free space below bottom bar');
+   assert.ok(scrollWidth<=innerWidth+1,'bottom bar should not cause horizontal overflow');
+ }
+ for(const width of [320,360,390])await assertNoWhatsAppOverlap(width);
+ await page.setViewportSize({width:390,height:844});
+
  const dests=await nav.locator('.mobile-bottom-link').evaluateAll(els=>els.map(x=>x.getAttribute('href')));
  assert.deepEqual(dests,['#top','#services','education/','#contact'],'mobile nav destinations');
  const genericWA=await nav.locator('.mobile-bottom-whatsapp').getAttribute('href');
@@ -66,9 +94,14 @@ try{
  await page.waitForFunction(()=>document.querySelector('#manual-email-link')?.hidden===false,{timeout:4000});
  assert.equal(await page.locator('#manual-email-link').isVisible(),true,'failed request exposes manual email alternative');
  assert.ok((await page.locator('#manual-email-link').getAttribute('href')).startsWith('mailto:01006984033m@gmail.com?'),'manual mail targets approved address');
- assert.deepEqual(errors,[],'no browser runtime errors');
+ await page.locator('#form-name').focus();
+ assert.equal(await nav.isVisible(),false,'bottom dock must get out of the way while entering form details');
+ await page.locator('#form-name').blur();
+ await page.waitForTimeout(80);
+ assert.equal(await nav.isVisible(),true,'bottom dock returns after form focus ends');
+  assert.deepEqual(errors,[],'no browser runtime errors');
  await page.goto(url+'education/',{waitUntil:'domcontentloaded'});
  assert.equal(await page.locator('#mobile-bottom-nav').isVisible(),true,'education has the same mobile bar');
  assert.equal(await page.locator('[data-bottom-target="education"]').getAttribute('aria-current'),'page','education is selected');
- console.log('PASS MOBILE 390px: fixed 4-link bar, prefilled WhatsApp, form POST accepted/failure, manual Gmail fallback, education parity');
+ console.log('PASS MOBILE 320/360/390px: WhatsApp never obscures other controls, form focus behavior, prefilled message, contact POST, education parity');
 }finally{await browser.close();await new Promise(resolve=>server.close(resolve))}
