@@ -8,7 +8,7 @@
   :'Hello LYMELVA, I would like information about physical therapy and lymphedema care, initial assessment and available appointment times.';
  const linkFor=message=>BASE+'?text='+encodeURIComponent(String(message||generic()).slice(0,1600));
  function refresh(){
-  const labels=ar()?{home:'الرئيسية',services:'الخدمات',education:'التوعية',contact:'تواصل معنا'}:{home:'Home',services:'Services',education:'Learn',contact:'Contact'};
+  const labels=ar()?{home:'الرئيسية',services:'الخدمات',education:'التوعية',contact:'تواصل معنا',whatsapp:'واتساب'}:{home:'Home',services:'Services',education:'Learn',contact:'Contact',whatsapp:'WhatsApp'};
   document.querySelectorAll('[data-mobile-label]').forEach(el=>{el.textContent=labels[el.dataset.mobileLabel]||''});
   document.querySelectorAll('a[href^="'+BASE+'"]').forEach(a=>{
    const text=a.id==='result-whatsapp'&&a.dataset.formMessage?a.dataset.formMessage:generic();

@@ -165,8 +165,8 @@ assert.match(home,/data-bottom-target="contact"/,'contact quick nav');
 assert.match(home,/class="mobile-bottom-whatsapp"/,'prominent WhatsApp quick action');
 for(const field of ['form-email','form-details','form-website','form-status','manual-email-link','result-whatsapp'])
   assert.ok(home.includes('id="'+field+'"'),'missing form UI '+field);
-assert.match(home,/src="mobile-nav\.js"/,'mobile quick navigation runtime linked');
-assert.match(home,/href="mobile-bottom\.css"/,'mobile quick nav stylesheet linked');
+assert.match(home,/src="mobile-nav\.js(?:\?rev=[^"]+)?"/,'mobile quick navigation runtime linked');
+assert.match(home,/href="mobile-bottom\.css(?:\?rev=[^"]+)?"/,'mobile quick nav stylesheet linked');
 assert.match(edu,/\.\.\/mobile-nav\.js/,'education shares WhatsApp runtime');
 assert.match(read('mobile-nav.js'),/encodeURIComponent/,'WhatsApp messages are URL encoded');
 assert.match(read('mobile-nav.js'),/dataset\.formMessage/,'submitted enquiry summary is prepared in WhatsApp');
@@ -195,3 +195,19 @@ assert.match(phoneNavCSS,/grid-template-columns:repeat\(5,minmax\(0,1fr\)\)/,'ph
 assert.match(phoneNavCSS,/\.mobile-bottom-whatsapp\{[^}]*transform:none/,'WhatsApp button stays in the dock');
 assert.doesNotMatch(phoneNavCSS,/\.mobile-bottom-whatsapp\{[^}]*translateY\(-/,'raised WhatsApp overlay must not return');
 assert.match(phoneNavCSS,/body:has\(\.contact-form:focus-within\)/,'dock yields space during form typing');
+
+assert.doesNotMatch(home,/جهّز ملخص الطلب/,'server-rendered HTML must not advertise an old local-only workflow');
+assert.match(home,/إرسال تفاصيل الطلب إلى البريد/,'contact button states real email action before JS hydration');
+assert.match(read('app.js'),/formGenerate:'إرسال تفاصيل الطلب إلى البريد'/,'JS and HTML agree on email submit action');
+assert.match(home,/app\.js\?rev=fix-wa-email-20261114/,'new app JavaScript must bypass stale Brave cache');
+assert.match(home,/mobile-bottom\.css\?rev=fix-wa-email-20261114/,'mobile style must bypass stale cache');
+assert.match(edu,/\.\.\/mobile-bottom\.css\?rev=fix-wa-email-20261114/,'education shares updated mobile style');
+assert.match(home,/data-mobile-label="whatsapp">واتساب/,'WhatsApp gets matching visible label');
+assert.match(edu,/data-mobile-label="whatsapp">واتساب/,'WhatsApp has matching label on education');
+assert.match(read('mobile-nav.js'),/whatsapp:'واتساب'/,'WhatsApp caption translates with language');
+assert.match(read('mobile-bottom.css'),/\.mobile-bottom-whatsapp\{[^}]*display:flex;flex-direction:column/,'WhatsApp is styled exactly like sibling bottom links');
+assert.match(read('mobile-bottom.css'),/\.mobile-bottom-whatsapp\{[^}]*background:transparent;border:0/,'no oversized green WhatsApp bubble');
+for(const route of ['/', '/index.html','/education/','/education/index.html']){
+ const header=vercel.headers.find(h=>h.source===route);
+ assert.ok(header?.headers.some(h=>h.key==='Cache-Control'&&h.value.includes('no-store')),'stale HTML blocked on '+route);
+}

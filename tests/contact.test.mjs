@@ -34,6 +34,10 @@ test('provider accepted: fixed owner email and sanitized message',async()=>{
   assert.equal(sent.to,'01006984033m@gmail.com');
   assert.equal(sent.email,'01006984033m@gmail.com');
   assert.ok(sent.message.includes(data.phone));
+  assert.ok(sent.message.includes(data.name),'name delivered in email body');
+  assert.ok(sent.message.includes('Initial assessment'),'request type delivered in email body');
+  assert.ok(sent.message.includes('Morning'),'preferred time delivered in email body');
+  assert.ok(sent.message.includes(data.details),'details delivered in email body');
   assert.ok(!sent.message.includes('undefined'));
  }finally{globalThis.fetch=f;if(saveKey===undefined)delete process.env.RESEND_API_KEY;else process.env.RESEND_API_KEY=saveKey;if(saveFrom===undefined)delete process.env.RESEND_FROM_EMAIL;else process.env.RESEND_FROM_EMAIL=saveFrom}
 });
