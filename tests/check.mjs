@@ -181,3 +181,10 @@ const csp=vercel.headers[0].headers.find(h=>h.key==='Content-Security-Policy').v
 assert.match(csp,/connect-src 'self'/,'CSP permits same-origin contact POST only');
 assert.doesNotMatch(csp,/connect-src \*/,'CSP never allows arbitrary outbound connections');
 assert.match(read('privacy.html'),/third-party email delivery provider/,'privacy terms updated for transmission');
+
+// RTL Android blank-page regression: keep spam honeypot inside viewport.
+const mobileCSS=read('mobile-bottom.css');
+assert.doesNotMatch(mobileCSS,/left:\s*-\s*10000px/,'honeypot cannot push RTL content 10000px offscreen');
+assert.match(mobileCSS,/\.contact-form\{position:relative\}/,'honeypot positions against its form');
+assert.match(mobileCSS,/clip-path:inset\(50%\)/,'honeypot remains visually hidden without overflow');
+assert.match(read('.github/workflows/quality.yml'),/mobile-layout-diagnostic\.mjs/,'live mobile viewport regression enabled');
