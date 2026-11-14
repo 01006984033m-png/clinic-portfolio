@@ -1,6 +1,24 @@
+import assert from 'node:assert/strict';
 import {chromium} from 'playwright-core';
+import {createServer} from 'node:http';
+import {readFile,stat} from 'node:fs/promises';
+import {resolve,extname,dirname,sep} from 'node:path';
+import {fileURLToPath} from 'node:url';
 const browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_PATH||'/usr/bin/google-chrome',args:['--no-sandbox','--disable-dev-shm-usage']});
-const base='https://clinic-portfolio-sigma.vercel.app/';
+const dist=resolve(dirname(fileURLToPath(import.meta.url)),'../dist');
+const mime={'.html':'text/html;charset=utf-8','.js':'text/javascript;charset=utf-8','.css':'text/css;charset=utf-8','.webp':'image/webp','.svg':'image/svg+xml','.png':'image/png'};
+const server=createServer(async(req,res)=>{
+ try{
+  const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
+  const relative=pathname.endsWith('/')?pathname+'index.html':pathname;
+  const path=resolve(dist,'.'+relative);
+  if(!path.startsWith(dist+sep)||!(await stat(path)).isFile())throw Error('not file');
+  res.writeHead(200,{'Content-Type':mime[extname(path)]||'application/octet-stream','Cache-Control':'no-store'});
+  res.end(await readFile(path));
+ }catch{res.writeHead(404);res.end('Not found')}
+});
+await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+const base='http://127.0.0.1:'+server.address().port+'/';
 const configs=[
  {name:'real-android-393',viewport:{width:393,height:820},screen:{width:393,height:820},deviceScaleFactor:2.8,isMobile:true,hasTouch:true},
  {name:'real-android-360',viewport:{width:360,height:780},screen:{width:360,height:780},deviceScaleFactor:3,isMobile:true,hasTouch:true},
@@ -38,7 +56,20 @@ try{
      totalImgs:document.images.length};
    });
    console.log('MOBILE_LAYOUT_DIAGNOSTIC',config.name,JSON.stringify({http:response.status(),...m,errors,badResponses}));
-  }catch(e){console.log('MOBILE_LAYOUT_DIAGNOSTIC_ERROR',config.name,String(e).slice(0,1200))}
+   assert.equal(response.status(),200,'site must return 200');
+   assert.deepEqual(errors,[],'no runtime errors');
+   assert.ok(m.hero&&m.hero.width>250&&m.hero.height>400,'hero should render');
+   assert.ok(m.scrollWidth<=m.innerWidth+8,
+     'critical: no 10,000px RTL overflow; scrollWidth='+m.scrollWidth+' innerWidth='+m.innerWidth);
+   assert.ok(m.hero.x < m.visualWidth && m.hero.x + m.hero.width > 0,
+     'critical: hero must intersect actual phone viewport '+JSON.stringify(m.hero));
+   if(config.name!=='desktop-request-touch'){
+     assert.ok(m.bottom?.width >= m.visualWidth*.72 && m.bottom.x>=-6 && m.bottom.x+m.bottom.width<=m.visualWidth+6,
+      'mobile navigation must be visible and correctly anchored '+JSON.stringify(m.bottom));
+     assert.ok(m.innerWidth<=m.visualWidth+8,'layout viewport must not zoom out the entire site');
+   }
+   console.log('PASS ANDROID BRAVE MOBILE VIEWPORT',config.name);
+  }catch(e){console.error('MOBILE_LAYOUT_DIAGNOSTIC_ERROR',config.name,String(e).slice(0,1800));throw e}
   await context.close();
  }
-}finally{await browser.close()}
+}finally{await browser.close();await new Promise(resolve=>server.close(resolve))}
