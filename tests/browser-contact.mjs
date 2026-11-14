@@ -96,7 +96,7 @@ try{
  assert.ok((await page.locator('#manual-email-link').getAttribute('href')).startsWith('mailto:01006984033m@gmail.com?'),'manual mail targets approved address');
  await page.locator('#form-name').focus();
  assert.equal(await nav.isVisible(),false,'bottom dock must get out of the way while entering form details');
- await page.locator('#form-name').blur();
+ await page.locator('#form-name').evaluate(el=>el.blur());
  await page.waitForTimeout(80);
  assert.equal(await nav.isVisible(),true,'bottom dock returns after form focus ends');
   assert.deepEqual(errors,[],'no browser runtime errors');
