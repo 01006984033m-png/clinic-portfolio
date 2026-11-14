@@ -165,8 +165,8 @@ assert.match(home,/data-bottom-target="contact"/,'contact quick nav');
 assert.match(home,/class="mobile-bottom-whatsapp"/,'prominent WhatsApp quick action');
 for(const field of ['form-email','form-details','form-website','form-status','manual-email-link','result-whatsapp'])
   assert.ok(home.includes('id="'+field+'"'),'missing form UI '+field);
-assert.match(home,/src="mobile-nav\.js"/,'mobile quick navigation runtime linked');
-assert.match(home,/href="mobile-bottom\.css"/,'mobile quick nav stylesheet linked');
+assert.match(home,/src="mobile-nav\.js(?:\?rev=[^"]+)?"/,'mobile quick navigation runtime linked');
+assert.match(home,/href="mobile-bottom\.css(?:\?rev=[^"]+)?"/,'mobile quick nav stylesheet linked');
 assert.match(edu,/\.\.\/mobile-nav\.js/,'education shares WhatsApp runtime');
 assert.match(read('mobile-nav.js'),/encodeURIComponent/,'WhatsApp messages are URL encoded');
 assert.match(read('mobile-nav.js'),/dataset\.formMessage/,'submitted enquiry summary is prepared in WhatsApp');
